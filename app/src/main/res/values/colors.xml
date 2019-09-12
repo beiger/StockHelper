@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#5687cc</color>
+
+    <!--背景色/按钮字体-->
+    <color name="white">#ffffff</color>
+    <!--状态导航栏背景色-->
+    <color name="f8f8f8">#f8f8f8</color>
+    <!--背景色-->
+    <color name="f2f2f2">#f2f2f2</color>
+    <!--二级分割线-->
+    <color name="eeeeee">#eeeeee</color>
+    <!--分割线-->
+    <color name="dddddd">#dddddd</color>
+    <!--次文字/标题说明/时间 等-->
+    <color name="black_99">#999999</color>
+    <!--次文字-->
+    <color name="black_66">#666666</color>
+    <!--文字/导航/title1-->
+    <color name="black_33">#333333</color>
+    <!--文字/标准蓝/文字高亮-->
+    <color name="blue">#00aaff</color>
+    <!--文字/标准橙/文字高亮-->
+    <color name="orange">#ffab19</color>
+    <!--按钮/选择气泡/文字高亮-->
+    <color name="orange_highlight">#fb7e00</color>
+    <!--文字/标准绿-->
+    <color name="green">#5ed152</color>
+    <!--气泡提示文字/标准红-->
+    <color name="red">#ff4343</color>
+    <!--分类提示文字-->
+    <color name="dark_pink">#de1e7c</color>
+
+
+    <color name="colorTextTitle">#333333</color>
+    <color name="colorTextContent">#666666</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="black_color_aa">#aa000000</color>
+    <color name="black">#000000</color>
+    <color name="bg_black_06">#0a000000</color>
+    <color name="bg_black_12">#12000000</color>
+    <color name="bg_white_dd">#ddffffff</color>
+    <color name="selectedTabColor">#ddffffff</color>
+    <color name="defaultTabColor">#99ffffff</color>
+    <color name="color_divider">#12000000</color>
+
+</resources>

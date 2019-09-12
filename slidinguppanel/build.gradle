@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+   compile 'androidx.legacy:legacy-support-v4:1.0.0'
+    compile 'androidx.annotation:annotation:1.1.0'
+    compile 'androidx.recyclerview:recyclerview:1.0.0'
+}
+
+android {
+    compileSdkVersion 29
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 29
+    }
+}

@@ -1,0 +1,36 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.sothree.slidinguppanel.library.test" >
+4
+5    <uses-sdk
+5-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:5:5-74
+6        android:minSdkVersion="19"
+6-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:5:15-41
+7        android:targetSdkVersion="29" />
+7-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:5:42-71
+8
+9    <instrumentation
+9-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:11:5-15:89
+10        android:name="android.test.InstrumentationTestRunner"
+10-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:11:22-75
+11        android:functionalTest="false"
+11-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:14:22-52
+12        android:handleProfiling="false"
+12-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:13:22-53
+13        android:label="Tests for com.sothree.slidinguppanel.library.test"
+13-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:15:22-87
+14        android:targetPackage="com.sothree.slidinguppanel.library.test" />
+14-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:12:22-85
+15
+16    <application
+16-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:7:5-9:19
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.0.0] C:\Users\Bing\.gradle\caches\transforms-2\files-2.1\607c59363a6853c9b05a90a9d2e91e02\core-1.0.0\AndroidManifest.xml:22:18-86
+18        android:debuggable="true" >
+18-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:7:18-43
+19        <uses-library android:name="android.test.runner" />
+19-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:8:9-60
+19-->D:\AndroidStudioProjects\AndroidSlidingUpPanel\library\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5731061685646049587.xml:8:23-57
+20    </application>
+21
+22</manifest>

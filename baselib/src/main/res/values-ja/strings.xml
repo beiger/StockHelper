@@ -1,0 +1,4 @@
+﻿<resources>
+	<string name="network_useless">ネットワーク異常です。再試行を押してください</string>
+	<string name="no_data">データなし</string>
+</resources>

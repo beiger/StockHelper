@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+        
+        <com.sothree.slidinguppanel.SlidingUpPanelLayout
+                android:id="@+id/panelLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                app:umanoPanelHeight="48dp"
+                app:umanoParallaxOffset="100dp"
+                app:umanoOverlay="true"
+                app:umanoScrollableView="@id/scrollView">
+
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                        android:id="@+id/refreshLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srlEnableAutoLoadMore="false"
+                        app:srlEnableLoadMore="true">
+
+                        <com.scwang.smartrefresh.header.DeliveryHeader
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"
+                                android:padding="12dp"
+                                tools:listitem="@android:layout/simple_list_item_2"/>
+
+                        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:background="@drawable/bg_slide_up_head">
+                                <View
+                                        android:layout_width="32dp"
+                                        android:layout_height="4dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/bg_slide_up_head_internal"/>
+                        </FrameLayout>
+
+                        <androidx.core.widget.NestedScrollView
+                                android:id="@+id/scrollView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/bg_white_dd">
+
+                                <EditText
+                                        android:id="@+id/etAttention"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="16dp"
+                                        android:background="@null"
+                                        android:text="haha"/>
+
+                        </androidx.core.widget.NestedScrollView>
+
+                </LinearLayout>
+
+        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</layout>

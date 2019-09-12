@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="CustomTabLayout">
+		<attr name="tabSpacing_custom" format="dimension"/>
+		<attr name="tabPadding_custom" format="dimension"/>
+		<attr name="tabPaddingStart_custom" format="dimension"/>
+		<attr name="tabPaddingTop_custom" format="dimension"/>
+		<attr name="tabPaddingEnd_custom" format="dimension"/>
+		<attr name="tabPaddingBottom_custom" format="dimension"/>
+		<attr name="tabTextAppearance_custom" format="reference"/>
+		<attr name="tabTextColor_custom" format="color"/>
+		<attr name="tabSelectedTextColor_custom" format="color"/>
+		<attr name="tabTextSize_custom" format="dimension"/>
+		<attr name="tabSelectedTextSize_custom" format="dimension"/>
+		<attr name="tabRippleColor_custom" format="color"/>
+		<attr name="tabBackground_custom" format="reference"/>
+		<attr name="tabContentStart_custom" format="dimension"/>
+		<attr name="tabGravity_custom" format="integer"/>
+	</declare-styleable>
+
+</resources>

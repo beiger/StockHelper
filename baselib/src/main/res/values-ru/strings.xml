@@ -1,0 +1,4 @@
+﻿<resources>
+	<string name="network_useless">Сеть не нормальна, щелкните, чтобы повторно пробовать</string>
+	<string name="no_data">Нет данных</string>
+</resources>

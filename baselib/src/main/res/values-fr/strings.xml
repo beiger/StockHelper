@@ -1,0 +1,4 @@
+﻿<resources>
+	<string name="network_useless">Anomalie du réseau,veuillezréessayer</string>
+	<string name="no_data"> Aucune donnée</string>
+</resources>

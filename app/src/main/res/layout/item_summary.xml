@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/card_item_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_card_white">
+
+                <TextView
+                        android:id="@+id/tvContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="340dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_margin="5dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="end"/>
+
+        </LinearLayout>
+</FrameLayout>

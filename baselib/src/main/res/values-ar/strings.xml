@@ -1,0 +1,4 @@
+﻿<resources>
+	<string name = "network_useless">الشبكة غير طبيعية، يرجي النقر فوق "إعادة المحاولة"</string>
+	<string name="no_data">لا توجد بيانات</string>
+</resources>

@@ -1,0 +1,21 @@
+R_DEF: Internal format may change without notice
+local
+attr? umanoAnchorPoint
+attr? umanoClipPanel
+attr? umanoDragView
+attr? umanoFadeColor
+attr? umanoFlingVelocity
+attr? umanoInitialState
+attr? umanoOverlay
+attr? umanoPanelHeight
+attr? umanoParallaxOffset
+attr? umanoScrollInterpolator
+attr? umanoScrollableView
+attr? umanoShadowHeight
+drawable above_shadow
+drawable below_shadow
+id anchored
+id collapsed
+id expanded
+id hidden
+styleable SlidingUpPanelLayout umanoPanelHeight umanoShadowHeight umanoParallaxOffset umanoFadeColor umanoFlingVelocity umanoDragView umanoScrollableView umanoOverlay umanoClipPanel umanoAnchorPoint umanoInitialState umanoScrollInterpolator

@@ -1,0 +1,4 @@
+<resources>
+	<string name="network_useless">Abnormal network, please click to retry </string>
+	<string name="no_data">No data </string>
+</resources>

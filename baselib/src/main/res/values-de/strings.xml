@@ -1,0 +1,4 @@
+﻿<resources>
+	<string name="network_useless">Netzwerkfehler, bitte erneut versuchen</string>
+	<string name="no_data">Keine Daten</string>
+</resources>

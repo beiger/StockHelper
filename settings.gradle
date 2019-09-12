@@ -1,0 +1,2 @@
+include ':app', ':baselib', ':cardslidepanel', ':slidinguppanel'
+rootProject.name='StockHelper'
