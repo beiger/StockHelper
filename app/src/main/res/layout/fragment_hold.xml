@@ -53,21 +53,50 @@
                                         android:background="@drawable/bg_slide_up_head_internal"/>
                         </FrameLayout>
 
-                        <androidx.core.widget.NestedScrollView
-                                android:id="@+id/scrollView"
+                        <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/bg_white_dd">
+                                android:layout_height="match_parent">
 
-                                <EditText
-                                        android:id="@+id/etAttention"
+                                <androidx.core.widget.NestedScrollView
+                                        android:id="@+id/scrollView"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:padding="16dp"
-                                        android:background="@null"
-                                        android:text="haha"/>
+                                        android:layout_height="match_parent"
+                                        android:background="@color/bg_white_dd">
 
-                        </androidx.core.widget.NestedScrollView>
+                                        <EditText
+                                                android:id="@+id/etAttention"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:padding="16dp"
+                                                android:background="@null"
+                                                android:text="haha"/>
+
+                                </androidx.core.widget.NestedScrollView>
+
+                                <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent">
+
+                                        <ImageView
+                                                android:id="@+id/ivEdit"
+                                                android:layout_width="48dp"
+                                                android:layout_height="48dp"
+                                                android:src="@drawable/ic_edit"
+                                                android:scaleType="centerInside"/>
+
+                                        <ImageView
+                                                android:id="@+id/ivCheck"
+                                                android:layout_width="48dp"
+                                                android:layout_height="48dp"
+                                                android:src="@drawable/ic_check_mark"
+                                                android:scaleType="centerInside"/>
+
+                                </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 </LinearLayout>
 

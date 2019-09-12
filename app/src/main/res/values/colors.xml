@@ -31,6 +31,8 @@
     <!--分类提示文字-->
     <color name="dark_pink">#de1e7c</color>
 
+    <color name="dark_green">#26b74e</color>
+
 
     <color name="colorTextTitle">#333333</color>
     <color name="colorTextContent">#666666</color>

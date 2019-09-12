@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,11 +21,12 @@ import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.holders.display.HoldsActivity
 import com.bing.stockhelper.main.MainActivity
 import com.bing.stockhelper.model.entity.OrderDetail
+import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import org.jetbrains.anko.support.v4.startActivity
 
-class HoldFragment : Fragment(){
+class HoldFragment : Fragment(), View.OnClickListener {
 
         private lateinit var mBinding: FragmentHoldBinding
         private lateinit var viewModel: HoldViewModel
@@ -37,7 +39,6 @@ class HoldFragment : Fragment(){
                                   savedInstanceState: Bundle?): View? {
                 mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_hold, container, false)
                 viewModel = ViewModelProviders.of(this).get(HoldViewModel::class.java)
-
 
                 initView()
                 return mBinding.root
@@ -80,6 +81,9 @@ class HoldFragment : Fragment(){
 
                 viewModel.orders.observe(this, Observer{ mAdapter.update(it) })
                 viewModel.dayAttentions.observe(this, Observer{
+                        if (mBinding.etAttention.text.isNotEmpty()) {
+                                return@Observer
+                        }
                         if (it.isNullOrEmpty()) {
                                 mBinding.etAttention.setText("")
                         } else {
@@ -98,5 +102,37 @@ class HoldFragment : Fragment(){
                                 (activity as MainActivity).hideFab(newState != SlidingUpPanelLayout.PanelState.COLLAPSED)
                         }
                 })
+
+                addClickableViews(
+                        mBinding.ivEdit,
+                        mBinding.ivCheck
+                )
+        }
+
+        override fun onClick(v: View) {
+                when (v.id) {
+                        R.id.ivEdit -> enableEditText(mBinding.etAttention, true)
+
+                        R.id.ivCheck -> {
+                                enableEditText(mBinding.etAttention, false)
+                                updateAttention()
+                        }
+                }
+        }
+
+        private fun enableEditText(et: EditText, enable: Boolean) {
+                if (enable) {
+                        et.isFocusableInTouchMode = true
+                        et.isFocusable = true
+                        et.requestFocus()
+                } else {
+                        et.isFocusable = false
+                        et.isFocusableInTouchMode = false
+                }
+        }
+
+        private fun updateAttention() {
+
+                viewModel.delete()
         }
 }

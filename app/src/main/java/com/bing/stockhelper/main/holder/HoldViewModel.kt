@@ -3,6 +3,7 @@ package com.bing.stockhelper.main.holder
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.bing.stockhelper.model.AppDatabase
+import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.OrderDetail
 
 class HoldViewModel(application: Application) : AndroidViewModel(application) {
@@ -14,5 +15,13 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
 
     fun delete(item: OrderDetail) {
         database.deleteOrder(item)
+    }
+
+    fun deleteAllAttention() {
+        database.deleteAllAttention()
+    }
+
+    fun insert(item: DayAttention) {
+        database.insertDayAttention(item)
     }
 }

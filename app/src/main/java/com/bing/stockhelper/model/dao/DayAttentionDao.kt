@@ -18,6 +18,9 @@ interface DayAttentionDao {
         @Delete
         fun delete(item: DayAttention)
 
+        @Query("DELETE FROM dayAttention")
+        fun deleteAll()
+
         @Update
         fun update(item: DayAttention)
 }

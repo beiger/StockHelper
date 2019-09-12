@@ -44,7 +44,7 @@ class HoldEditActivity : AppCompatActivity() {
                 if (intent == null) {
                         isNew = true
                 } else {
-                        orderDetail = intent.getParcelableExtra(Constant.TAG_ORDER_STATUS)
+                        orderDetail = intent.getParcelableExtra(Constant.TAG_ORDER_DETAIL)
                         isNew = orderDetail == null
                 }
                 initViews()
@@ -121,6 +121,9 @@ class HoldEditActivity : AppCompatActivity() {
                 } else {
                         viewModel.update(orderDetail!!)
                 }
+                setResult(Activity.RESULT_OK, Intent().apply {
+                        putExtra(Constant.TAG_ORDER_DETAIL, orderDetail)
+                })
                 super.onBackPressed()
         }
 

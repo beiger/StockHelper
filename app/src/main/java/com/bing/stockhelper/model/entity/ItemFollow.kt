@@ -12,17 +12,28 @@ data class ItemFollow(
         var name: String,
         var expectPrice: Float,
         var currentPrice: Float,
-        var comment: String,
+        var comment: String?,
         // 0-10
         var focusDegree: Int,
         var typeId: Int
 ) : Parcelable {
+
+        fun isSameWith(item: ItemFollow): Boolean {
+                return code == item.code &&
+                        name == item.name &&
+                        expectPrice == item.expectPrice &&
+                        currentPrice == item.currentPrice &&
+                        comment == item.comment &&
+                        focusDegree == item.focusDegree &&
+                        typeId == item.typeId
+        }
+
         constructor(source: Parcel) : this(
                 source.readString()!!,
                 source.readString()!!,
                 source.readFloat(),
                 source.readFloat(),
-                source.readString()!!,
+                source.readString(),
                 source.readInt(),
                 source.readInt()
         )
@@ -47,7 +58,7 @@ data class ItemFollow(
                 }
 
                 fun instance(): ItemFollow = ItemFollow(
-                        "", "", 0f, 0f, "", 0, -1
+                        "", "", 0f, 0f, null, 0, -1
                 )
         }
 }

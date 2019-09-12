@@ -46,7 +46,7 @@ class FollowFragment : Fragment(){
                         onClick = { item, _ ->
                                 startActivity<FollowEditActivity>(Constant.TAG_ITEM_FOLLOW to item)
                         },
-                        isSame = { old, newI -> old.code == newI.code },
+                        isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_follow,
                         bindData = { item, binding ->
                                 binding.item = item
@@ -76,6 +76,8 @@ class FollowFragment : Fragment(){
                 mRecyclerView.itemAnimator = DefaultItemAnimator()
                 initAdapter()
 
-                viewModel.follows.observe(this, Observer{ mAdapter.update(it) })
+                viewModel.follows.observe(this, Observer{
+                        mAdapter.update(it)
+                })
         }
 }

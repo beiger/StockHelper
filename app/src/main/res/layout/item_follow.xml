@@ -47,7 +47,7 @@
                                 android:paddingHorizontal="16dp"
                                 android:paddingVertical="4dp"
                                 android:text="@{item.comment}"/>
-                        <view
+                        <View
                                 android:layout_width="0dp"
                                 android:layout_height="8dp"/>
                 </LinearLayout>

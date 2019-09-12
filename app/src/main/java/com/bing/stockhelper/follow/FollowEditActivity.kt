@@ -2,6 +2,7 @@ package com.bing.stockhelper.follow
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -105,11 +106,73 @@ class FollowEditActivity : AppCompatActivity() {
         }
 
         override fun onBackPressed() {
+                if (!updateItemFollow()) {
+                        return
+                }
                 if (isNew) {
                         viewModel.insert(itemFollow!!)
                 } else {
                         viewModel.update(itemFollow!!)
                 }
                 super.onBackPressed()
+        }
+
+        private fun updateItemFollow(): Boolean {
+                val name = getStrFromEt(binding.etName) ?: return false
+                val code = getStrFromEt(binding.etCode) ?: return false
+                val expectPrice = getFloatFromEt(binding.etExpect) ?: return false
+                val currentPrice = getFloatFromEt(binding.etCurrent) ?: return false
+                val comment = getStrFromEt(binding.etComment, false)
+                val focusDegree = getIntFromEt(binding.etFocusDegree) ?: return false
+                val typeId = getIntFromEt(binding.etType) ?: return false
+                if (itemFollow == null) {
+                        itemFollow = ItemFollow.instance()
+                }
+                itemFollow?.let {
+                        it.code = code
+                        it.name = name
+                        it.expectPrice = expectPrice
+                        it.currentPrice = currentPrice
+                        it.comment = comment
+                        it.focusDegree = focusDegree
+                        it.typeId = typeId
+                }
+                return true
+        }
+
+        private fun getStrFromEt(et: EditText, required: Boolean = true): String? {
+                val value = et.text.toString()
+                return if (value.isEmpty()) {
+                        if (required) {
+                                ToastUtils.showShort(R.string.info_not_complete)
+                        }
+                        null
+                } else {
+                        value
+                }
+        }
+
+        private fun getFloatFromEt(et: EditText, required: Boolean = true): Float? {
+                if (et.text.toString().isEmpty()) {
+                        if (required) {
+                                ToastUtils.showShort(R.string.info_not_complete)
+                        }
+                        return null
+                }
+                return try {
+                        et.text.toString().toFloat()
+                } catch (e: Exception) {
+                        ToastUtils.showShort(R.string.format_error)
+                        null
+                }
+        }
+
+        private fun getIntFromEt(et: EditText): Int? {
+                return try {
+                        et.text.toString().toInt()
+                } catch (e: Exception) {
+                        ToastUtils.showShort(R.string.format_error)
+                        null
+                }
         }
 }

@@ -50,6 +50,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun insertDayAttention(dayAttention: DayAttention) = dayAttentionDao().insert(dayAttention)
         fun updateDayAttention(dayAttention: DayAttention) = dayAttentionDao().update(dayAttention)
         fun deleteDayAttention(dayAttention: DayAttention) = dayAttentionDao().delete(dayAttention)
+        fun deleteAllAttention() = dayAttentionDao().deleteAll()
 
     companion object {
                 @Volatile private var sInstance: AppDatabase? = null
