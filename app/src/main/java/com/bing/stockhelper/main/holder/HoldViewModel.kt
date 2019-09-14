@@ -23,5 +23,7 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insert(item: DayAttention) {
         database.insertDayAttention(item)
+        val attentions = database.loadDayAttentions()
+        println("-------${attentions.size}")
     }
 }

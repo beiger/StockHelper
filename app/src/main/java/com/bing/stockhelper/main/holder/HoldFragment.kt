@@ -20,7 +20,9 @@ import com.bing.stockhelper.databinding.ItemStockHoldBinding
 import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.holders.display.HoldsActivity
 import com.bing.stockhelper.main.MainActivity
+import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.OrderDetail
+import com.blankj.utilcode.util.KeyboardUtils
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -81,6 +83,7 @@ class HoldFragment : Fragment(), View.OnClickListener {
 
                 viewModel.orders.observe(this, Observer{ mAdapter.update(it) })
                 viewModel.dayAttentions.observe(this, Observer{
+                        println("-------dayAttentions changed ${mBinding.etAttention.text.isEmpty()}, ${it.size}")
                         if (mBinding.etAttention.text.isNotEmpty()) {
                                 return@Observer
                         }
@@ -114,6 +117,7 @@ class HoldFragment : Fragment(), View.OnClickListener {
                         R.id.ivEdit -> enableEditText(mBinding.etAttention, true)
 
                         R.id.ivCheck -> {
+                                KeyboardUtils.hideSoftInput(v)
                                 enableEditText(mBinding.etAttention, false)
                                 updateAttention()
                         }
@@ -132,7 +136,10 @@ class HoldFragment : Fragment(), View.OnClickListener {
         }
 
         private fun updateAttention() {
-
-                viewModel.delete()
+                viewModel.deleteAllAttention()
+                val content = mBinding.etAttention.text.toString()
+                if (content.isNotEmpty()) {
+                        viewModel.insert(DayAttention(-1, content))
+                }
         }
 }

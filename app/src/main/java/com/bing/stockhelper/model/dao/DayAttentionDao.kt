@@ -9,7 +9,7 @@ interface DayAttentionDao {
         @Query("SELECT * FROM dayAttention")
         fun loadItems(): List<DayAttention>
 
-        @Query("SELECT * FROM summary")
+        @Query("SELECT * FROM dayAttention")
         fun loadItemsLive(): LiveData<List<DayAttention>>
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)

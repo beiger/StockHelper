@@ -67,9 +67,10 @@
                                                 android:id="@+id/etAttention"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
+                                                android:minHeight="400dp"
                                                 android:padding="16dp"
-                                                android:background="@null"
-                                                android:text="haha"/>
+                                                android:gravity="top"
+                                                android:background="@null"/>
 
                                 </androidx.core.widget.NestedScrollView>
 
@@ -84,14 +85,16 @@
                                                 android:layout_width="48dp"
                                                 android:layout_height="48dp"
                                                 android:src="@drawable/ic_edit"
-                                                android:scaleType="centerInside"/>
+                                                android:scaleType="centerInside"
+                                                android:background="?attr/selectableItemBackground"/>
 
                                         <ImageView
                                                 android:id="@+id/ivCheck"
                                                 android:layout_width="48dp"
                                                 android:layout_height="48dp"
                                                 android:src="@drawable/ic_check_mark"
-                                                android:scaleType="centerInside"/>
+                                                android:scaleType="centerInside"
+                                                android:background="?attr/selectableItemBackground"/>
 
                                 </LinearLayout>
 
