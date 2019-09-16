@@ -1,31 +1,3 @@
 <resources>
-        <string name="app_name">test</string>
-        <string name="hold">持有</string>
-        <string name="follow">关注</string>
-        <string name="summary">总结</string>
-        <string name="search">搜索</string>
-
-        <!-- TODO: Remove or change this placeholder text -->
-        <string name="hello_blank_fragment">Hello blank fragment</string>
-        <string name="cost">成本</string>
-        <string name="current">当前</string>
-        <string name="expect">预期</string>
-        <string name="today_operation">今日操作</string>
-        <string name="tomorrow_operation">明日操作</string>
-        <string name="comment">评论</string>
-        <string name="number">数量</string>
-        <string name="hold_days">持有天数</string>
-        <string name="name">名称</string>
-        <string name="code">代码</string>
-        <string name="edit">编辑</string>
-        <string name="hold_num">持有数量</string>
-        <string name="sell_price">卖出价</string>
-        <string name="background">背景</string>
-        <string name="format_error">格式错误</string>
-        <string name="confirm_delete">确定要删除吗</string>
-        <string name="buy_time">买入时间</string>
-        <string name="focus_degree">关注度</string>
-        <string name="type">类型</string>
-        <string name="info_not_complete">信息不完整</string>
-        <string name="time_empty">未选择时间</string>
+    <string name="app_name">app</string>
 </resources>

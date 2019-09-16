@@ -1,2 +1,2 @@
-include ':app', ':baselib', ':cardslidepanel', ':slidinguppanel'
-rootProject.name='StockHelper'
+include ':stock', ':baselib', ':cardslidepanel', ':slidinguppanel', ':app', ':common_service'
+

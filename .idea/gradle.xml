@@ -11,10 +11,13 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselib" />
             <option value="$PROJECT_DIR$/cardslidepanel" />
+            <option value="$PROJECT_DIR$/common_service" />
             <option value="$PROJECT_DIR$/slidinguppanel" />
+            <option value="$PROJECT_DIR$/stock" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>
