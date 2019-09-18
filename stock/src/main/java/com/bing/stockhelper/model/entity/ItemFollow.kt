@@ -15,7 +15,7 @@ data class ItemFollow(
         var comment: String?,
         // 0-10
         var focusDegree: Int,
-        var typeId: Int
+        var tags: String
 ) : Parcelable {
 
         fun isSameWith(item: ItemFollow): Boolean {
@@ -25,7 +25,7 @@ data class ItemFollow(
                         currentPrice == item.currentPrice &&
                         comment == item.comment &&
                         focusDegree == item.focusDegree &&
-                        typeId == item.typeId
+                        tags == item.tags
         }
 
         constructor(source: Parcel) : this(
@@ -35,7 +35,7 @@ data class ItemFollow(
                 source.readFloat(),
                 source.readString(),
                 source.readInt(),
-                source.readInt()
+                source.readString()!!
         )
 
         override fun describeContents() = 0
@@ -47,7 +47,7 @@ data class ItemFollow(
                 writeFloat(currentPrice)
                 writeString(comment)
                 writeInt(focusDegree)
-                writeInt(typeId)
+                writeString(tags)
         }
 
         companion object {
@@ -58,7 +58,7 @@ data class ItemFollow(
                 }
 
                 fun instance(): ItemFollow = ItemFollow(
-                        "", "", 0f, 0f, null, 0, -1
+                        "", "", 0f, 0f, null, 0, ""
                 )
         }
 }

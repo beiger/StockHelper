@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
@@ -23,9 +24,11 @@ import com.bing.stockhelper.main.MainActivity
 import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.OrderDetail
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import org.jetbrains.anko.padding
 import org.jetbrains.anko.support.v4.startActivity
 
 class HoldFragment : Fragment(), View.OnClickListener {
@@ -77,7 +80,7 @@ class HoldFragment : Fragment(), View.OnClickListener {
                 mRefreshLayout.setEnableOverScrollDrag(true)//是否启用越界拖动
 
                 mRecyclerView = mBinding.recyclerView
-                mRecyclerView.layoutManager = GridLayoutManager(context, 2)
+                mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 mRecyclerView.itemAnimator = DefaultItemAnimator()
                 initAdapter()
 

@@ -17,8 +17,6 @@ import java.lang.Exception
 
 class FollowEditActivity : AppCompatActivity() {
 
-        private val REQUEST_CODE_CHOOSE_IMG = 0x00
-
         private lateinit var binding: ActivityFollowEditBinding
         private lateinit var viewModel: FollowEditViewModel
         @Volatile
@@ -47,12 +45,8 @@ class FollowEditActivity : AppCompatActivity() {
                         binding.etExpect.setText(it.expectPrice.toString())
                         binding.etCurrent.setText(it.currentPrice.toString())
                         binding.etFocusDegree.setText(it.focusDegree.toString())
-                        binding.etType.setText(it.typeId.toString())
+                        binding.etTags.setText(it.tags.toString())
                         binding.etComment.setText(it.comment)
-                }
-
-                if (itemFollow == null) {
-                        itemFollow = ItemFollow.instance()
                 }
 
                 binding.back.setOnClickListener {
@@ -60,48 +54,6 @@ class FollowEditActivity : AppCompatActivity() {
                 }
                 binding.cancel.setOnClickListener {
                         finish()
-                }
-                binding.etName.afterTextChanged {
-                        itemFollow!!.name = it.toString()
-                }
-                binding.etCode.afterTextChanged {
-                        itemFollow!!.code = it.toString()
-                }
-                binding.etFocusDegree.afterTextChanged {
-                        itemFollow!!.focusDegree = try {
-                                it.toString().toInt()
-                        } catch (e: Exception) {
-                                ToastUtils.showShort(R.string.format_error)
-                                0
-                        }
-                }
-                binding.etType.afterTextChanged {
-                        itemFollow!!.typeId =
-                                try {
-                                        it.toString().toInt()
-                                } catch (e: Exception) {
-                                        ToastUtils.showShort(R.string.format_error)
-                                        -1
-                                }
-                }
-                binding.etExpect.afterTextChanged {
-                        itemFollow!!.expectPrice = try {
-                                it.toString().toFloat()
-                        } catch (e: Exception) {
-                                ToastUtils.showShort(R.string.format_error)
-                                0f
-                        }
-                }
-                binding.etCurrent.afterTextChanged {
-                        itemFollow!!.currentPrice = try {
-                                it.toString().toFloat()
-                        } catch (e: Exception) {
-                                ToastUtils.showShort(R.string.format_error)
-                                0f
-                        }
-                }
-                binding.etComment.afterTextChanged {
-                        itemFollow!!.comment = it.toString()
                 }
         }
 
@@ -124,7 +76,7 @@ class FollowEditActivity : AppCompatActivity() {
                 val currentPrice = getFloatFromEt(binding.etCurrent) ?: return false
                 val comment = getStrFromEt(binding.etComment, false)
                 val focusDegree = getIntFromEt(binding.etFocusDegree) ?: return false
-                val typeId = getIntFromEt(binding.etType) ?: return false
+                val tags = getStrFromEt(binding.etTags) ?: return false
                 if (itemFollow == null) {
                         itemFollow = ItemFollow.instance()
                 }
@@ -135,7 +87,7 @@ class FollowEditActivity : AppCompatActivity() {
                         it.currentPrice = currentPrice
                         it.comment = comment
                         it.focusDegree = focusDegree
-                        it.typeId = typeId
+                        it.tags = tags
                 }
                 return true
         }

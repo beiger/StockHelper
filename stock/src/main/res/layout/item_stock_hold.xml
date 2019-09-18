@@ -17,7 +17,7 @@
 
                 <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="240dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -25,13 +25,21 @@
                                 android:layout_height="80dp"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="16dp"
-                                app:img_url="@{item.imgUrl}"/>
+                                app:img_url="@{item.imgUrl}"
+                                android:visibility="visible"/>
+
+                        <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                app:img_url="@{item.imgUrl}"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone"/>
 
                         <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="4dp">
                                 <TextView
                                         android:layout_width="wrap_content"
@@ -49,11 +57,25 @@
                         </LinearLayout>
 
                         <TextView
+                                android:id="@+id/flTags"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="12dp"
+                                android:paddingVertical="2dp"
+                                android:text="@{item.tags}"
+                                android:textColor="@color/color_tag"
+                                android:textSize="12sp"/>
+
+                        <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="4dp"
                                 android:text="@{item.comment}"/>
+
+                        <View
+                                android:layout_width="0dp"
+                                android:layout_height="8dp"/>
                 </LinearLayout>
 
         </androidx.cardview.widget.CardView>

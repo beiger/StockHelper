@@ -22,7 +22,8 @@ data class OrderDetail(
         var todayOp: String?,
         var tomorrowOp: String?,
         var isHold: Boolean = true,
-        var comment: String?
+        var comment: String?,
+        var tags: String
 ) : Parcelable {
         fun holdDays(): Int {
                 //TODO
@@ -43,7 +44,8 @@ data class OrderDetail(
                         todayOp == item.todayOp &&
                         tomorrowOp == item.tomorrowOp &&
                         isHold == item.isHold &&
-                        comment == item.comment
+                        comment == item.comment &&
+                        tags == item.tags
         }
 
         constructor(source: Parcel) : this(
@@ -61,7 +63,8 @@ data class OrderDetail(
                 source.readString(),
                 source.readString(),
                 1 == source.readInt(),
-                source.readString()
+                source.readString(),
+                source.readString()!!
         )
 
         override fun describeContents() = 0
@@ -82,6 +85,7 @@ data class OrderDetail(
                 writeString(tomorrowOp)
                 writeInt((if (isHold) 1 else 0))
                 writeString(comment)
+                writeString(tags)
         }
 
         companion object {
@@ -92,7 +96,7 @@ data class OrderDetail(
                 }
 
                 fun instance(): OrderDetail = OrderDetail(
-                        0, 0L, "", "", null, 0L, 0f, 0f, 0f, null, 0, null, null, true, null
+                        0, 0L, "", "", null, 0L, 0f, 0f, 0f, null, 0, null, null, true, null, ""
                 )
         }
 }

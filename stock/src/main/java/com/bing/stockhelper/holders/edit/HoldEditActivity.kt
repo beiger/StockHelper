@@ -63,6 +63,7 @@ class HoldEditActivity : AppCompatActivity() {
                         binding.etSellPrice.setText(it.sellPrice?.toString())
                         binding.etTodayOp.setText(it.todayOp)
                         binding.etTomorrowOp.setText(it.tomorrowOp)
+                        binding.etTags.setText(it.tags)
                         binding.etComment.setText(it.comment)
                         imgUrl = it.imgUrl
                         Glide.with(this).load(it.imgUrl).into(binding.ivBg)
@@ -137,6 +138,7 @@ class HoldEditActivity : AppCompatActivity() {
                 val sellPrice = getFloatFromEt(binding.etSellPrice, false)
                 val todayOp = getStrFromEt(binding.etTodayOp, false)
                 val tomorrowOp = getStrFromEt(binding.etTomorrowOp, false)
+                val tags = getStrFromEt(binding.etTags) ?: return false
                 val comment = getStrFromEt(binding.etComment, false)
                 if (time == 0L) {
                         ToastUtils.showShort(R.string.time_empty)
@@ -161,6 +163,7 @@ class HoldEditActivity : AppCompatActivity() {
                         it.buyNum = holdNum
                         it.todayOp = todayOp
                         it.tomorrowOp = tomorrowOp
+                        it.tags = tags
                         it.comment = comment
                 }
                 return true

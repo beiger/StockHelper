@@ -28,4 +28,5 @@
         <string name="type">类型</string>
         <string name="info_not_complete">信息不完整</string>
         <string name="time_empty">未选择时间</string>
+    <string name="tag">标签</string>
 </resources>

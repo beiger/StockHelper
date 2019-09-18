@@ -115,4 +115,7 @@ dependencies {
 
     kapt 'androidx.room:room-compiler:2.1.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
+
+    implementation 'com.github.florent37:shapeofview:1.4.7'
+    implementation 'com.google.android:flexbox:1.1.0'
 }

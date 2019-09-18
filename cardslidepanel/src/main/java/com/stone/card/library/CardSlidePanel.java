@@ -6,18 +6,18 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Point;
 import android.graphics.Rect;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.core.view.ViewCompat;
 import androidx.customview.widget.ViewDragHelper;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +60,6 @@ public class CardSlidePanel extends ViewGroup {
     private CardAdapter adapter;
     private static final int VIEW_COUNT = 4;
     private Rect draggableArea;
-    private WeakReference<Object> savedFirstItemData;
 
     public CardSlidePanel(Context context) {
         this(context, null);
@@ -104,15 +103,19 @@ public class CardSlidePanel extends ViewGroup {
             return;
         }
 
-        // 1. addView添加到ViewGroup中
-        for (int i = 0; i < VIEW_COUNT; i++) {
-            CardItemView itemView = new CardItemView(getContext());
-            itemView.bindLayoutResId(adapter.getLayoutId());
-            itemView.setParentView(this);
-            addView(itemView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        Log.d("Card", "--------doBindAdapter");
 
-            if (i == 0) {
-                itemView.setAlpha(0);
+        // 1. addView添加到ViewGroup中
+        if (getChildCount() == 0) {
+            for (int i = 0; i < VIEW_COUNT; i++) {
+                CardItemView itemView = new CardItemView(getContext());
+                itemView.bindLayoutResId(adapter.getLayoutId());
+                itemView.setParentView(this);
+                addView(itemView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                if (i == 0) {
+                    itemView.setAlpha(0);
+                }
             }
         }
 
@@ -125,15 +128,19 @@ public class CardSlidePanel extends ViewGroup {
 
         // 3. 填充数据
         int count = adapter.getCount();
-        for (int i = 0; i < VIEW_COUNT; i++) {
-            if (i < count) {
-                adapter.bindView(viewList.get(i), i);
-                if (i == 0) {
-                    savedFirstItemData = new WeakReference<>(adapter.getItem(i));
-                }
-            } else {
-                viewList.get(i).setVisibility(View.INVISIBLE);
+        Log.d("Card", "-------doBindAdapter count" + count);
+        if (count == 0) {
+            for (View view: viewList) {
+                view.setVisibility(View.INVISIBLE);
             }
+            return;
+        }
+        for (int i = 0; i < VIEW_COUNT; i++) {
+//            if (i < count) {
+            adapter.bindView(viewList.get(i), i % count);
+//            } else {
+//                viewList.get(i).setVisibility(View.INVISIBLE);
+//            }
         }
     }
 
@@ -264,11 +271,12 @@ public class CardSlidePanel extends ViewGroup {
 
         // 3. changedView填充新数据
         int newIndex = isShowing + 4;
-        if (newIndex < adapter.getCount()) {
-            adapter.bindView(changedView, newIndex);
-        } else {
-            changedView.setVisibility(View.INVISIBLE);
-        }
+//        if (newIndex < adapter.getCount()) {
+        Log.i("Card", "-----orderViewStack");
+        adapter.bindView(changedView, newIndex % adapter.getCount());
+//        } else {
+//            changedView.setVisibility(View.INVISIBLE);
+//        }
 
         // 4. viewList中的卡片view的位次调整
         viewList.remove(changedView);
@@ -276,11 +284,12 @@ public class CardSlidePanel extends ViewGroup {
         releasedViewList.remove(0);
 
         // 5. 更新showIndex、接口回调
-        if (isShowing + 1 < adapter.getCount()) {
-            isShowing++;
-        }
+//        if (isShowing + 1 < adapter.getCount()) {
+        isShowing++;
+        Log.d("Card", "isShowing: " + isShowing);
+//        }
         if (null != cardSwitchListener) {
-            cardSwitchListener.onShow(isShowing);
+            cardSwitchListener.onShow(isShowing % adapter.getCount());
         }
     }
 
@@ -390,7 +399,7 @@ public class CardSlidePanel extends ViewGroup {
 
             // 3. 消失动画即将进行，listener回调
             if (flyType >= 0 && cardSwitchListener != null) {
-                cardSwitchListener.onCardVanish(isShowing, flyType);
+                cardSwitchListener.onCardVanish(isShowing % adapter.getCount(), flyType);
             }
         }
     }
@@ -537,51 +546,29 @@ public class CardSlidePanel extends ViewGroup {
         adapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
+
+                Log.d("Card", "onChanged" + adapter.getCount());
                 orderViewStack();
 
-                boolean reset = false;
-                if (adapter.getCount() > 0) {
-                    Object firstObj = adapter.getItem(0);
-                    if (null == savedFirstItemData) {
-                        // 此前就没有数据，需要保存第一条数据
-                        savedFirstItemData = new WeakReference<>(firstObj);
-                        isShowing = 0;
-                    } else {
-                        Object savedObj = savedFirstItemData.get();
-                        if (firstObj != savedObj) {
-                            // 如果第一条数据不等的话，需要重置
-                            isShowing = 0;
-                            reset = true;
-                            savedFirstItemData = new WeakReference<>(firstObj);
-                        }
-                    }
+                isShowing = 0;
+                int count = adapter.getCount();
+                if (count <= 0) {
+                    return;
                 }
 
                 int delay = 0;
                 for (int i = 0; i < VIEW_COUNT; i++) {
                     CardItemView itemView = viewList.get(i);
-                    if (isShowing + i < adapter.getCount()) {
-                        if (itemView.getVisibility() == View.VISIBLE) {
-                            if (!reset) {
-                                continue;
-                            }
-                        } else if (i == 0) {
-                            if (isShowing > 0) {
-                                isShowing++;
-                            }
-                            cardSwitchListener.onShow(isShowing);
-                        }
-                        if (i == VIEW_COUNT - 1) {
-                            itemView.setAlpha(0);
-                            itemView.setVisibility(View.VISIBLE);
-                        } else {
-                            itemView.setVisibilityWithAnimation(View.VISIBLE, delay++);
-                        }
-                        adapter.bindView(itemView, isShowing + i);
+                    if (i == VIEW_COUNT - 1) {
+                        itemView.setAlpha(0);
+                        itemView.setVisibility(View.VISIBLE);
                     } else {
-                        itemView.setVisibility(View.INVISIBLE);
+                        itemView.setVisibilityWithAnimation(View.VISIBLE, delay++);
                     }
+                    Log.i("Card", "------dataobserver" + ((isShowing + i) % count));
+                    adapter.bindView(itemView, (isShowing + i) % count);
                 }
+                cardSwitchListener.onShow(0);
             }
         });
     }

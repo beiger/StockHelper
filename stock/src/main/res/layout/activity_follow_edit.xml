@@ -185,13 +185,12 @@
                                 <TextView
                                         style="@style/HoldTextView"
                                         android:paddingVertical="12dp"
-                                        android:text="@string/type"/>
+                                        android:text="@string/tag"/>
 
                                 <EditText
-                                        android:id="@+id/etType"
+                                        android:id="@+id/etTags"
                                         style="@style/HoldEditText"
-                                        android:paddingVertical="12dp"
-                                        android:inputType="number"/>
+                                        android:paddingVertical="12dp"/>
                         </LinearLayout>
 
                         <View
