@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/baselib" />
             <option value="$PROJECT_DIR$/cardslidepanel" />
             <option value="$PROJECT_DIR$/common_service" />
+            <option value="$PROJECT_DIR$/lib-ios-dialog" />
             <option value="$PROJECT_DIR$/slidinguppanel" />
             <option value="$PROJECT_DIR$/stock" />
           </set>

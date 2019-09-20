@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.afollestad.materialdialogs.MaterialDialog
+import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.FragmentSummaryBinding
 import com.bing.stockhelper.model.entity.Summary
@@ -110,13 +110,14 @@ class SummaryFragment : Fragment() {
                                 view.context.startActivity(intent)
                         }
                         view.setOnLongClickListener {
-                                MaterialDialog(view.context).show {
-                                        message(R.string.confirm_delete)
-                                        positiveButton {
+                                AlertDialog(view.context)
+                                        .init()
+                                        .setMsg(getString(R.string.confirm_delete))
+                                        .setPositiveButton("") {
                                                 viewModel.delete(summary)
-                                        }
-                                        negativeButton {  }
-                                }
+                                        }.setNegativeButton("") {
+
+                                        }.show()
                                 true
                         }
                 }

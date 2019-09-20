@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
+import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
@@ -51,13 +50,14 @@ class FollowFragment : Fragment(){
                         bindData = { item, binding ->
                                 binding.item = item
                                 binding.root.setOnLongClickListener {
-                                        MaterialDialog(context!!).show {
-                                                message(R.string.confirm_delete)
-                                                positiveButton {
+                                        AlertDialog(context!!)
+                                                .init()
+                                                .setMsg(getString(R.string.confirm_delete))
+                                                .setPositiveButton("") {
                                                         viewModel.delete(item)
-                                                }
-                                                negativeButton {  }
-                                        }
+                                                }.setNegativeButton("") {
+
+                                                }.show()
                                         true
                                 }
                         }

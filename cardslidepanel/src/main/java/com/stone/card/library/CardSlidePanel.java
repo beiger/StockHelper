@@ -553,6 +553,10 @@ public class CardSlidePanel extends ViewGroup {
                 isShowing = 0;
                 int count = adapter.getCount();
                 if (count <= 0) {
+                    for (int i = 0; i < VIEW_COUNT; i++) {
+                        CardItemView itemView = viewList.get(i);
+                        itemView.setVisibility(View.INVISIBLE);
+                    }
                     return;
                 }
 

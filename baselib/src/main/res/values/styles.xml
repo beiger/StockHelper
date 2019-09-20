@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+	<style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="windowNoTitle">true</item>
+		<item name="md_corner_radius">8dp</item>
+		<item name="md_background_color">#ddffffff</item>
+		<item name="android:windowActivityTransitions">true</item>
 	</style>
 
 	<style name="TransparentDialog" parent="@android:style/Theme.Dialog">

@@ -88,12 +88,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
-                        android:background="@color/bg_white_dd">
+                        android:background="@color/bg_white_dd"
+                        android:orientation="vertical">
                         <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="220dp"
                                 android:src="@drawable/img1"
                                 android:scaleType="centerCrop"/>
+
+                        <TextView
+                                android:id="@+id/tvHuawei"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/huawei_concept"
+                                android:textSize="15sp"
+                                android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
 
         </androidx.drawerlayout.widget.DrawerLayout>

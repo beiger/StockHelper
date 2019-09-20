@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.adorkable.iosdialog.AlertDialog
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
@@ -59,13 +60,14 @@ class HoldFragment : Fragment(), View.OnClickListener {
                         bindData = { item, binding ->
                                 binding.item = item
                                 binding.root.setOnLongClickListener {
-                                        MaterialDialog(context!!).show {
-                                                message(R.string.confirm_delete)
-                                                positiveButton {
+                                        AlertDialog(context!!)
+                                                .init()
+                                                .setMsg(getString(R.string.confirm_delete))
+                                                .setPositiveButton("") {
                                                         viewModel.delete(item)
-                                                }
-                                                negativeButton {  }
-                                        }
+                                                }.setNegativeButton("") {
+
+                                                }.show()
                                         true
                                 }
                         }
