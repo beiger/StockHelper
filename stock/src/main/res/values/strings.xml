@@ -30,4 +30,6 @@
     <string name="time_empty">未选择时间</string>
     <string name="tag">标签</string>
     <string name="huawei_concept">华为概念</string>
+    <string name="tag_first_level">一级标签</string>
+    <string name="tag_second_level">二级标签</string>
 </resources>

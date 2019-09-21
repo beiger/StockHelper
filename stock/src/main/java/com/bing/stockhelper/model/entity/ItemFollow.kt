@@ -8,46 +8,31 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "itemFollows")
 data class ItemFollow(
         @PrimaryKey
-        var code: String,
-        var name: String,
-        var expectPrice: Float,
-        var currentPrice: Float,
+        var stockId: Int,
         var comment: String?,
         // 0-10
-        var focusDegree: Int,
-        var tags: String
+        var focusDegree: Int
 ) : Parcelable {
 
+        // 判断是否刷新界面
         fun isSameWith(item: ItemFollow): Boolean {
-                return code == item.code &&
-                        name == item.name &&
-                        expectPrice == item.expectPrice &&
-                        currentPrice == item.currentPrice &&
+                return stockId == item.stockId &&
                         comment == item.comment &&
-                        focusDegree == item.focusDegree &&
-                        tags == item.tags
+                        focusDegree == item.focusDegree
         }
 
         constructor(source: Parcel) : this(
-                source.readString()!!,
-                source.readString()!!,
-                source.readFloat(),
-                source.readFloat(),
-                source.readString(),
                 source.readInt(),
-                source.readString()!!
+                source.readString(),
+                source.readInt()
         )
 
         override fun describeContents() = 0
 
         override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-                writeString(code)
-                writeString(name)
-                writeFloat(expectPrice)
-                writeFloat(currentPrice)
+                writeInt(stockId)
                 writeString(comment)
                 writeInt(focusDegree)
-                writeString(tags)
         }
 
         companion object {
@@ -58,7 +43,7 @@ data class ItemFollow(
                 }
 
                 fun instance(): ItemFollow = ItemFollow(
-                        "", "", 0f, 0f, null, 0, ""
+                        -1, null, 0
                 )
         }
 }
