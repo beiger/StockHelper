@@ -1,15 +1,15 @@
 package com.bing.stockhelper.main.follow
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.utils.Constant
@@ -19,17 +19,17 @@ import com.bing.stockhelper.databinding.FragmentFollowsBinding
 import com.bing.stockhelper.databinding.ItemFollowBinding
 import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.model.entity.ItemFollow
-import com.scwang.smartrefresh.layout.api.RefreshLayout
-import org.jetbrains.anko.support.v4.startActivity
+import com.fanhantech.baselib.app.ui
+import com.fanhantech.baselib.app.waitIO
+import org.jetbrains.anko.support.v4.startActivityForResult
 
-class FollowFragment : Fragment(){
+class FollowFragment : Fragment() {
+        private val REQUEST_CODE_EDIT = 0X00
 
         private lateinit var mBinding: FragmentFollowsBinding
         private lateinit var viewModel: FollowViewModel
 
-        private lateinit var mRecyclerView: RecyclerView
-        private lateinit var mRefreshLayout: RefreshLayout
-        private lateinit var mAdapter: SimpleAdapter<ItemFollow, ItemFollowBinding>
+        private lateinit var mAdapter: SimpleAdapter<ItemFollow.Info, ItemFollowBinding>
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                                   savedInstanceState: Bundle?): View? {
@@ -42,19 +42,20 @@ class FollowFragment : Fragment(){
 
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
+                        items = viewModel.followInfos,
                         onClick = { item, _ ->
-                                startActivity<FollowEditActivity>(Constant.TAG_ITEM_FOLLOW to item)
+                                startActivityForResult<FollowEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ITEM_FOLLOW to item)
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_follow,
-                        bindData = { item, binding ->
+                        bindData = { item, position, binding ->
                                 binding.item = item
                                 binding.root.setOnLongClickListener {
                                         AlertDialog(context!!)
                                                 .init()
                                                 .setMsg(getString(R.string.confirm_delete))
                                                 .setPositiveButton("") {
-                                                        viewModel.delete(item)
+                                                        viewModel.delete(viewModel.follows[position])
                                                 }.setNegativeButton("") {
 
                                                 }.show()
@@ -62,22 +63,37 @@ class FollowFragment : Fragment(){
                                 }
                         }
                 )
-                mRecyclerView.adapter = mAdapter
+                mBinding.recyclerView.adapter = mAdapter
         }
 
         private fun initRecyclerView() {
-                mRefreshLayout = mBinding.refreshLayout
-                mRefreshLayout.setEnableRefresh(false)
-                mRefreshLayout.setEnableLoadMore(false)
-                mRefreshLayout.setEnableOverScrollDrag(true)//是否启用越界拖动
+                with(mBinding.refreshLayout) {
+                        setEnableRefresh(false)
+                        setEnableLoadMore(false)
+                        setEnableOverScrollDrag(true)//是否启用越界拖动
+                }
 
-                mRecyclerView = mBinding.recyclerView
-                mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                mRecyclerView.itemAnimator = DefaultItemAnimator()
-                initAdapter()
+                with(mBinding.recyclerView) {
+                        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                        itemAnimator = DefaultItemAnimator()
+                        ui {
+                                waitIO { viewModel.loadFollows() }
+                                initAdapter()
+                        }
+                }
+        }
 
-                viewModel.follows.observe(this, Observer{
-                        mAdapter.update(it)
-                })
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+                super.onActivityResult(requestCode, resultCode, data)
+                if (resultCode == Activity.RESULT_OK) {
+                        when (requestCode) {
+                                REQUEST_CODE_EDIT -> {
+                                        ui {
+                                                waitIO { viewModel.loadFollows() }
+                                                mAdapter.update(viewModel.followInfos)
+                                        }
+                                }
+                        }
+                }
         }
 }

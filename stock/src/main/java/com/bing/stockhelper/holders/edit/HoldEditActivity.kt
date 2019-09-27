@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,27 +14,26 @@ import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityHoldEditBinding
 import com.bing.stockhelper.model.entity.OrderDetail
+import com.bing.stockhelper.stock.StockListActivity
 import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.Glide
+import com.fanhantech.baselib.app.ui
+import com.fanhantech.baselib.app.waitIO
+import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.luck.picture.lib.config.PictureMimeType
+import org.jetbrains.anko.startActivityForResult
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HoldEditActivity : AppCompatActivity() {
+class HoldEditActivity : AppCompatActivity(), View.OnClickListener {
 
-        private val REQUEST_CODE_CHOOSE_IMG = 0x00
+        private val REQUEST_CODE_CHOOSE_STOCK = 0x00
 
         private lateinit var binding: ActivityHoldEditBinding
         private lateinit var viewModel: HoldEditViewModel
-        @Volatile
-        private var isNew = false
-        private var orderDetail: OrderDetail? = null
+
+        private var orderDetailId: Int = -1
         private var time = 0L
-        private var imgUrl: String? = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
@@ -41,50 +41,47 @@ class HoldEditActivity : AppCompatActivity() {
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_hold_edit)
                 viewModel = ViewModelProviders.of(this).get(HoldEditViewModel::class.java)
 
-                if (intent == null) {
-                        isNew = true
-                } else {
-                        orderDetail = intent.getParcelableExtra(Constant.TAG_ORDER_DETAIL)
-                        isNew = orderDetail == null
+                intent?.let {
+                        orderDetailId = intent.getIntExtra(Constant.TAG_ORDER_DETAIL_ID, -1)
                 }
                 initViews()
         }
 
         private fun initViews() {
-                orderDetail?.let {
-                        binding.etName.setText(it.name)
-                        binding.etCode.setText(it.code)
-                        binding.etHoldNum.setText(it.buyNum.toString())
-                        time = it.buyTime
-                        binding.etBuyTime.text = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(Date(it.buyTime))
-                        binding.etCost.setText(it.buyPrice.toString())
-                        binding.etExpect.setText(it.expectPrice.toString())
-                        binding.etCurrent.setText(it.currentPrice.toString())
-                        binding.etSellPrice.setText(it.sellPrice?.toString())
-                        binding.etTodayOp.setText(it.todayOp)
-                        binding.etTomorrowOp.setText(it.tomorrowOp)
-                        binding.etTags.setText(it.tags)
-                        binding.etComment.setText(it.comment)
-                        imgUrl = it.imgUrl
-                        Glide.with(this).load(it.imgUrl).into(binding.ivBg)
+                ui {
+                        waitIO {
+                                viewModel.loadOrder(orderDetailId)
+                                viewModel.orderDetail?.let {
+                                        viewModel.loadStock(it.stockId)
+                                }
+                        }
+                        viewModel.orderDetail?.let {
+                                binding.tvStock.text = viewModel.stockDetail?.name
+                                binding.etHoldNum.setText(it.buyNum.toString())
+                                time = it.buyTime
+                                binding.etBuyTime.text = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(Date(it.buyTime))
+                                binding.etCost.setText(it.buyPrice.toString())
+                                binding.etExpect.setText(it.expectPrice.toString())
+                                binding.etCurrent.setText(it.currentPrice.toString())
+                                binding.etSellPrice.setText(it.sellPrice?.toString())
+                                binding.etComment.setText(it.comment)
+                        }
                 }
 
-                binding.back.setOnClickListener {
-                        onBackPressed()
-                }
-                binding.cancel.setOnClickListener {
-                        finish()
-                }
-                binding.ivBg.setOnClickListener {
-                        PictureSelector.create(this)
-                                .openGallery(PictureMimeType.ofImage())
-                                .selectionMode(PictureConfig.SINGLE)
-                                .isCamera(false)
-                                .forResult(REQUEST_CODE_CHOOSE_IMG)
-                }
+                addClickableViews(
+                        binding.back,
+                        binding.cancel,
+                        binding.etBuyTime,
+                        binding.tvStock
+                )
+        }
 
-                binding.etBuyTime.setOnClickListener {
-                        datePick()
+        override fun onClick(v: View) {
+                when (v.id) {
+                        R.id.back -> onBackPressed()
+                        R.id.cancel -> finish()
+                        R.id.etBuyTime -> datePick()
+                        R.id.tvStock -> startActivityForResult<StockListActivity>(REQUEST_CODE_CHOOSE_STOCK)
                 }
         }
 
@@ -104,10 +101,16 @@ class HoldEditActivity : AppCompatActivity() {
                 super.onActivityResult(requestCode, resultCode, data)
                 if (resultCode == Activity.RESULT_OK) {
                         when (requestCode) {
-                                REQUEST_CODE_CHOOSE_IMG -> {
-                                        val path: String? = PictureSelector.obtainMultipleResult(data)[0].path
-                                        imgUrl = path
-                                        Glide.with(this).load(path).into(binding.ivBg)
+                                REQUEST_CODE_CHOOSE_STOCK -> {
+                                        val stockId = data?.getIntExtra(Constant.TAG_STOCK_ID, -1) ?: return
+                                        if (stockId != -1) {
+                                                ui {
+                                                        waitIO {
+                                                                viewModel.loadStock(stockId)
+                                                        }
+                                                        binding.tvStock.text = viewModel.stockDetail?.name
+                                                }
+                                        }
                                 }
                         }
                 }
@@ -117,41 +120,36 @@ class HoldEditActivity : AppCompatActivity() {
                 if (!updateOrderDetail()) {
                         return
                 }
-                if (isNew) {
-                        viewModel.insert(orderDetail!!)
+                if (orderDetailId == -1) {
+                        viewModel.insert(viewModel.orderDetail!!)
                 } else {
-                        viewModel.update(orderDetail!!)
+                        viewModel.update(viewModel.orderDetail!!)
                 }
-                setResult(Activity.RESULT_OK, Intent().apply {
-                        putExtra(Constant.TAG_ORDER_DETAIL, orderDetail)
-                })
+                setResult(Activity.RESULT_OK)
                 super.onBackPressed()
         }
 
         private fun updateOrderDetail(): Boolean {
-                val name = getStrFromEt(binding.etName) ?: return false
-                val code = getStrFromEt(binding.etCode) ?: return false
+                val stockId = viewModel.stockDetail?.id
+                if (stockId == null) {
+                        ToastUtils.showShort(R.string.stock_empty)
+                        return false
+                }
                 val buyPrice = getFloatFromEt(binding.etCost) ?: return false
                 val holdNum = getIntFromEt(binding.etHoldNum) ?: return false
                 val expectPrice = getFloatFromEt(binding.etExpect) ?: return false
                 val currentPrice = getFloatFromEt(binding.etCurrent) ?: return false
                 val sellPrice = getFloatFromEt(binding.etSellPrice, false)
-                val todayOp = getStrFromEt(binding.etTodayOp, false)
-                val tomorrowOp = getStrFromEt(binding.etTomorrowOp, false)
-                val tags = getStrFromEt(binding.etTags) ?: return false
                 val comment = getStrFromEt(binding.etComment, false)
                 if (time == 0L) {
                         ToastUtils.showShort(R.string.time_empty)
                         return false
                 }
-                if (orderDetail == null) {
-                        orderDetail = OrderDetail.instance().apply { orderNum = System.currentTimeMillis() }
+                if (viewModel.orderDetail == null) {
+                        viewModel.orderDetail = OrderDetail.instance().apply { orderNum = System.currentTimeMillis() }
                 }
-                orderDetail?.let {
-                        println("----$imgUrl")
-                        it.code = code
-                        it.name = name
-                        it.imgUrl = imgUrl
+                viewModel.orderDetail?.let {
+                        it.stockId = stockId
                         it.buyTime = time
                         it.buyPrice = buyPrice
                         it.expectPrice = expectPrice
@@ -161,9 +159,6 @@ class HoldEditActivity : AppCompatActivity() {
                                 it.isHold = false
                         }
                         it.buyNum = holdNum
-                        it.todayOp = todayOp
-                        it.tomorrowOp = tomorrowOp
-                        it.tags = tags
                         it.comment = comment
                 }
                 return true

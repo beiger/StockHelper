@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.bing.stockhelper.model.dao.*
 import com.bing.stockhelper.model.entity.*
 
@@ -16,6 +17,7 @@ import com.bing.stockhelper.model.entity.*
                 ConcernedTag::class],
         version = 1,
         exportSchema = false)
+@TypeConverters(IntListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
         abstract fun stockDetailDao(): StockDetailDao
@@ -35,12 +37,14 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun loadOrdersLive(): LiveData<List<OrderDetail>> = orderDetailDao().loadItemsLive()
         fun loadOrders(): List<OrderDetail> = orderDetailDao().loadItems()
+        fun loadOrders(id: Int): List<OrderDetail> = orderDetailDao().loadItems(id)
         fun insertOrder(item: OrderDetail) = orderDetailDao().insert(item)
         fun updateOrder(item: OrderDetail) = orderDetailDao().update(item)
         fun deleteOrder(item: OrderDetail) = orderDetailDao().delete(item)
 
         fun loadFollowsLive(): LiveData<List<ItemFollow>> = itemFollowDao().loadItemsLive()
         fun loadFollows(): List<ItemFollow> = itemFollowDao().loadItems()
+        fun loadFollows(id: Int): List<ItemFollow> = itemFollowDao().loadItems(id)
         fun insertFollow(item: ItemFollow) = itemFollowDao().insert(item)
         fun updateFollow(item: ItemFollow) = itemFollowDao().update(item)
         fun deleteFollow(item: ItemFollow) = itemFollowDao().delete(item)

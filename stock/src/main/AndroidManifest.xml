@@ -7,9 +7,11 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application>
+        <activity android:name=".stock.StockListActivity">
+        </activity>
         <activity android:name=".stock.StockEditActivity">
         </activity>
-        <activity android:name=".hauwei.HuaweiActivity">
+        <activity android:name=".huawei.HuaweiActivity">
         </activity>
         <activity
                 android:name=".summary.SummaryEditActivity"

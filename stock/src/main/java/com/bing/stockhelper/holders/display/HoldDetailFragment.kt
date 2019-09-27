@@ -13,7 +13,6 @@ import com.bing.stockhelper.utils.Constant.TAG_POSITION
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.FragmentHoldDetailBinding
 import com.bing.stockhelper.holders.edit.HoldEditActivity
-import com.bing.stockhelper.model.entity.OrderDetail
 import com.bing.stockhelper.utils.Constant
 import org.jetbrains.anko.support.v4.startActivityForResult
 
@@ -34,11 +33,11 @@ class HoldDetailFragment : Fragment() {
                                   savedInstanceState: Bundle?): View? {
                 binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hold_detail, container, false)
                 viewModel = ViewModelProviders.of(activity!!).get(HoldsViewModel::class.java)
-                val order = viewModel.ordersThisOpen[position]
+                val order = viewModel.orderDetailInfo[position]
                 binding.order = order
                 binding.cardView.setOnClickListener {
-                        val item = viewModel.ordersThisOpen[position]
-                        startActivityForResult<HoldEditActivity>(REQUEST_EDIT, Constant.TAG_ORDER_DETAIL to item)
+                        val item = viewModel.orders[position]
+                        startActivityForResult<HoldEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ORDER_DETAIL to item)
                 }
                 return binding.root
         }
@@ -47,17 +46,16 @@ class HoldDetailFragment : Fragment() {
                 super.onActivityResult(requestCode, resultCode, data)
                 if (resultCode == Activity.RESULT_OK) {
                         when (requestCode) {
-                                REQUEST_EDIT -> {
-                                        val order: OrderDetail = data!!.getParcelableExtra(Constant.TAG_ORDER_DETAIL) ?: return
-                                        binding.order = order
-                                        viewModel.ordersThisOpen[position] = order
+                                REQUEST_CODE_EDIT -> {
+                                        viewModel.update(position)
+                                        binding.order = viewModel.orderDetailInfo[position]
                                 }
                         }
                 }
         }
 
         companion object {
-                private const val REQUEST_EDIT = 0
+                private const val REQUEST_CODE_EDIT = 0
 
                 fun instance(position: Int): HoldDetailFragment {
                         return HoldDetailFragment().apply {

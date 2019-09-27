@@ -1,4 +1,4 @@
-package com.bing.stockhelper.hauwei
+package com.bing.stockhelper.huawei
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

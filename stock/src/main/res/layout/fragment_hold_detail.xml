@@ -5,7 +5,7 @@
         <data>
                 <variable
                         name="order"
-                        type="com.bing.stockhelper.model.entity.OrderDetail"/>
+                        type="com.bing.stockhelper.model.entity.OrderDetail.DetailInfo"/>
         </data>
 
         <androidx.core.widget.NestedScrollView
@@ -87,6 +87,10 @@
                                                         android:textColor="@color/red"
                                                         android:layout_gravity="center"/>
                                         </LinearLayout>
+                                        <View
+                                                android:layout_width="0dp"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1"/>
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -154,7 +158,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingHorizontal="16dp"
                                         android:paddingVertical="4dp"
-                                        android:text="@string/today_operation"
+                                        android:text="@string/description"
                                         android:textStyle="bold"
                                         android:textColor="@color/black"/>
                                 <TextView
@@ -162,21 +166,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingHorizontal="16dp"
                                         android:paddingVertical="4dp"
-                                        android:text="@{order.todayOp}"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingHorizontal="16dp"
-                                        android:paddingVertical="4dp"
-                                        android:text="@string/tomorrow_operation"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/black"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingHorizontal="16dp"
-                                        android:paddingVertical="8dp"
-                                        android:text="@{order.tomorrowOp}"/>
+                                        android:text="@{order.description}"/>
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"

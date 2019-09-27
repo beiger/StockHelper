@@ -12,6 +12,10 @@ interface OrderDetailDao {
         @Query("SELECT * FROM orderDetail")
         fun loadItemsLive(): LiveData<List<OrderDetail>>
 
+        @Query("SELECT * FROM orderDetail where id=:id")
+        fun loadItems(id: Int): List<OrderDetail>
+
+
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun insert(item: OrderDetail)
 

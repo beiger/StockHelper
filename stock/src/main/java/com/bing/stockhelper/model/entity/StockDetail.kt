@@ -1,18 +1,11 @@
 package com.bing.stockhelper.model.entity
 
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-
-const val HOLD_STATE_NOT_BUY = -1
-const val HOLD_STATE_HOLD = 0
-const val HOLD_STATE_SELL = 1
-
-const val FOLLOW_STATE_FOLLOW = 0
-const val FOLLOW_STATE_NOT = 1
-
+import androidx.room.TypeConverter
+import com.fanhantech.baselib.utils.GSON
+import com.fanhantech.baselib.utils.genericType
+import java.lang.StringBuilder
 
 @Entity(tableName = "stockDetail")
 data class StockDetail(
@@ -21,10 +14,10 @@ data class StockDetail(
         var code: String,
         var name: String,
         var imgUrl: String?,
-        var firstTags: List<Int>,
-        var secondTags: List<Int>,
+        var firstTags: MutableList<Int>,
+        var secondTags: MutableList<Int>,
         var description: String?
-) : Parcelable {
+) {
         // 刷新界面用的
         fun isSameWith(item: StockDetail): Boolean {
                 return code == item.code &&
@@ -35,39 +28,38 @@ data class StockDetail(
                         description == item.description
         }
 
-        constructor(source: Parcel) : this(
-                source.readInt(),
-                source.readString()!!,
-                source.readString()!!,
-                source.readString(),
-                ArrayList<Int>().apply { source.readList(this as List<*>, Int::class.java.classLoader) },
-                ArrayList<Int>().apply { source.readList(this as List<*>, Int::class.java.classLoader) },
-                source.readString()
-        )
-
-        override fun describeContents() = 0
-
-        override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-                writeInt(id)
-                writeString(code)
-                writeString(name)
-                writeString(imgUrl)
-                writeList(firstTags)
-                writeList(secondTags)
-                writeString(description)
-        }
-
-        companion object {
-                @JvmField
-                val CREATOR: Parcelable.Creator<StockDetail> = object : Parcelable.Creator<StockDetail> {
-                        override fun createFromParcel(source: Parcel): StockDetail = StockDetail(source)
-                        override fun newArray(size: Int): Array<StockDetail?> = arrayOfNulls(size)
+        fun tagsStr(level: Int, tags: List<StockTag>): String {
+                val levelTags = when (level) {
+                        TAG_LEVEL_FIRST -> firstTags
+                        TAG_LEVEL_SECOND -> secondTags
+                        else -> null
+                } ?: return ""
+                if (tags.isEmpty()) {
+                        levelTags.clear()
+                        return ""
                 }
+                val builder = StringBuilder()
+                val iterator = levelTags.iterator()
+                while (iterator.hasNext()) {
+                        val nextTag = iterator.next()
+                        val tag = tags.firstOrNull { it.id == nextTag }
+                        if (tag == null) {
+                                iterator.remove()
+                        } else {
+                                builder.append(tag.name + TAG_SEPERATER)
+                        }
+                }
+                if (builder.isNotEmpty()) {
+                        builder.dropLast(1)
+                }
+                return builder.toString()
         }
 }
 
-const val LEVEL_FIRST = 0
-const val LEVEL_SECOND = 1
+const val TAG_LEVEL_FIRST = 0
+const val TAG_LEVEL_SECOND = 1
+
+const val TAG_SEPERATER = "，"
 
 @Entity(tableName = "stockTag")
 class StockTag(
@@ -76,3 +68,16 @@ class StockTag(
         var name: String,
         var level: Int
 )
+
+class IntListConverter {
+        @TypeConverter
+        fun  revertIntList(jsonstr: String): MutableList<Int> {
+                val type = genericType<MutableList<Int>>()
+                return GSON.ins.fromJson(jsonstr, type)
+        }
+
+        @TypeConverter
+        fun  convertIntList(info: MutableList<Int>): String {
+                return GSON.ins.toJson(info)
+        }
+}

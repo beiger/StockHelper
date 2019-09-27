@@ -12,6 +12,8 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleStatePagerAdapter2
 import com.bing.stockhelper.databinding.ActivityHoldsBinding
 import com.bing.stockhelper.model.entity.OrderDetail
+import com.fanhantech.baselib.app.ui
+import com.fanhantech.baselib.app.waitIO
 import com.fanhantech.baselib.utils.UiUtil
 
 class HoldsActivity : AppCompatActivity() {
@@ -33,15 +35,13 @@ class HoldsActivity : AppCompatActivity() {
         }
 
         private fun initViews() {
-                viewModel.orders.observe(this, Observer {
-                        if (viewModel.ordersThisOpen.size == 0) {
-                                viewModel.ordersThisOpen.addAll(it)
-                                initViewPager(it)
-                        }
-                })
+                ui {
+                        waitIO { viewModel.loadOrders() }
+                        initViewPager(viewModel.orderDetailInfo)
+                }
         }
 
-        private fun initViewPager(orders: List<OrderDetail>) {
+        private fun initViewPager(orders: List<OrderDetail.DetailInfo>) {
                 val pagerAdapter = SimpleStatePagerAdapter2(
                         supportFragmentManager,
                         { position -> HoldDetailFragment.instance(position) },

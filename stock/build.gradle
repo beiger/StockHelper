@@ -113,6 +113,7 @@ dependencies {
     implementation project(":cardslidepanel")
     implementation project(":slidinguppanel")
     implementation project(":lib-ios-dialog")
+    implementation project(":bottomdialog")
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

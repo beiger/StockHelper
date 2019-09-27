@@ -2,12 +2,9 @@ package com.bing.stockhelper.main
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
-import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -18,7 +15,7 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleStatePagerAdapter
 import com.bing.stockhelper.databinding.ActivityMainBinding
 import com.bing.stockhelper.follow.FollowEditActivity
-import com.bing.stockhelper.hauwei.HuaweiActivity
+import com.bing.stockhelper.huawei.HuaweiActivity
 import com.bing.stockhelper.holders.edit.HoldEditActivity
 import com.bing.stockhelper.main.follow.FollowFragment
 import com.bing.stockhelper.main.holder.HoldFragment
@@ -26,10 +23,8 @@ import com.bing.stockhelper.main.summary.SummaryFragment
 import com.bing.stockhelper.search.SearchActivity
 import com.bing.stockhelper.summary.SummaryEditActivity
 import com.bing.stockhelper.widget.CustomTabLayout
-import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
-import kotlinx.coroutines.delay
 import org.jetbrains.anko.startActivity
 import java.util.*
 

@@ -6,7 +6,7 @@
 
                 <variable
                         name="item"
-                        type="com.bing.stockhelper.model.entity.ItemFollow"/>
+                        type="com.bing.stockhelper.model.entity.ItemFollow.Info"/>
         </data>
 
         <androidx.cardview.widget.CardView
@@ -47,9 +47,26 @@
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="16dp"
                                 android:paddingVertical="2dp"
-                                android:text="@{item.tags}"
+                                android:text="@{item.firstTags}"
                                 android:textColor="@color/color_tag"
                                 android:textSize="12sp"/>
+
+                        <TextView
+                                android:id="@+id/slTags"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="2dp"
+                                android:text="@{item.secondTags}"
+                                android:textColor="@color/color_tag"
+                                android:textSize="12sp"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="4dp"
+                                android:text="@{item.description}"/>
 
                         <TextView
                                 android:layout_width="wrap_content"

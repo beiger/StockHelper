@@ -4,24 +4,36 @@ import android.app.Application
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import com.bing.stockhelper.model.AppDatabase
-import com.bing.stockhelper.model.entity.OrderDetail
-import com.bing.stockhelper.model.entity.StockDetail
+import com.bing.stockhelper.model.entity.*
 import com.fanhantech.baselib.app.io
 
 class StockEditViewModel(application: Application): AndroidViewModel(application) {
         private val database = AppDatabase.getInstance(application)
 
-        private val stockDetail = MutableLiveData<StockDetail>()
+        var stockDetail: StockDetail? = null
+        val stockTagLive = database.loadStockTagsLive()
+        var stockTagsFirst: List<StockTag> = listOf()
+        var stockTagsSecond: List<StockTag> = listOf()
 
         @WorkerThread
-        fun load(id: Int): StockDetail? {
+        fun load(id: Int) {
                 val results = database.loadStocks(id)
-                if (results.isEmpty()) {
-                        return null
+                if (results.isNotEmpty()) {
+                        stockDetail = results[0]
                 }
-                return results[0]
+        }
+
+        @WorkerThread
+        fun loadTags() {
+                val stockTags = database.loadStockTags()
+                stockTagsFirst = stockTags.filter { it.level == TAG_LEVEL_FIRST }
+                stockTagsSecond = stockTags.filter { it.level == TAG_LEVEL_SECOND }
+        }
+
+        @WorkerThread
+        fun insertTag(item: StockTag) {
+                database.insertStockTag(item)
         }
 
         @MainThread

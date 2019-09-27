@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+        <data>
+                <variable name="stock" type="com.bing.stockhelper.model.entity.StockDetail"/>
+        </data>
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{stock.name}"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                <TextView
+                        android:id="@+id/tvCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{stock.code}"/>
+
+        </LinearLayout>
+</layout>
+

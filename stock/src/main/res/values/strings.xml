@@ -32,4 +32,10 @@
     <string name="huawei_concept">华为概念</string>
     <string name="tag_first_level">一级标签</string>
     <string name="tag_second_level">二级标签</string>
+    <string name="cancel">取消</string>
+    <string name="tag_level">标签登记</string>
+    <string name="level_not_selected">未选择等级</string>
+    <string name="stock">股票</string>
+    <string name="stock_empty">未选择股票</string>
+    <string name="description">简介</string>
 </resources>

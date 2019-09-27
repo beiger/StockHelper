@@ -11,7 +11,10 @@ interface ItemFollowDao {
 
         @Query("SELECT * FROM itemFollows")
         fun loadItemsLive(): LiveData<List<ItemFollow>>
-
+        
+        @Query("SELECT * FROM itemFollows where stockId=:id")
+        fun loadItems(id: Int): List<ItemFollow>
+        
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun insert(item: ItemFollow)
 

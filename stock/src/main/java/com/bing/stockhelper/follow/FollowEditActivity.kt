@@ -1,7 +1,10 @@
 package com.bing.stockhelper.follow
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,18 +13,23 @@ import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityFollowEditBinding
 import com.bing.stockhelper.model.entity.ItemFollow
+import com.bing.stockhelper.stock.StockListActivity
 import com.blankj.utilcode.util.ToastUtils
-import com.fanhantech.baselib.kotlinExpands.afterTextChanged
+import com.fanhantech.baselib.app.ui
+import com.fanhantech.baselib.app.waitIO
+import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
+import org.jetbrains.anko.startActivityForResult
 import java.lang.Exception
 
-class FollowEditActivity : AppCompatActivity() {
+class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
+
+        private val REQUEST_CODE_CHOOSE_STOCK = 0x00
 
         private lateinit var binding: ActivityFollowEditBinding
         private lateinit var viewModel: FollowEditViewModel
-        @Volatile
-        private var isNew = false
-        private var itemFollow: ItemFollow? = null
+
+        private var stockId: Int = -1
 
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
@@ -29,31 +37,58 @@ class FollowEditActivity : AppCompatActivity() {
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_follow_edit)
                 viewModel = ViewModelProviders.of(this).get(FollowEditViewModel::class.java)
 
-                if (intent == null) {
-                        isNew = true
-                } else {
-                        itemFollow = intent.getParcelableExtra(Constant.TAG_ITEM_FOLLOW)
-                        isNew = itemFollow == null
+                intent?.let {
+                        stockId = intent.getIntExtra(Constant.TAG_ITEM_FOLLOW_ID, -1)
                 }
                 initViews()
         }
 
         private fun initViews() {
-                itemFollow?.let {
-                        binding.etName.setText(it.name)
-                        binding.etCode.setText(it.code)
-                        binding.etExpect.setText(it.expectPrice.toString())
-                        binding.etCurrent.setText(it.currentPrice.toString())
-                        binding.etFocusDegree.setText(it.focusDegree.toString())
-                        binding.etTags.setText(it.tags.toString())
-                        binding.etComment.setText(it.comment)
+                ui {
+                        waitIO {
+                                viewModel.loadFollow(stockId)
+                                viewModel.itemFollow?.let {
+                                        viewModel.loadStock(it.stockId)
+                                }
+                        }
+                        viewModel.itemFollow?.let {
+                                binding.tvStock.text = viewModel.stockDetail?.name
+                                binding.etFocusDegree.setText(it.focusDegree)
+                                binding.etComment.setText(it.comment)
+                        }
                 }
 
-                binding.back.setOnClickListener {
-                        onBackPressed()
+                addClickableViews(
+                        binding.back,
+                        binding.cancel,
+                        binding.tvStock
+                )
+        }
+
+        override fun onClick(v: View) {
+                when (v.id) {
+                        R.id.back -> onBackPressed()
+                        R.id.cancel -> finish()
+                        R.id.tvStock -> startActivityForResult<StockListActivity>(REQUEST_CODE_CHOOSE_STOCK)
                 }
-                binding.cancel.setOnClickListener {
-                        finish()
+        }
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+                super.onActivityResult(requestCode, resultCode, data)
+                if (resultCode == Activity.RESULT_OK) {
+                        when (requestCode) {
+                                REQUEST_CODE_CHOOSE_STOCK -> {
+                                        val stockId = data?.getIntExtra(Constant.TAG_STOCK_ID, -1) ?: return
+                                        if (stockId != -1) {
+                                                ui {
+                                                        waitIO {
+                                                                viewModel.loadStock(stockId)
+                                                        }
+                                                        binding.tvStock.text = viewModel.stockDetail?.name
+                                                }
+                                        }
+                                }
+                        }
                 }
         }
 
@@ -61,33 +96,29 @@ class FollowEditActivity : AppCompatActivity() {
                 if (!updateItemFollow()) {
                         return
                 }
-                if (isNew) {
-                        viewModel.insert(itemFollow!!)
+                if (stockId == -1) {
+                        viewModel.insert(viewModel.itemFollow!!)
                 } else {
-                        viewModel.update(itemFollow!!)
+                        viewModel.update(viewModel.itemFollow!!)
                 }
                 super.onBackPressed()
         }
 
         private fun updateItemFollow(): Boolean {
-                val name = getStrFromEt(binding.etName) ?: return false
-                val code = getStrFromEt(binding.etCode) ?: return false
-                val expectPrice = getFloatFromEt(binding.etExpect) ?: return false
-                val currentPrice = getFloatFromEt(binding.etCurrent) ?: return false
+                val stockId = viewModel.stockDetail?.id
+                if (stockId == null) {
+                        ToastUtils.showShort(R.string.stock_empty)
+                        return false
+                }
                 val comment = getStrFromEt(binding.etComment, false)
                 val focusDegree = getIntFromEt(binding.etFocusDegree) ?: return false
-                val tags = getStrFromEt(binding.etTags) ?: return false
-                if (itemFollow == null) {
-                        itemFollow = ItemFollow.instance()
+                if (viewModel.itemFollow == null) {
+                        viewModel.itemFollow = ItemFollow.instance()
                 }
-                itemFollow?.let {
-                        it.code = code
-                        it.name = name
-                        it.expectPrice = expectPrice
-                        it.currentPrice = currentPrice
+                viewModel.itemFollow?.let {
+                        it.stockId = stockId
                         it.comment = comment
                         it.focusDegree = focusDegree
-                        it.tags = tags
                 }
                 return true
         }
@@ -101,21 +132,6 @@ class FollowEditActivity : AppCompatActivity() {
                         null
                 } else {
                         value
-                }
-        }
-
-        private fun getFloatFromEt(et: EditText, required: Boolean = true): Float? {
-                if (et.text.toString().isEmpty()) {
-                        if (required) {
-                                ToastUtils.showShort(R.string.info_not_complete)
-                        }
-                        return null
-                }
-                return try {
-                        et.text.toString().toFloat()
-                } catch (e: Exception) {
-                        ToastUtils.showShort(R.string.format_error)
-                        null
                 }
         }
 

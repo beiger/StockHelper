@@ -49,5 +49,7 @@
     <color name="defaultTabColor">#99ffffff</color>
     <color name="color_divider">#12000000</color>
     <color name="color_tag">#5CACEE</color>
+    <color name="color_gray">#bbbbbb</color>
+    <color name="color_aaaaaa">#aaaaaa</color>
 
 </resources>
