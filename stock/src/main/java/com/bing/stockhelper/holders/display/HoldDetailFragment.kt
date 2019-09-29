@@ -1,7 +1,5 @@
 package com.bing.stockhelper.holders.display
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +16,7 @@ import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.bing.stockhelper.utils.Constant
 import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.app.waitIO
-import org.jetbrains.anko.support.v4.startActivityForResult
+import org.jetbrains.anko.support.v4.startActivity
 
 class HoldDetailFragment : Fragment() {
 
@@ -46,24 +44,12 @@ class HoldDetailFragment : Fragment() {
                 }
                 binding.cardView.setOnClickListener {
                         val item = viewModel.orderDetailInfos.value!![position]
-                        startActivityForResult<HoldEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ORDER_DETAIL_ID to item.id)
+                        startActivity<HoldEditActivity>(Constant.TAG_ORDER_DETAIL_ID to item.id)
                 }
                 return binding.root
         }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-                super.onActivityResult(requestCode, resultCode, data)
-                if (resultCode == Activity.RESULT_OK) {
-                        when (requestCode) {
-                                REQUEST_CODE_EDIT -> {
-
-                                }
-                        }
-                }
-        }
-
         companion object {
-                private const val REQUEST_CODE_EDIT = 0
 
                 fun instance(position: Int): HoldDetailFragment {
                         return HoldDetailFragment().apply {

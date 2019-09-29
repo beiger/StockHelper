@@ -1,6 +1,5 @@
 package com.bing.stockhelper.main.holder
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,12 +58,10 @@ class HoldFragment : Fragment(), View.OnClickListener {
                 }
                 initAdapter()
                 viewModel.orderDetailInfos.observe(this, Observer {
-                        println("----infos: ${it.size}")
                         mAdapter.update(it)
                 })
 
                 viewModel.dayAttentions.observe(this, Observer{
-                        println("-------dayAttentions changed ${mBinding.etAttention.text.isEmpty()}, ${it.size}")
                         if (mBinding.etAttention.text.isNotEmpty()) {
                                 return@Observer
                         }
@@ -100,7 +97,7 @@ class HoldFragment : Fragment(), View.OnClickListener {
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_order_detail,
-                        bindData = { item, position, binding ->
+                        bindData = { item, _, binding ->
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
@@ -151,19 +148,5 @@ class HoldFragment : Fragment(), View.OnClickListener {
                                 viewModel.insert(DayAttention(0, content))
                         }
                 }
-        }
-
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-                super.onActivityResult(requestCode, resultCode, data)
-//                if (resultCode == Activity.RESULT_OK) {
-//                        when (requestCode) {
-//                                REQUEST_CODE_ORDER_DETAIL -> {
-//                                        ui {
-//                                                waitIO { viewModel.loadOrders() }
-//                                                mAdapter.update(viewModel.orderDetailInfo)
-//                                        }
-//                                }
-//                        }
-//                }
         }
 }

@@ -29,7 +29,7 @@ class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
         private lateinit var binding: ActivityFollowEditBinding
         private lateinit var viewModel: FollowEditViewModel
 
-        private var stockId: Int = -1
+        private var followId: Int = -1
 
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
                 viewModel = ViewModelProviders.of(this).get(FollowEditViewModel::class.java)
 
                 intent?.let {
-                        stockId = intent.getIntExtra(Constant.TAG_ITEM_FOLLOW_ID, -1)
+                        followId = intent.getIntExtra(Constant.TAG_ITEM_FOLLOW_ID, -1)
                 }
                 initViews()
         }
@@ -46,7 +46,7 @@ class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
         private fun initViews() {
                 ui {
                         waitIO {
-                                viewModel.loadFollow(stockId)
+                                viewModel.loadFollow(followId)
                                 viewModel.itemFollow?.let {
                                         viewModel.loadStock(it.stockId)
                                 }
@@ -96,7 +96,7 @@ class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
                 if (!updateItemFollow()) {
                         return
                 }
-                if (stockId == -1) {
+                if (followId == -1) {
                         viewModel.insert(viewModel.itemFollow!!)
                 } else {
                         viewModel.update(viewModel.itemFollow!!)

@@ -1,7 +1,5 @@
 package com.bing.stockhelper.main.follow
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +20,7 @@ import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.model.entity.ItemFollow
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
-import com.fanhantech.baselib.app.ui
-import com.fanhantech.baselib.app.waitIO
-import org.jetbrains.anko.support.v4.startActivityForResult
+import org.jetbrains.anko.support.v4.startActivity
 
 class FollowFragment : Fragment() {
         private val REQUEST_CODE_EDIT = 0X00
@@ -49,11 +45,11 @@ class FollowFragment : Fragment() {
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
                         onClick = { item, _ ->
-                                startActivityForResult<FollowEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ITEM_FOLLOW_ID to item.id)
+                                startActivity<FollowEditActivity>(Constant.TAG_ITEM_FOLLOW_ID to item.id)
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_follow,
-                        bindData = { item, position, binding ->
+                        bindData = { item, _, binding ->
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
@@ -85,16 +81,5 @@ class FollowFragment : Fragment() {
                         itemAnimator = DefaultItemAnimator()
                 }
                 initAdapter()
-        }
-
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-                super.onActivityResult(requestCode, resultCode, data)
-                if (resultCode == Activity.RESULT_OK) {
-                        when (requestCode) {
-                                REQUEST_CODE_EDIT -> {
-
-                                }
-                        }
-                }
         }
 }

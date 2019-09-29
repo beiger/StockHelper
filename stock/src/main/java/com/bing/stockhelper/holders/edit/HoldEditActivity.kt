@@ -125,7 +125,6 @@ class HoldEditActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                         viewModel.update(viewModel.orderDetail!!)
                 }
-                setResult(Activity.RESULT_OK)
                 super.onBackPressed()
         }
 

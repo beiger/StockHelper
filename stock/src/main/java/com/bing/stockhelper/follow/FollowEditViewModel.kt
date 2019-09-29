@@ -6,7 +6,6 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.AndroidViewModel
 import com.bing.stockhelper.model.AppDatabase
 import com.bing.stockhelper.model.entity.ItemFollow
-import com.bing.stockhelper.model.entity.OrderDetail
 import com.bing.stockhelper.model.entity.StockDetail
 import com.fanhantech.baselib.app.io
 

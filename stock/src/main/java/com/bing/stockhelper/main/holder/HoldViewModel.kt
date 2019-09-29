@@ -24,7 +24,6 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
         fun loadTags() {
                 val stockTags = database.loadStockTags()
                 stockTagsFirst = stockTags.filter { it.level == TAG_LEVEL_FIRST }
-                println("-----${stockTagsFirst.size}")
                 stockTagsSecond = stockTags.filter { it.level == TAG_LEVEL_SECOND }
         }
 

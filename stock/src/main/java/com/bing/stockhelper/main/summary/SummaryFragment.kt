@@ -41,7 +41,6 @@ class SummaryFragment : Fragment() {
 
         private fun initView() {
                 viewModel.summaries.observe(this, Observer {
-                        println("-------summary change")
                         summaries.clear()
                         summaries.addAll(it)
 
