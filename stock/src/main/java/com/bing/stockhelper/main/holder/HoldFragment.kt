@@ -1,6 +1,5 @@
 package com.bing.stockhelper.main.holder
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.utils.Constant
@@ -24,9 +22,10 @@ import com.bing.stockhelper.holders.display.HoldsActivity
 import com.bing.stockhelper.main.MainActivity
 import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.OrderDetail
+import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
+import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.blankj.utilcode.util.KeyboardUtils
-import com.fanhantech.baselib.app.ui
-import com.fanhantech.baselib.app.waitIO
+import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import org.jetbrains.anko.support.v4.startActivityForResult
@@ -54,14 +53,15 @@ class HoldFragment : Fragment(), View.OnClickListener {
                        setEnableLoadMore(false)
                        setEnableOverScrollDrag(true)//是否启用越界拖动
                }
-                ui {
-                        waitIO { viewModel.loadOrders() }
-                        with(mBinding.recyclerView) {
-                                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                                itemAnimator = DefaultItemAnimator()
-                                initAdapter()
-                        }
+                with(mBinding.recyclerView) {
+                        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                        itemAnimator = DefaultItemAnimator()
                 }
+                initAdapter()
+                viewModel.orderDetailInfos.observe(this, Observer {
+                        println("----infos: ${it.size}")
+                        mAdapter.update(it)
+                })
 
                 viewModel.dayAttentions.observe(this, Observer{
                         println("-------dayAttentions changed ${mBinding.etAttention.text.isEmpty()}, ${it.size}")
@@ -95,7 +95,6 @@ class HoldFragment : Fragment(), View.OnClickListener {
 
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
-                        items = viewModel.orderDetailInfo,
                         onClick = { _, position ->
                                 startActivityForResult<HoldsActivity>(REQUEST_CODE_ORDER_DETAIL, Constant.TAG_POSITION to position)
                         },
@@ -103,12 +102,14 @@ class HoldFragment : Fragment(), View.OnClickListener {
                         itemLayout = R.layout.item_order_detail,
                         bindData = { item, position, binding ->
                                 binding.item = item
+                                binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
+                                binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
                                 binding.root.setOnLongClickListener {
                                         AlertDialog(context!!)
                                                 .init()
                                                 .setMsg(getString(R.string.confirm_delete))
                                                 .setPositiveButton("") {
-                                                        viewModel.delete(viewModel.orders[position])
+                                                        viewModel.delete(item.id)
                                                 }.setNegativeButton("") {
 
                                                 }.show()
@@ -143,24 +144,26 @@ class HoldFragment : Fragment(), View.OnClickListener {
         }
 
         private fun updateAttention() {
-                viewModel.deleteAllAttention()
-                val content = mBinding.etAttention.text.toString()
-                if (content.isNotEmpty()) {
-                        viewModel.insert(DayAttention(-1, content))
+                io {
+                        viewModel.deleteAllAttention()
+                        val content = mBinding.etAttention.text.toString()
+                        if (content.isNotEmpty()) {
+                                viewModel.insert(DayAttention(0, content))
+                        }
                 }
         }
 
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
                 super.onActivityResult(requestCode, resultCode, data)
-                if (resultCode == Activity.RESULT_OK) {
-                        when (requestCode) {
-                                REQUEST_CODE_ORDER_DETAIL -> {
-                                        ui {
-                                                waitIO { viewModel.loadOrders() }
-                                                mAdapter.update(viewModel.orderDetailInfo)
-                                        }
-                                }
-                        }
-                }
+//                if (resultCode == Activity.RESULT_OK) {
+//                        when (requestCode) {
+//                                REQUEST_CODE_ORDER_DETAIL -> {
+//                                        ui {
+//                                                waitIO { viewModel.loadOrders() }
+//                                                mAdapter.update(viewModel.orderDetailInfo)
+//                                        }
+//                                }
+//                        }
+//                }
         }
 }

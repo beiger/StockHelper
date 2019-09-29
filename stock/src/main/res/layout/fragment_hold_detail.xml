@@ -46,6 +46,25 @@
                                                 android:textStyle="bold"
                                                 android:textColor="@color/black"/>
                                 </LinearLayout>
+
+                                <TextView
+                                        android:id="@+id/flTags"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="12dp"
+                                        android:paddingVertical="2dp"
+                                        android:textColor="@color/color_tag"
+                                        android:textSize="12sp"/>
+
+                                <TextView
+                                        android:id="@+id/slTags"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="12dp"
+                                        android:paddingVertical="2dp"
+                                        android:textColor="@color/color_tag"
+                                        android:textSize="12sp"/>
+
                                 <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"

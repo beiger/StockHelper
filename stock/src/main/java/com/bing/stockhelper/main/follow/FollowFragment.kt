@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -19,6 +20,8 @@ import com.bing.stockhelper.databinding.FragmentFollowsBinding
 import com.bing.stockhelper.databinding.ItemFollowBinding
 import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.model.entity.ItemFollow
+import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
+import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.app.waitIO
 import org.jetbrains.anko.support.v4.startActivityForResult
@@ -37,25 +40,29 @@ class FollowFragment : Fragment() {
                 viewModel = ViewModelProviders.of(this).get(FollowViewModel::class.java)
 
                 initRecyclerView()
+                viewModel.followInfos.observe(this, Observer {
+                        mAdapter.update(it)
+                })
                 return mBinding.root
         }
 
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
-                        items = viewModel.followInfos,
                         onClick = { item, _ ->
-                                startActivityForResult<FollowEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ITEM_FOLLOW to item)
+                                startActivityForResult<FollowEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ITEM_FOLLOW_ID to item.id)
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_follow,
                         bindData = { item, position, binding ->
                                 binding.item = item
+                                binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
+                                binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
                                 binding.root.setOnLongClickListener {
                                         AlertDialog(context!!)
                                                 .init()
                                                 .setMsg(getString(R.string.confirm_delete))
                                                 .setPositiveButton("") {
-                                                        viewModel.delete(viewModel.follows[position])
+                                                        viewModel.delete(item.id)
                                                 }.setNegativeButton("") {
 
                                                 }.show()
@@ -76,11 +83,8 @@ class FollowFragment : Fragment() {
                 with(mBinding.recyclerView) {
                         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                         itemAnimator = DefaultItemAnimator()
-                        ui {
-                                waitIO { viewModel.loadFollows() }
-                                initAdapter()
-                        }
                 }
+                initAdapter()
         }
 
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,10 +92,7 @@ class FollowFragment : Fragment() {
                 if (resultCode == Activity.RESULT_OK) {
                         when (requestCode) {
                                 REQUEST_CODE_EDIT -> {
-                                        ui {
-                                                waitIO { viewModel.loadFollows() }
-                                                mAdapter.update(viewModel.followInfos)
-                                        }
+
                                 }
                         }
                 }

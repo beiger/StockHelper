@@ -53,7 +53,7 @@ class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
                         }
                         viewModel.itemFollow?.let {
                                 binding.tvStock.text = viewModel.stockDetail?.name
-                                binding.etFocusDegree.setText(it.focusDegree)
+                                binding.etFocusDegree.setText(it.focusDegree.toString())
                                 binding.etComment.setText(it.comment)
                         }
                 }

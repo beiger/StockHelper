@@ -3,12 +3,20 @@ package com.bing.stockhelper.model.entity
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.WorkerThread
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.bing.stockhelper.model.AppDatabase
+import java.lang.StringBuilder
 import java.util.*
 
-@Entity(tableName = "orderDetail")
+@Entity(
+        tableName = "orderDetail",
+        foreignKeys = [ForeignKey(entity = StockDetail::class, parentColumns = ["id"], childColumns = ["stockId"], onDelete = CASCADE, onUpdate = CASCADE)],
+        indices = [androidx.room.Index(value = ["stockId"], unique = true)]
+)
 data class OrderDetail(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
@@ -79,27 +87,14 @@ data class OrderDetail(
                 )
         }
 
-        @WorkerThread
-        fun toInfo(dataBase: AppDatabase, firstTtags: List<StockTag>, secondTags: List<StockTag>): DetailInfo? {
-                val stocks = dataBase.loadStocks(stockId)
-                return if (stocks.isNotEmpty()) {
-                        val stock = stocks[0]
-                        DetailInfo(id, orderNum, stock.code, stock.name, stock.imgUrl, stock.tagsStr(TAG_LEVEL_FIRST, firstTtags),
-                                stock.tagsStr(TAG_LEVEL_SECOND, secondTags), stock.description, buyTime, buyPrice,
-                                expectPrice, currentPrice, sellPrice, buyNum, isHold, comment)
-                } else {
-                        null
-                }
-        }
-
         data class DetailInfo(
                 var id: Int = 0,
                 var orderNum: Long,
                 var code: String,
                 var name: String,
                 var imgUrl: String?,
-                var firstTags: String,
-                var secondTags: String,
+                var firstTags: MutableList<Int>,
+                var secondTags: MutableList<Int>,
                 var description: String?,
                 var buyTime: Long,
                 var buyPrice: Float,
@@ -115,8 +110,8 @@ data class OrderDetail(
                                 code == item.code &&
                                 name == item.name &&
                                 imgUrl == item.imgUrl &&
-                                firstTags == item.firstTags &&
-                                secondTags == item.secondTags &&
+                                firstTags.toString() == item.firstTags.toString() &&
+                                secondTags.toString() == item.secondTags.toString() &&
                                 description == item.description &&
                                 buyTime == item.buyTime &&
                                 buyPrice == item.buyPrice &&
@@ -146,6 +141,30 @@ data class OrderDetail(
                                 23, 59, 59
                         )
                         return ((now.timeInMillis - buyDate.timeInMillis) / (1000 * 60 * 60 * 24) + 1).toInt()
+                }
+
+                fun tagsStr(level: Int, tags: List<StockTag>): String {
+                        val levelTags = when (level) {
+                                TAG_LEVEL_FIRST -> firstTags
+                                TAG_LEVEL_SECOND -> secondTags
+                                else -> null
+                        } ?: return ""
+                        if (tags.isEmpty()) {
+                                levelTags.clear()
+                                return ""
+                        }
+                        val builder = StringBuilder()
+                        val iterator = levelTags.iterator()
+                        while (iterator.hasNext()) {
+                                val nextTag = iterator.next()
+                                val tag = tags.firstOrNull { it.id == nextTag }
+                                if (tag == null) {
+                                        iterator.remove()
+                                } else {
+                                        builder.append(tag.name + TAG_SEPERATER)
+                                }
+                        }
+                        return builder.dropLast(1).toString()
                 }
         }
 }

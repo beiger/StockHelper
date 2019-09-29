@@ -13,7 +13,11 @@ import com.bing.stockhelper.utils.Constant.TAG_POSITION
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.FragmentHoldDetailBinding
 import com.bing.stockhelper.holders.edit.HoldEditActivity
+import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
+import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.bing.stockhelper.utils.Constant
+import com.fanhantech.baselib.app.ui
+import com.fanhantech.baselib.app.waitIO
 import org.jetbrains.anko.support.v4.startActivityForResult
 
 class HoldDetailFragment : Fragment() {
@@ -33,11 +37,16 @@ class HoldDetailFragment : Fragment() {
                                   savedInstanceState: Bundle?): View? {
                 binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hold_detail, container, false)
                 viewModel = ViewModelProviders.of(activity!!).get(HoldsViewModel::class.java)
-                val order = viewModel.orderDetailInfo[position]
+                val order = viewModel.orderDetailInfos.value!![position]
                 binding.order = order
+                ui {
+                        waitIO { viewModel.loadTags() }
+                        binding.flTags.text = order.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
+                        binding.slTags.text = order.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
+                }
                 binding.cardView.setOnClickListener {
-                        val item = viewModel.orders[position]
-                        startActivityForResult<HoldEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ORDER_DETAIL to item)
+                        val item = viewModel.orderDetailInfos.value!![position]
+                        startActivityForResult<HoldEditActivity>(REQUEST_CODE_EDIT, Constant.TAG_ORDER_DETAIL_ID to item.id)
                 }
                 return binding.root
         }
@@ -47,8 +56,7 @@ class HoldDetailFragment : Fragment() {
                 if (resultCode == Activity.RESULT_OK) {
                         when (requestCode) {
                                 REQUEST_CODE_EDIT -> {
-                                        viewModel.update(position)
-                                        binding.order = viewModel.orderDetailInfo[position]
+
                                 }
                         }
                 }

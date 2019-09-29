@@ -24,7 +24,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="4dp">
                                 <TextView
                                         android:layout_width="wrap_content"
@@ -45,9 +45,8 @@
                                 android:id="@+id/flTags"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="2dp"
-                                android:text="@{item.firstTags}"
                                 android:textColor="@color/color_tag"
                                 android:textSize="12sp"/>
 
@@ -55,23 +54,22 @@
                                 android:id="@+id/slTags"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="2dp"
-                                android:text="@{item.secondTags}"
                                 android:textColor="@color/color_tag"
                                 android:textSize="12sp"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="4dp"
                                 android:text="@{item.description}"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="16dp"
+                                android:paddingHorizontal="12dp"
                                 android:paddingVertical="4dp"
                                 android:text="@{item.comment}"/>
                         <View

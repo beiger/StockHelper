@@ -12,8 +12,6 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleStatePagerAdapter2
 import com.bing.stockhelper.databinding.ActivityHoldsBinding
 import com.bing.stockhelper.model.entity.OrderDetail
-import com.fanhantech.baselib.app.ui
-import com.fanhantech.baselib.app.waitIO
 import com.fanhantech.baselib.utils.UiUtil
 
 class HoldsActivity : AppCompatActivity() {
@@ -35,10 +33,9 @@ class HoldsActivity : AppCompatActivity() {
         }
 
         private fun initViews() {
-                ui {
-                        waitIO { viewModel.loadOrders() }
-                        initViewPager(viewModel.orderDetailInfo)
-                }
+                viewModel.orderDetailInfos.observe(this, Observer {
+                        initViewPager(it)
+                })
         }
 
         private fun initViewPager(orders: List<OrderDetail.DetailInfo>) {

@@ -105,9 +105,9 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:2.8.6.0'
 
     // 图片选择
-    // 由于PictureSelector兼容性，目前还不能升级
     api 'com.github.bumptech.glide:glide:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
 
     // 权限
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
@@ -121,7 +121,6 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
     api 'de.hdodenhof:circleimageview:3.0.1'
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
 
     api 'com.alibaba:arouter-api:1.4.1'
     kapt 'com.alibaba:arouter-compiler:1.2.2'

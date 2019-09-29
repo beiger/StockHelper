@@ -4,35 +4,32 @@ import android.app.Application
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.AndroidViewModel
 import com.bing.stockhelper.model.AppDatabase
-import com.bing.stockhelper.model.entity.DayAttention
-import com.bing.stockhelper.model.entity.OrderDetail
-import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
-import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
+import com.bing.stockhelper.model.entity.*
+import com.fanhantech.baselib.app.io
 
 class HoldViewModel(application: Application) : AndroidViewModel(application) {
 
         private val database = AppDatabase.getInstance(application)
 
-        var orders: List<OrderDetail> = listOf()
-        val orderDetailInfo: MutableList<OrderDetail.DetailInfo> = mutableListOf()
+        val orderDetailInfos = database.loadOrderInfosLive()
         val dayAttentions = database.loadDayAttentionsLive()
+        var stockTagsFirst = listOf<StockTag>()
+        var stockTagsSecond = listOf<StockTag>()
 
-        @WorkerThread
-        fun loadOrders() {
-                orders = database.loadOrders()
-                orderDetailInfo.clear()
-                val stockTags = database.loadStockTags()
-                val stockTagsFirst = stockTags.filter { it.level == TAG_LEVEL_FIRST }
-                val stockTagsSecond = stockTags.filter { it.level == TAG_LEVEL_SECOND }
-                orders.forEach {
-                        it.toInfo(database, stockTagsFirst, stockTagsSecond)?.let { info ->
-                                orderDetailInfo.add(info)
-                        }
-                }
+        init {
+                io { loadTags() }
         }
 
-        fun delete(item: OrderDetail) {
-                database.deleteOrder(item)
+        @WorkerThread
+        fun loadTags() {
+                val stockTags = database.loadStockTags()
+                stockTagsFirst = stockTags.filter { it.level == TAG_LEVEL_FIRST }
+                println("-----${stockTagsFirst.size}")
+                stockTagsSecond = stockTags.filter { it.level == TAG_LEVEL_SECOND }
+        }
+
+        fun delete(id: Int) {
+                database.deleteOrder(id)
         }
 
         fun deleteAllAttention() {

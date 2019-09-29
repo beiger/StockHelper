@@ -1,5 +1,7 @@
 package com.bing.stockhelper.stock
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,12 +12,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.databinding.ActivityStockListBinding
 import com.bing.stockhelper.databinding.ItemStockSearchBinding
 import com.bing.stockhelper.model.AppDatabase
 import com.bing.stockhelper.model.entity.StockDetail
+import com.bing.stockhelper.utils.Constant
+import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.kotlinExpands.afterTextChanged
 import com.fanhantech.baselib.utils.UiUtil
@@ -31,7 +36,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
 
         private lateinit var stocksLive: LiveData<List<StockDetail>>
         private val filterStockLive = MutableLiveData<List<StockDetail>>()
-        private lateinit var adapter: SimpleAdapter<StockDetail, ItemStockSearchBinding>
+        private lateinit var mAdapter: SimpleAdapter<StockDetail, ItemStockSearchBinding>
 
         private val searchSubject = PublishSubject.create<String>()
         private val compositeDisposable = CompositeDisposable()
@@ -48,6 +53,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                                 .debounce(400, TimeUnit.MILLISECONDS)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe {
+                                        println("------subscribe")
                                         filterStock(it)
                                 }
                 )
@@ -61,18 +67,23 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                 initSearchView()
 
                 stocksLive.observe(this, Observer {
+                        println("------${it.size}")
                         searchSubject.onNext(binding.searchView.text.toString())
                 })
                 filterStockLive.observe(this, Observer {
-                        adapter.update(it)
+                        println("------${it.size}")
+                        mAdapter.update(it)
                 })
         }
 
         private fun initRecycleView() {
-                adapter = SimpleAdapter(
+                mAdapter = SimpleAdapter(
                         items = null,
                         onClick = { item, position ->
-
+                                setResult(Activity.RESULT_OK, Intent().apply {
+                                        putExtra(Constant.TAG_STOCK_ID, item.id)
+                                })
+                                finish()
                         },
                         isSame = { old, newItem ->
                                 old.isSameWith(newItem)
@@ -80,11 +91,23 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                         itemLayout = R.layout.item_stock_search,
                         bindData = { item, _, binding ->
                                 binding.stock = item
+                                binding.root.setOnLongClickListener {
+                                        AlertDialog(this)
+                                                .init()
+                                                .setMsg(getString(R.string.confirm_delete))
+                                                .setPositiveButton("") {
+                                                        io { database.deleteStock(item) }
+                                                }.setNegativeButton("") {
+
+                                                }.show()
+                                        true
+                                }
                         }
                 )
                 with(binding.recyclerView) {
                         layoutManager = GridLayoutManager(this@StockListActivity, 2)
                         itemAnimator = DefaultItemAnimator()
+                        this.adapter = mAdapter
                 }
         }
 
@@ -102,7 +125,12 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         private fun filterStock(text: String) {
+                println("------filterStock")
+                println("------${stocksLive.value?.size}, $text")
                 val all = stocksLive.value ?: return
+                if (text.isEmpty()) {
+                        filterStockLive.value = all
+                }
                 filterStockLive.value = all.filter {
                         it.name.contains(text) || it.code.contains(text)
                 }

@@ -37,17 +37,21 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun loadOrdersLive(): LiveData<List<OrderDetail>> = orderDetailDao().loadItemsLive()
         fun loadOrders(): List<OrderDetail> = orderDetailDao().loadItems()
+        fun loadOrderInfosLive(): LiveData<List<OrderDetail.DetailInfo>> = orderDetailDao().loadItemInfosLive()
         fun loadOrders(id: Int): List<OrderDetail> = orderDetailDao().loadItems(id)
         fun insertOrder(item: OrderDetail) = orderDetailDao().insert(item)
         fun updateOrder(item: OrderDetail) = orderDetailDao().update(item)
         fun deleteOrder(item: OrderDetail) = orderDetailDao().delete(item)
+        fun deleteOrder(id: Int) = orderDetailDao().delete(id)
 
         fun loadFollowsLive(): LiveData<List<ItemFollow>> = itemFollowDao().loadItemsLive()
         fun loadFollows(): List<ItemFollow> = itemFollowDao().loadItems()
+        fun loadFollowInfosLive(): LiveData<List<ItemFollow.Info>> = itemFollowDao().loadItemInfosLive()
         fun loadFollows(id: Int): List<ItemFollow> = itemFollowDao().loadItems(id)
         fun insertFollow(item: ItemFollow) = itemFollowDao().insert(item)
         fun updateFollow(item: ItemFollow) = itemFollowDao().update(item)
         fun deleteFollow(item: ItemFollow) = itemFollowDao().delete(item)
+        fun deleteFollow(id: Int) = itemFollowDao().delete(id)
 
         fun loadSummarysLive(): LiveData<List<Summary>> = summaryDao().loadItemsLive()
         fun loadSummarys(): List<Summary> = summaryDao().loadItems()

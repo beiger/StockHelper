@@ -1,5 +1,7 @@
 package com.bing.stockhelper.stock
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -101,6 +103,19 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                 }
         }
 
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+                super.onActivityResult(requestCode, resultCode, data)
+                if (resultCode == Activity.RESULT_OK) {
+                        when (requestCode) {
+                                REQUEST_CODE_CHOOSE_IMG -> {
+                                        val selected = PictureSelector.obtainMultipleResult(data)[0].path
+                                        imgUrl = selected
+                                        Glide.with(this).load(selected).into(binding.ivBg)
+                                }
+                        }
+                }
+        }
+
         private fun clickTags(level: Int) {
                 val title: String
                 val tags: List<StockTag>
@@ -177,8 +192,7 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                         choosedTags.add(tags[it].id)
                         builder.append(tags[it].name + TAG_SEPERATER)
                 }
-                builder.dropLast(1)
-                textView.text = builder.toString()
+                textView.text = builder.dropLast(1).toString()
         }
 
         private fun addTags() {
@@ -186,22 +200,27 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                 dialog = BottomDialog.create(
                         supportFragmentManager,
                         R.layout.dialog_add_tags,
-                        handleView = { it ->
+                        handleView = {
                                 val radioGroup = it.findViewById<RadioGroup>(R.id.radio_group)
                                 val tvOk = it.findViewById<TextView>(R.id.tvOk)
+                                val etTags = it.findViewById<EditText>(R.id.etTags)
                                 tvOk.setOnClickListener {
                                         val level = when (radioGroup.checkedRadioButtonId) {
                                                 R.id.rbFirst -> TAG_LEVEL_FIRST
                                                 R.id.rbSecond -> TAG_LEVEL_SECOND
                                                 else -> null
                                         }
-                                        val etTags = it.findViewById<EditText>(R.id.etTags)
                                         val names = etTags.text.toString()
+                                        if (names.isEmpty()) {
+                                                ToastUtils.showShort(R.string.no_tags)
+                                                return@setOnClickListener
+                                        }
                                         if (level == null) {
                                                 ToastUtils.showShort(R.string.level_not_selected)
                                                 return@setOnClickListener
                                         }
                                         addTags(level, names)
+                                        dialog?.dismiss()
                                 }
                                 it.tvCancel.setOnClickListener {
                                         dialog?.dismiss()
@@ -214,7 +233,7 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
         private fun addTags(level: Int, names: String) {
                 io {
                         names.split(TAG_SEPERATER).forEach {
-                                viewModel.insertTag(StockTag(-1, it, level))
+                                viewModel.insertTag(StockTag(0, it, level))
                         }
                 }
         }
@@ -236,7 +255,7 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                 val code = getStrFromEt(binding.etCode) ?: return false
                 val description = getStrFromEt(binding.etDescription, false)
                 if (viewModel.stockDetail == null) {
-                        viewModel.stockDetail = StockDetail(-1, code, name, imgUrl, firstTags, secondTags, description)
+                        viewModel.stockDetail = StockDetail(0, code, name, imgUrl, firstTags, secondTags, description)
                 } else {
                         viewModel.stockDetail?.let {
                                 it.code = code
