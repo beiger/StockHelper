@@ -13,7 +13,7 @@ import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityFollowEditBinding
 import com.bing.stockhelper.model.entity.ItemFollow
-import com.bing.stockhelper.stock.StockListActivity
+import com.bing.stockhelper.stock.select.StockSelectActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.app.waitIO
@@ -69,7 +69,7 @@ class FollowEditActivity : AppCompatActivity(), View.OnClickListener {
                 when (v.id) {
                         R.id.back -> onBackPressed()
                         R.id.cancel -> finish()
-                        R.id.tvStock -> startActivityForResult<StockListActivity>(REQUEST_CODE_CHOOSE_STOCK)
+                        R.id.tvStock -> startActivityForResult<StockSelectActivity>(REQUEST_CODE_CHOOSE_STOCK)
                 }
         }
 

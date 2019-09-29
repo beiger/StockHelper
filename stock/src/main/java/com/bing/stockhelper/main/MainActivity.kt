@@ -21,6 +21,7 @@ import com.bing.stockhelper.main.follow.FollowFragment
 import com.bing.stockhelper.main.holder.HoldFragment
 import com.bing.stockhelper.main.summary.SummaryFragment
 import com.bing.stockhelper.search.SearchActivity
+import com.bing.stockhelper.stock.list.StockListActivity
 import com.bing.stockhelper.summary.SummaryEditActivity
 import com.bing.stockhelper.widget.CustomTabLayout
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
@@ -90,7 +91,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 addClickableViews(
                         mBinding.search,
                         mBinding.fabAdd,
-                        mBinding.tvHuawei
+                        mBinding.tvHuawei,
+                        mBinding.tvAllStocks
                 )
         }
 
@@ -112,6 +114,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         }
 
                         R.id.tvHuawei -> startActivity<HuaweiActivity>()
+
+                        R.id.tvAllStocks -> startActivity<StockListActivity>()
                 }
         }
 

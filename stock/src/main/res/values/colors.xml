@@ -48,7 +48,8 @@
     <color name="selectedTabColor">#ddffffff</color>
     <color name="defaultTabColor">#99ffffff</color>
     <color name="color_divider">#12000000</color>
-    <color name="color_tag">#5CACEE</color>
+    <color name="color_tag_first">#5CACEE</color>
+    <color name="color_tag_second">#26b74e</color>
     <color name="color_gray">#bbbbbb</color>
     <color name="color_aaaaaa">#aaaaaa</color>
 

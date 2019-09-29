@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 class SimpleAdapter<T, B: ViewDataBinding>(
         private var items: List<T>? = null,
         //TODO onClick最好不要用position，position只要不执行onBindView就永远不会更新
-        private val onClick: ((t: T, position: Int) -> Unit)? = null,
+        private val onClick: ((t: T) -> Unit)? = null,
         private val isSame: (t1: T, t2: T) -> Boolean,
         private val itemLayout: Int = -1,
-        //TODO position可能会错误
-        private val bindData: (t: T, position: Int, binding: B) -> Unit
+        private val bindData: (t: T, binding: B) -> Unit
 ): RecyclerView.Adapter<SimpleAdapter.ItemViewHolder<B>>() {
 
         fun update(_items: List<T>?) {
@@ -59,10 +58,10 @@ class SimpleAdapter<T, B: ViewDataBinding>(
                 val binding = holder.binding
                 onClick?.let {
                         binding.root.setOnClickListener {
-                                it(item, position)
+                                it(item)
                         }
                 }
-                bindData(item, position, binding)
+                bindData(item, binding)
                 binding.executePendingBindings()
         }
 

@@ -27,10 +27,9 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import org.jetbrains.anko.support.v4.startActivityForResult
+import org.jetbrains.anko.support.v4.startActivity
 
 class HoldFragment : Fragment(), View.OnClickListener {
-        private val REQUEST_CODE_ORDER_DETAIL = 0X00
 
         private lateinit var mBinding: FragmentHoldBinding
         private lateinit var viewModel: HoldViewModel
@@ -92,12 +91,12 @@ class HoldFragment : Fragment(), View.OnClickListener {
 
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
-                        onClick = { _, position ->
-                                startActivityForResult<HoldsActivity>(REQUEST_CODE_ORDER_DETAIL, Constant.TAG_POSITION to position)
+                        onClick = { item ->
+                                startActivity<HoldsActivity>(Constant.TAG_ORDER_DETAIL_ID to item.id)
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_order_detail,
-                        bindData = { item, _, binding ->
+                        bindData = { item, binding ->
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)

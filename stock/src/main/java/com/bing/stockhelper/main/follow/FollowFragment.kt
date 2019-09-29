@@ -44,12 +44,12 @@ class FollowFragment : Fragment() {
 
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
-                        onClick = { item, _ ->
+                        onClick = { item ->
                                 startActivity<FollowEditActivity>(Constant.TAG_ITEM_FOLLOW_ID to item.id)
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_follow,
-                        bindData = { item, _, binding ->
+                        bindData = { item, binding ->
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)

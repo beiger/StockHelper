@@ -49,10 +49,7 @@ data class StockDetail(
                                 builder.append(tag.name + TAG_SEPERATER)
                         }
                 }
-                if (builder.isNotEmpty()) {
-                        builder.dropLast(1)
-                }
-                return builder.toString()
+                return  builder.dropLast(1).toString()
         }
 }
 

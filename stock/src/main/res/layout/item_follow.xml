@@ -47,7 +47,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
                                 android:paddingVertical="2dp"
-                                android:textColor="@color/color_tag"
+                                android:textColor="@color/color_tag_first"
                                 android:textSize="12sp"/>
 
                         <TextView
@@ -56,7 +56,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
                                 android:paddingVertical="2dp"
-                                android:textColor="@color/color_tag"
+                                android:textColor="@color/color_tag_first"
                                 android:textSize="12sp"/>
 
                         <TextView

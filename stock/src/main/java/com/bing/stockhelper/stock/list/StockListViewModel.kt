@@ -1,18 +1,21 @@
-package com.bing.stockhelper.main.holder
+package com.bing.stockhelper.stock.list
 
 import android.app.Application
+import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.AndroidViewModel
 import com.bing.stockhelper.model.AppDatabase
-import com.bing.stockhelper.model.entity.*
+import com.bing.stockhelper.model.entity.StockDetail
+import com.bing.stockhelper.model.entity.StockTag
+import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
+import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.fanhantech.baselib.app.io
+import com.fanhantech.baselib.app.ui
 
-class HoldViewModel(application: Application) : AndroidViewModel(application) {
-
+class StockListViewModel(application: Application): AndroidViewModel(application) {
         private val database = AppDatabase.getInstance(application)
 
-        val orderDetailInfos = database.loadOrderInfosLive()
-        val dayAttentions = database.loadDayAttentionsLive()
+        val stocksLive = database.loadStocksLive()
         var stockTagsFirst = listOf<StockTag>()
         var stockTagsSecond = listOf<StockTag>()
 
@@ -27,15 +30,8 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
                 stockTagsSecond = stockTags.filter { it.level == TAG_LEVEL_SECOND }
         }
 
-        fun delete(id: Int) {
-                database.deleteOrder(id)
-        }
-
-        fun deleteAllAttention() {
-                database.deleteAllAttention()
-        }
-
-        fun insert(item: DayAttention) {
-                database.insertDayAttention(item)
+        @MainThread
+        fun delete(item: StockDetail) {
+                ui { database.deleteStock(item) }
         }
 }

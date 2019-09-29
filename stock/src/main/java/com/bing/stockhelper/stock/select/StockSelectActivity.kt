@@ -1,4 +1,4 @@
-package com.bing.stockhelper.stock
+package com.bing.stockhelper.stock.select
 
 import android.app.Activity
 import android.content.Intent
@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
-import com.bing.stockhelper.databinding.ActivityStockListBinding
+import com.bing.stockhelper.databinding.ActivityStockSelectBinding
 import com.bing.stockhelper.databinding.ItemStockSearchBinding
 import com.bing.stockhelper.model.AppDatabase
 import com.bing.stockhelper.model.entity.StockDetail
+import com.bing.stockhelper.stock.edit.StockEditActivity
 import com.bing.stockhelper.utils.Constant
 import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
@@ -30,8 +31,8 @@ import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.startActivity
 import java.util.concurrent.TimeUnit
 
-class StockListActivity : AppCompatActivity(), View.OnClickListener {
-        private lateinit var binding: ActivityStockListBinding
+class StockSelectActivity : AppCompatActivity(), View.OnClickListener {
+        private lateinit var binding: ActivityStockSelectBinding
         private lateinit var database: AppDatabase
 
         private lateinit var stocksLive: LiveData<List<StockDetail>>
@@ -44,7 +45,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
                 UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
-                binding = DataBindingUtil.setContentView(this, R.layout.activity_stock_list)
+                binding = DataBindingUtil.setContentView(this, R.layout.activity_stock_select)
 
                 database = AppDatabase.getInstance(application)
                 stocksLive = database.loadStocksLive()
@@ -67,11 +68,9 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                 initSearchView()
 
                 stocksLive.observe(this, Observer {
-                        println("------${it.size}")
                         searchSubject.onNext(binding.searchView.text.toString())
                 })
                 filterStockLive.observe(this, Observer {
-                        println("------${it.size}")
                         mAdapter.update(it)
                 })
         }
@@ -79,7 +78,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
         private fun initRecycleView() {
                 mAdapter = SimpleAdapter(
                         items = null,
-                        onClick = { item, position ->
+                        onClick = { item->
                                 setResult(Activity.RESULT_OK, Intent().apply {
                                         putExtra(Constant.TAG_STOCK_ID, item.id)
                                 })
@@ -89,7 +88,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                                 old.isSameWith(newItem)
                         },
                         itemLayout = R.layout.item_stock_search,
-                        bindData = { item, _, binding ->
+                        bindData = { item, binding ->
                                 binding.stock = item
                                 binding.root.setOnLongClickListener {
                                         AlertDialog(this)
@@ -105,7 +104,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                         }
                 )
                 with(binding.recyclerView) {
-                        layoutManager = GridLayoutManager(this@StockListActivity, 2)
+                        layoutManager = GridLayoutManager(this@StockSelectActivity, 2)
                         itemAnimator = DefaultItemAnimator()
                         this.adapter = mAdapter
                 }

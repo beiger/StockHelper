@@ -14,7 +14,7 @@ import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityHoldEditBinding
 import com.bing.stockhelper.model.entity.OrderDetail
-import com.bing.stockhelper.stock.StockListActivity
+import com.bing.stockhelper.stock.select.StockSelectActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.app.waitIO
@@ -81,7 +81,7 @@ class HoldEditActivity : AppCompatActivity(), View.OnClickListener {
                         R.id.back -> onBackPressed()
                         R.id.cancel -> finish()
                         R.id.etBuyTime -> datePick()
-                        R.id.tvStock -> startActivityForResult<StockListActivity>(REQUEST_CODE_CHOOSE_STOCK)
+                        R.id.tvStock -> startActivityForResult<StockSelectActivity>(REQUEST_CODE_CHOOSE_STOCK)
                 }
         }
 

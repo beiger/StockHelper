@@ -18,6 +18,7 @@ class HoldsActivity : AppCompatActivity() {
         private lateinit var binding: ActivityHoldsBinding
         private lateinit var viewModel: HoldsViewModel
 
+        private var orderId = -1
         private var currentPosition = 0
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +28,14 @@ class HoldsActivity : AppCompatActivity() {
                 viewModel = ViewModelProviders.of(this).get(HoldsViewModel::class.java)
 
                 intent?.let {
-                        currentPosition = it.getIntExtra(Constant.TAG_POSITION, 0)
+                        orderId = it.getIntExtra(Constant.TAG_ORDER_DETAIL_ID, -1)
                 }
                 initViews()
         }
 
         private fun initViews() {
                 viewModel.orderDetailInfos.observe(this, Observer {
+                        currentPosition = it.indexOfFirst { order -> order.id == orderId }
                         initViewPager(it)
                 })
         }

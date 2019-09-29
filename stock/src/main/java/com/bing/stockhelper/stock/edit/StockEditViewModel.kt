@@ -1,4 +1,4 @@
-package com.bing.stockhelper.stock
+package com.bing.stockhelper.stock.edit
 
 import android.app.Application
 import androidx.annotation.MainThread
