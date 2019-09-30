@@ -56,6 +56,9 @@ class HoldFragment : Fragment(), View.OnClickListener {
                         itemAnimator = DefaultItemAnimator()
                 }
                 initAdapter()
+                viewModel.stockTags.observe(this, Observer {
+                        viewModel.seperaterTags(it)
+                })
                 viewModel.orderDetailInfos.observe(this, Observer {
                         mAdapter.update(it)
                 })

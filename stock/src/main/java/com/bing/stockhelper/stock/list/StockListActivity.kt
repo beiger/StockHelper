@@ -48,6 +48,9 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                         itemAnimator = DefaultItemAnimator()
                 }
                 initAdapter()
+                viewModel.stockTags.observe(this, Observer {
+                        viewModel.separateTags(it)
+                })
                 viewModel.stocksLive.observe(this, Observer {
                         mAdapter.update(it)
                 })

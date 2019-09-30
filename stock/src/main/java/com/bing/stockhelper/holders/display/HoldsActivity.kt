@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.R
-import com.bing.stockhelper.adapter.SimpleStatePagerAdapter2
+import com.bing.stockhelper.adapter.SimpleStatePagerAdapter
 import com.bing.stockhelper.databinding.ActivityHoldsBinding
 import com.bing.stockhelper.model.entity.OrderDetail
 import com.fanhantech.baselib.utils.UiUtil
@@ -41,7 +41,7 @@ class HoldsActivity : AppCompatActivity() {
         }
 
         private fun initViewPager(orders: List<OrderDetail.DetailInfo>) {
-                val pagerAdapter = SimpleStatePagerAdapter2(
+                val pagerAdapter = SimpleStatePagerAdapter(
                         supportFragmentManager,
                         { position -> HoldDetailFragment.instance(position) },
                         orders.size

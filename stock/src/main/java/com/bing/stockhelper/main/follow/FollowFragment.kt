@@ -23,7 +23,6 @@ import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import org.jetbrains.anko.support.v4.startActivity
 
 class FollowFragment : Fragment() {
-        private val REQUEST_CODE_EDIT = 0X00
 
         private lateinit var mBinding: FragmentFollowsBinding
         private lateinit var viewModel: FollowViewModel
@@ -36,6 +35,10 @@ class FollowFragment : Fragment() {
                 viewModel = ViewModelProviders.of(this).get(FollowViewModel::class.java)
 
                 initRecyclerView()
+
+                viewModel.stockTags.observe(this, Observer {
+                        viewModel.separateTags(it)
+                })
                 viewModel.followInfos.observe(this, Observer {
                         mAdapter.update(it)
                 })

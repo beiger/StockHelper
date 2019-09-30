@@ -62,7 +62,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingHorizontal="16dp"
                                         android:paddingVertical="2dp"
-                                        android:textColor="@color/color_tag_first"
+                                        android:textColor="@color/color_tag_second"
                                         android:textSize="12sp"/>
 
                                 <LinearLayout

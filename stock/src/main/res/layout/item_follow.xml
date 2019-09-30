@@ -46,7 +46,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
-                                android:paddingVertical="2dp"
+                                android:layout_marginTop="2dp"
                                 android:textColor="@color/color_tag_first"
                                 android:textSize="12sp"/>
 
@@ -55,22 +55,24 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
-                                android:paddingVertical="2dp"
-                                android:textColor="@color/color_tag_first"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/color_tag_second"
                                 android:textSize="12sp"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
-                                android:paddingVertical="4dp"
-                                android:text="@{item.description}"/>
+                                android:layout_marginTop="2dp"
+                                android:text="@{item.description}"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"/>
 
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="12dp"
-                                android:paddingVertical="4dp"
+                                android:layout_marginTop="4dp"
                                 android:text="@{item.comment}"/>
                         <View
                                 android:layout_width="0dp"

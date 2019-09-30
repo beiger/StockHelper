@@ -2,14 +2,15 @@ package com.bing.stockhelper.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import java.util.ArrayList
 
-class SimpleStatePagerAdapter(
+class SimplePagerAdapter(
         fm: FragmentManager,
         private val mFragments: ArrayList<Fragment>,
         private val mTitles: List<String>? = null
-): FragmentStatePagerAdapter(fm) {
+): FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
                 return mFragments[position]
@@ -24,7 +25,7 @@ class SimpleStatePagerAdapter(
         }
 }
 
-class SimpleStatePagerAdapter2(
+class SimpleStatePagerAdapter(
         fm: FragmentManager,
         private val builder: (Int) -> Fragment,
         private val size: Int,

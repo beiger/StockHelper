@@ -2,17 +2,18 @@ package com.bing.stockhelper.main
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.bing.stockhelper.R
-import com.bing.stockhelper.adapter.SimpleStatePagerAdapter
+import com.bing.stockhelper.adapter.SimplePagerAdapter
 import com.bing.stockhelper.databinding.ActivityMainBinding
 import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.huawei.HuaweiActivity
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         private lateinit var viewModel: MainViewModel
         private lateinit var mViewPager: ViewPager
         private lateinit var mTabs: CustomTabLayout
-        private lateinit var mFragmentPagerAdapter: FragmentStatePagerAdapter
+        private lateinit var mFragmentPagerAdapter: FragmentPagerAdapter
         private var currentPosition = 0
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         getString(R.string.follow),
                         getString(R.string.summary)
                 )
-                mFragmentPagerAdapter = SimpleStatePagerAdapter(supportFragmentManager, fragments, titles)
+                mFragmentPagerAdapter = SimplePagerAdapter(supportFragmentManager, fragments, titles)
                 mViewPager.adapter = mFragmentPagerAdapter
                 mViewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
                         override fun onPageScrollStateChanged(state: Int) {  }
@@ -124,6 +125,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         mBinding.fabAdd.hide()
                 } else {
                         mBinding.fabAdd.show()
+                }
+        }
+
+        override fun onBackPressed() {
+                if (mBinding.drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                        mBinding.drawerLayout.closeDrawer(Gravity.LEFT)
+                } else {
+                        super.onBackPressed()
                 }
         }
 }
