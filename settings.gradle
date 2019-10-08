@@ -1,2 +1,2 @@
-include ':stock', ':baselib', ':cardslidepanel', ':slidinguppanel', ':app', ':common_service', ':lib-ios-dialog', ':bottomdialog'
+include ':stock', ':baselib', ':cardslidepanel', ':slidinguppanel', ':app', ':common_service', ':lib-ios-dialog', ':bottomdialog', ':pilelayout'
 
