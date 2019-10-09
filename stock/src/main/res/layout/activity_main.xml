@@ -116,6 +116,16 @@
                                 android:textSize="15sp"
                                 android:textColor="@color/black_33"
                                 android:background="?attr/selectableItemBackground"/>
+
+                        <TextView
+                                android:id="@+id/tvCollections"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/collection_articles"
+                                android:textSize="15sp"
+                                android:textColor="@color/black_33"
+                                android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
 
         </androidx.drawerlayout.widget.DrawerLayout>

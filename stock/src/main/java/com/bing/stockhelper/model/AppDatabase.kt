@@ -14,7 +14,7 @@ import com.bing.stockhelper.model.entity.*
 @Database(
         entities = [StockDetail::class, StockTag::class, OrderDetail::class,
                 ItemFollow::class, Summary::class, DayAttention::class,
-                ConcernedTag::class],
+                ConcernedTag::class, CollectArticle::class],
         version = 1,
         exportSchema = false)
 @TypeConverters(IntListConverter::class)
@@ -27,6 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
         abstract fun summaryDao(): SummaryDao
         abstract fun dayAttentionDao(): DayAttentionDao
         abstract fun concernedTagDao(): ConcernedTagDao
+        abstract fun collectArticleDao(): CollectArticleDao
 
         fun loadStocksLive(): LiveData<List<StockDetail>> = stockDetailDao().loadItemsLive()
         fun loadStocks(): List<StockDetail> = stockDetailDao().loadItems()
@@ -78,6 +79,14 @@ abstract class AppDatabase : RoomDatabase() {
         fun insertConcernedTag(item: ConcernedTag) = concernedTagDao().insert(item)
         fun updateConcernedag(item: ConcernedTag) = concernedTagDao().update(item)
         fun deleteConcernedTag(item: ConcernedTag) = concernedTagDao().delete(item)
+
+        fun loadCollectArticlesLive(): LiveData<List<CollectArticle>> = collectArticleDao().loadItemsLive()
+        fun loadCollectArticles(): List<CollectArticle> = collectArticleDao().loadItems()
+        fun loadCollectArticles(id: Int): List<CollectArticle> = collectArticleDao().loadItems(id)
+        fun loadCollectArticlesLive(id: Int): LiveData<List<CollectArticle>> = collectArticleDao().loadItemsLive(id)
+        fun insertCollectArticle(item: CollectArticle) = collectArticleDao().insert(item)
+        fun updateCollectArticle(item: CollectArticle) = collectArticleDao().update(item)
+        fun deleteCollectArticle(item: CollectArticle) = collectArticleDao().delete(item)
 
     companion object {
                 @Volatile private var sInstance: AppDatabase? = null

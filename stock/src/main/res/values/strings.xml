@@ -41,4 +41,5 @@
     <string name="no_tags">未填写标签</string>
     <string name="add_tags">添加标签</string>
     <string name="all_stocks">所有股票</string>
+    <string name="collection_articles">收藏</string>
 </resources>
