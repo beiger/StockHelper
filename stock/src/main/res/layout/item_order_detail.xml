@@ -13,7 +13,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp">
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -27,13 +28,6 @@
                                 android:layout_marginTop="16dp"
                                 app:img_url="@{item.imgUrl}"
                                 android:visibility="visible"/>
-
-                        <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="100dp"
-                                app:img_url="@{item.imgUrl}"
-                                android:scaleType="centerCrop"
-                                android:visibility="gone"/>
 
                         <LinearLayout
                                 android:layout_width="match_parent"

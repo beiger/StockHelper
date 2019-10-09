@@ -11,6 +11,7 @@
                 app:umanoPanelHeight="48dp"
                 app:umanoParallaxOffset="100dp"
                 app:umanoOverlay="true"
+                app:umanoShadowHeight="4dp"
                 app:umanoScrollableView="@id/scrollView">
 
                 <com.scwang.smartrefresh.layout.SmartRefreshLayout

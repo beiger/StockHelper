@@ -45,8 +45,9 @@
     <color name="bg_black_12">#12000000</color>
     <color name="bg_white_dd">#ddffffff</color>
     <color name="bg_white_cc">#ccffffff</color>
-    <color name="selectedTabColor">#ddffffff</color>
-    <color name="defaultTabColor">#99ffffff</color>
+    <color name="bg_black_cc">#cc000000</color>
+    <color name="selectedTabColor">#c0000000</color>
+    <color name="defaultTabColor">#99000000</color>
     <color name="color_divider">#12000000</color>
     <color name="color_tag_first">#5CACEE</color>
     <color name="color_tag_second">#26b74e</color>

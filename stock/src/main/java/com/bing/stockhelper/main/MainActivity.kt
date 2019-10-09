@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
-                UiUtil.setBarColorAndFontWhite(this, Color.TRANSPARENT)
+                UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
                 mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
                 viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
                 initView()
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         private fun initView() {
                 val indicator = DrawerArrowDrawable(this)
-                indicator.color = getColor(R.color.bg_white_cc)
+                indicator.color = getColor(R.color.bg_black_cc)
                 mBinding.indicator.setImageDrawable(indicator)
 
                 with(mBinding.drawerLayout) {

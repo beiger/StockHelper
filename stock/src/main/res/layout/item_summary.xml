@@ -17,7 +17,7 @@
                 <LinearLayout
                         android:id="@+id/card_item_content"
                         android:layout_width="match_parent"
-                        android:layout_height="392dp"
+                        android:layout_height="397dp"
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:background="@color/white">

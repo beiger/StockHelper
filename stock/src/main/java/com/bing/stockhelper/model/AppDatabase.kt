@@ -31,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun loadStocksLive(): LiveData<List<StockDetail>> = stockDetailDao().loadItemsLive()
         fun loadStocks(): List<StockDetail> = stockDetailDao().loadItems()
         fun loadStocks(id: Int): List<StockDetail> = stockDetailDao().loadItems(id)
+        fun loadStocksLive(id: Int): LiveData<List<StockDetail>> = stockDetailDao().loadItemsLive(id)
         fun insertStock(item: StockDetail) = stockDetailDao().insert(item)
         fun updateStock(item: StockDetail) = stockDetailDao().update(item)
         fun deleteStock(item: StockDetail) = stockDetailDao().delete(item)

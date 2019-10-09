@@ -54,7 +54,6 @@ class StockSelectActivity : AppCompatActivity(), View.OnClickListener {
                                 .debounce(400, TimeUnit.MILLISECONDS)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe {
-                                        println("------subscribe")
                                         filterStock(it)
                                 }
                 )

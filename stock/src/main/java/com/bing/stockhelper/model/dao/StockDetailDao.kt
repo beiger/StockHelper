@@ -16,6 +16,9 @@ interface StockDetailDao {
         @Query("SELECT * FROM stockDetail where id=:id")
         fun loadItems(id: Int): List<StockDetail>
 
+        @Query("SELECT * FROM stockDetail where id=:id")
+        fun loadItemsLive(id: Int): LiveData<List<StockDetail>>
+
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun insert(item: StockDetail)
 

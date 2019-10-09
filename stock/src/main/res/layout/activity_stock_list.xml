@@ -25,11 +25,24 @@
                     android:src="@drawable/ic_arrow_back_black_24dp"
                     android:background="?android:selectableItemBackground"/>
 
-            <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:gravity="center"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp">
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"/>
+
+                <ImageView
+                        android:id="@+id/ivAdd"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="?android:selectableItemBackground"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_add_black_24dp"/>
+
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
