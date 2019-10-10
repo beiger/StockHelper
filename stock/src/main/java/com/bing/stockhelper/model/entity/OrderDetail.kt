@@ -3,11 +3,8 @@ package com.bing.stockhelper.model.entity
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.WorkerThread
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.PrimaryKey
 import com.bing.stockhelper.model.AppDatabase
 import java.lang.StringBuilder
 import java.util.*
@@ -15,7 +12,7 @@ import java.util.*
 @Entity(
         tableName = "orderDetail",
         foreignKeys = [ForeignKey(entity = StockDetail::class, parentColumns = ["id"], childColumns = ["stockId"], onDelete = CASCADE, onUpdate = CASCADE)],
-        indices = [androidx.room.Index(value = ["stockId"], unique = true)]
+        indices = [Index(value = ["stockId"], unique = true)]
 )
 data class OrderDetail(
         @PrimaryKey(autoGenerate = true)

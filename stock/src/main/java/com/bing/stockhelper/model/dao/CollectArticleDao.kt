@@ -18,7 +18,7 @@ interface CollectArticleDao {
         @Query("SELECT * FROM collectArticle where id=:id")
         fun loadItemsLive(id: Int): LiveData<List<CollectArticle>>
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: CollectArticle)
 
         @Delete

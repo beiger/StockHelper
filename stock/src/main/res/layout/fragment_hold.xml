@@ -85,7 +85,7 @@
                                                 android:id="@+id/ivEdit"
                                                 android:layout_width="48dp"
                                                 android:layout_height="48dp"
-                                                android:src="@drawable/ic_edit"
+                                                android:src="@drawable/ic_edit_blue"
                                                 android:scaleType="centerInside"
                                                 android:background="?attr/selectableItemBackground"/>
 

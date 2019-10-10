@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimplePagerAdapter
+import com.bing.stockhelper.collection.display.CollectArticlesActivity
 import com.bing.stockhelper.databinding.ActivityMainBinding
 import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.huawei.HuaweiActivity
@@ -24,6 +25,7 @@ import com.bing.stockhelper.main.summary.SummaryFragment
 import com.bing.stockhelper.search.SearchActivity
 import com.bing.stockhelper.stock.list.StockListActivity
 import com.bing.stockhelper.summary.SummaryEditActivity
+import com.bing.stockhelper.tag.TagListActivity
 import com.bing.stockhelper.widget.CustomTabLayout
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
@@ -93,7 +95,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         mBinding.search,
                         mBinding.fabAdd,
                         mBinding.tvHuawei,
-                        mBinding.tvAllStocks
+                        mBinding.tvAllStocks,
+                        mBinding.tvCollections,
+                        mBinding.tvTags
                 )
         }
 
@@ -103,7 +107,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 startActivity<SearchActivity>()
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         }
-
                         R.id.fabAdd -> {
                                 when (currentPosition) {
                                         0 -> startActivity<HoldEditActivity>()
@@ -113,10 +116,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                         2 -> startActivity<SummaryEditActivity>()
                                 }
                         }
-
                         R.id.tvHuawei -> startActivity<HuaweiActivity>()
-
                         R.id.tvAllStocks -> startActivity<StockListActivity>()
+                        R.id.tvCollections -> startActivity<CollectArticlesActivity>()
+                        R.id.tvTags -> startActivity<TagListActivity>()
                 }
         }
 

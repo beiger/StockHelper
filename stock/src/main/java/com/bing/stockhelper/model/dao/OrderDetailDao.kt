@@ -21,7 +21,7 @@ interface OrderDetailDao {
         fun loadItems(id: Int): List<OrderDetail>
 
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: OrderDetail)
 
         @Delete

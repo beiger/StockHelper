@@ -20,7 +20,7 @@ interface ItemFollowDao {
         @Query("SELECT * FROM itemFollows where id=:id")
         fun loadItems(id: Int): List<ItemFollow>
         
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: ItemFollow)
 
         @Delete

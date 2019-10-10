@@ -11,12 +11,14 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityStockDisplayBinding
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
+import com.bing.stockhelper.stock.edit.StockEditActivity
 import com.bing.stockhelper.utils.Constant
 import com.blankj.utilcode.util.SizeUtils
 import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.app.waitIO
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
+import org.jetbrains.anko.startActivity
 
 class StockDisplayActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -74,6 +76,8 @@ class StockDisplayActivity : AppCompatActivity(), View.OnClickListener {
         override fun onClick(v: View) {
                 when (v.id) {
                         R.id.back -> finish()
+
+                        R.id.ivBg ->  startActivity<StockEditActivity>(Constant.TAG_STOCK_ID to stockId)
                 }
         }
 

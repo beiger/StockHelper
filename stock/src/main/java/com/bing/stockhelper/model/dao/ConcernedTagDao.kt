@@ -13,7 +13,7 @@ interface ConcernedTagDao {
         @Query("SELECT * FROM concernedTag")
         fun loadItemsLive(): LiveData<List<ConcernedTag>>
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: ConcernedTag)
 
         @Delete

@@ -60,7 +60,7 @@ class StockSelectActivity : AppCompatActivity(), View.OnClickListener {
 
                 addClickableViews(
                         binding.back,
-                        binding.ivAdd
+                        binding.fabAdd
                 )
 
                 initRecycleView()
@@ -118,13 +118,11 @@ class StockSelectActivity : AppCompatActivity(), View.OnClickListener {
         override fun onClick(v: View) {
                 when (v.id) {
                         R.id.back -> finish()
-                        R.id.ivAdd -> startActivity<StockEditActivity>()
+                        R.id.fabAdd -> startActivity<StockEditActivity>()
                 }
         }
 
         private fun filterStock(text: String) {
-                println("------filterStock")
-                println("------${stocksLive.value?.size}, $text")
                 val all = stocksLive.value ?: return
                 if (text.isEmpty()) {
                         filterStockLive.value = all

@@ -8,6 +8,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bing.stockhelper.model.dao.*
 import com.bing.stockhelper.model.entity.*
 
@@ -94,6 +96,12 @@ abstract class AppDatabase : RoomDatabase() {
                 @VisibleForTesting
                 val DATABASE_NAME = "db-stock"
 
+            var MIGRATION1_2: Migration = object : Migration(1, 2) {
+                    override fun migrate(database: SupportSQLiteDatabase) {
+
+                    }
+            }
+
                 fun getInstance(context: Context): AppDatabase {
                         return sInstance ?: synchronized(this) {
                                 sInstance ?: buildDatabase(context).also { sInstance = it }
@@ -102,6 +110,7 @@ abstract class AppDatabase : RoomDatabase() {
 
                 private fun buildDatabase(appContext: Context): AppDatabase {
                         return Room.databaseBuilder(appContext, AppDatabase::class.java, DATABASE_NAME)
+//                                .addMigrations(MIGRATION1_2)
 //                                .allowMainThreadQueries()
                                 .build()
                 }

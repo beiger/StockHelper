@@ -15,7 +15,7 @@ interface StockTagDao {
         @Query("SELECT * FROM stockTag where id=:id")
         fun loadItems(id: Int): List<StockTag>
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: StockTag)
 
         @Delete

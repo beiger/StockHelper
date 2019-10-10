@@ -19,7 +19,7 @@ interface StockDetailDao {
         @Query("SELECT * FROM stockDetail where id=:id")
         fun loadItemsLive(id: Int): LiveData<List<StockDetail>>
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: StockDetail)
 
         @Delete

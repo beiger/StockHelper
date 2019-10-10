@@ -7,7 +7,13 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application>
-        <activity android:name=".collection.CollectionActivity">
+        <activity android:name=".collection.display.ArticleDisplayActivity">
+        </activity>
+        <activity android:name=".collection.edit.ArticleEditActivity">
+        </activity>
+        <activity android:name=".tag.TagListActivity">
+        </activity>
+        <activity android:name=".collection.display.CollectArticlesActivity">
         </activity>
         <activity android:name=".stock.list.StockDisplayActivity">
         </activity>
@@ -45,6 +51,16 @@
         <activity
                 android:name=".search.SearchActivity"
                 android:screenOrientation="portrait"/>
+
+        <provider
+                android:name=".utils.StockFileProvider"
+                android:authorities="com.bing.stockHelper.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths_stock"/>
+        </provider>
     </application>
 
 </manifest>

@@ -12,7 +12,7 @@ interface DayAttentionDao {
         @Query("SELECT * FROM dayAttention")
         fun loadItemsLive(): LiveData<List<DayAttention>>
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: DayAttention)
 
         @Delete

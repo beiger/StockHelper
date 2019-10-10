@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+	<!--Context.getFilesDir().-->
+	<files-path name="innerFileData" path="data"/>
+	<!-- getCacheDir().-->
+	<cache-path name="innerCacheData" path="data" />
+	<!-- Environment.getExternalStorageDirectory().-->
+	<external-path name="sdcardData" path="data" />
+	<!-- Environment.getExternalStorageDirectory().-->
+	<external-path name="PictureSelector" path="PictureSelector" />
+	<!--Context#getExternalFilesDir(String) Context.getExternalFilesDir(null).   -->
+	<external-files-path name="collectArticle" path="data/stock/collect" />
+	<!-- Context.getExternalCacheDir().  -->
+	<external-cache-path name="outCacheData" path="data" />
+
+	<root-path name="root" path="" />
+</paths>

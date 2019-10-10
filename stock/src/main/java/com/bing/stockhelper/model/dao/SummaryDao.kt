@@ -12,7 +12,7 @@ interface SummaryDao {
         @Query("SELECT * FROM summary")
         fun loadItemsLive(): LiveData<List<Summary>>
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: Summary)
 
         @Delete

@@ -1,13 +1,17 @@
 package com.bing.stockhelper.model.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.fanhantech.baselib.utils.GSON
 import com.fanhantech.baselib.utils.genericType
 import java.lang.StringBuilder
 
-@Entity(tableName = "stockDetail")
+@Entity(
+        tableName = "stockDetail",
+        indices = [Index(value = ["code"], unique = true), Index(value = ["name"], unique = true)]
+)
 data class StockDetail(
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0,
@@ -58,13 +62,26 @@ const val TAG_LEVEL_SECOND = 1
 
 const val TAG_SEPERATER = "，"
 
-@Entity(tableName = "stockTag")
+@Entity(
+        tableName = "stockTag",
+        indices = [Index(value = ["name"], unique = true)]
+)
 class StockTag(
         @PrimaryKey(autoGenerate = true)
         var id: Int,
         var name: String,
         var level: Int
-)
+) {
+        fun isSameWith(item: StockTag): Boolean {
+                return id == item.id &&
+                        name == item.name &&
+                        level == item.level
+        }
+
+        fun copy(): StockTag {
+                return StockTag(id, name, level)
+        }
+}
 
 class IntListConverter {
         @TypeConverter

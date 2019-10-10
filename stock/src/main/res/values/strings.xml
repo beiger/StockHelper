@@ -42,4 +42,7 @@
     <string name="add_tags">添加标签</string>
     <string name="all_stocks">所有股票</string>
     <string name="collection_articles">收藏</string>
+    <string name="picture">图片</string>
+    <string name="title">标题</string>
+    <string name="image_not_selected">未选择图片</string>
 </resources>
