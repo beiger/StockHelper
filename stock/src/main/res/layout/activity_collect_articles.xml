@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:overScrollMode="never"
-                    android:padding="0dp"
+                    android:paddingHorizontal="12dp"
                     tools:listitem="@android:layout/simple_list_item_2"/>
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter

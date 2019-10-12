@@ -3,6 +3,7 @@ apply from: "bing.gradle"
 buildscript {
     ext.kotlin_version = '1.3.50'
     repositories {
+        maven { url  "http://dl.bintray.com/piasy/maven" }
         jcenter()
         google()
         maven { url "https://jitpack.io" }
@@ -18,6 +19,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url  "http://dl.bintray.com/piasy/maven" }
         jcenter()
         google()
         maven { url "https://jitpack.io" }

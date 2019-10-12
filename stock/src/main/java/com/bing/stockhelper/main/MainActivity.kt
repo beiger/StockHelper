@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimplePagerAdapter
-import com.bing.stockhelper.collection.display.CollectArticlesActivity
+import com.bing.stockhelper.collection.list.CollectArticlesActivity
 import com.bing.stockhelper.databinding.ActivityMainBinding
 import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.huawei.HuaweiActivity

@@ -1,4 +1,4 @@
-package com.bing.stockhelper.collection.display
+package com.bing.stockhelper.collection.list
 
 import android.app.Application
 import androidx.annotation.MainThread

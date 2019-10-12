@@ -45,4 +45,8 @@
     <string name="picture">图片</string>
     <string name="title">标题</string>
     <string name="image_not_selected">未选择图片</string>
+    <string name="content">内容</string>
+    <string name="text">文本</string>
+    <string name="image">图片</string>
+    <string name="content_empty">内容为空</string>
 </resources>

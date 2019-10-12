@@ -1,27 +1,28 @@
-package com.bing.stockhelper.collection.display
+package com.bing.stockhelper.collection.list
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
-import com.bing.stockhelper.collection.edit.ArticleEditActivity
+import com.bing.stockhelper.collection.detail.article.CollectArticleActivity
+import com.bing.stockhelper.collection.detail.image.CollectImageActivity
 import com.bing.stockhelper.databinding.ActivityCollectArticlesBinding
 import com.bing.stockhelper.databinding.ItemCollectArticleBinding
-import com.bing.stockhelper.model.entity.CollectArticle
-import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
-import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
-import com.bing.stockhelper.stock.edit.StockEditActivity
+import com.bing.stockhelper.model.entity.*
 import com.bing.stockhelper.utils.Constant
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
+import com.fanhantech.bottomdialog.BottomDialog
 import org.jetbrains.anko.startActivity
 
 class CollectArticlesActivity : AppCompatActivity(), View.OnClickListener {
@@ -45,7 +46,7 @@ class CollectArticlesActivity : AppCompatActivity(), View.OnClickListener {
                         setEnableOverScrollDrag(true)//是否启用越界拖动
                 }
                 with(binding.recyclerView) {
-                        layoutManager = LinearLayoutManager(this@CollectArticlesActivity)
+                        layoutManager = GridLayoutManager(this@CollectArticlesActivity, 2)
                         itemAnimator = DefaultItemAnimator()
                 }
                 initAdapter()
@@ -65,7 +66,11 @@ class CollectArticlesActivity : AppCompatActivity(), View.OnClickListener {
         private fun initAdapter() {
                 mAdapter = SimpleAdapter(
                         onClick = {
-                                startActivity<ArticleDisplayActivity>(Constant.TAG_COLLECT_ARTICLE_ID to it.id)
+                                println("-------${it.type}")
+                                when (it.type) {
+                                        COLLECTION_TYPE_IMAGE -> startActivity<CollectImageActivity>(Constant.TAG_COLLECT_ARTICLE_ID to it.id)
+                                        COLLECTION_TYPE_ARTICLE -> startActivity<CollectArticleActivity>(Constant.TAG_COLLECT_ARTICLE_ID to it.id)
+                                }
                         },
                         isSame = { old, newI -> old.isSameWith(newI) },
                         itemLayout = R.layout.item_collect_article,
@@ -73,6 +78,8 @@ class CollectArticlesActivity : AppCompatActivity(), View.OnClickListener {
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
+                                binding.tvArticle.visibility = if (item.type == COLLECTION_TYPE_ARTICLE) View.VISIBLE else View.GONE
+                                binding.ivImage.visibility = if (item.type == COLLECTION_TYPE_IMAGE) View.VISIBLE else View.GONE
                                 binding.root.setOnLongClickListener {
                                         AlertDialog(this)
                                                 .init()
@@ -92,7 +99,22 @@ class CollectArticlesActivity : AppCompatActivity(), View.OnClickListener {
         override fun onClick(v: View) {
                 when (v.id) {
                         R.id.back -> finish()
-                        R.id.fabAdd -> startActivity<ArticleEditActivity>()
+                        R.id.fabAdd -> addCollect()
                 }
+        }
+
+        private fun addCollect() {
+                var dialog: BottomDialog? = null
+                dialog = BottomDialog.create(supportFragmentManager, R.layout.dialog_add_collect_article, {
+                        it.findViewById<LinearLayout>(R.id.text).setOnClickListener {
+                                dialog?.dismiss()
+                                startActivity<CollectArticleActivity>()
+                        }
+                        it.findViewById<LinearLayout>(R.id.image).setOnClickListener {
+                                dialog?.dismiss()
+                                startActivity<CollectImageActivity>()
+                        }
+                })
+                dialog.show()
         }
 }
