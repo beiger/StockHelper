@@ -15,6 +15,6 @@ object Constant {
     const val TAG_ITEM_FOLLOW_ID = "item_follow_id"
     const val TAG_MAIN_COLOR = "main_color"
 
-    val COLLECT_File_DIR = BaseConstant.Out_File_DIR + "stock/collect" + File.separator
-    val BACKUP_FILE_DIR = BaseConstant.Out_File_DIR + "stock/backup" + File.separator
+    val COLLECT_File_DIR = BaseConstant.OUT_DOCUMENT_DIR + "stock/collect" + File.separator
+    val BACKUP_FILE_DIR = BaseConstant.OUT_DOCUMENT_DIR + "stock/backup" + File.separator
 }

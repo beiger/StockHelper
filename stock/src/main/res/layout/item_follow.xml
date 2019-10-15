@@ -41,6 +41,27 @@
                                         android:textColor="@color/black"/>
                         </LinearLayout>
 
+                        <com.cb.ratingbar.CBRatingBar
+                                android:id="@+id/rate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="12dp"
+                                android:layout_marginVertical="4dp"
+                                app:starSize="8dp"
+                                app:starCount="10"
+                                app:starSpace="2dp"
+                                app:starStrokeWidth="1dp"
+                                app:starCanTouch="false"
+                                app:starMaxProgress="100"
+                                app:starShowStroke="false"
+                                app:starUseGradient="true"
+                                app:starStartColor="#fba117"
+                                app:starEndColor="#ff0000"
+                                app:starCoverColor="#ff0000"
+                                app:starFillColor="#cccccc"
+                                app:starStrokeColor="#0f0f0f"
+                                app:starCoverDir="left_to_right"/>
+
                         <TextView
                                 android:id="@+id/flTags"
                                 android:layout_width="match_parent"

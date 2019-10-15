@@ -11,8 +11,6 @@
         </activity>
         <activity android:name=".collection.detail.image.CollectImageActivity">
         </activity>
-        <activity android:name=".collection.edit.ArticleEditActivity">
-        </activity>
         <activity android:name=".tag.TagListActivity">
         </activity>
         <activity android:name=".collection.list.CollectArticlesActivity">

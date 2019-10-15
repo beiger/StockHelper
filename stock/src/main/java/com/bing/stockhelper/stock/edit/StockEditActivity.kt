@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -204,6 +205,8 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                         supportFragmentManager,
                         R.layout.dialog_add_tags,
                         handleView = {
+                                it.findViewById<RadioButton>(R.id.rbFirst).setButtonDrawable(R.drawable.radio_button_style)
+                                it.findViewById<RadioButton>(R.id.rbSecond).setButtonDrawable(R.drawable.radio_button_style)
                                 val radioGroup = it.findViewById<RadioGroup>(R.id.radio_group)
                                 val tvOk = it.findViewById<TextView>(R.id.tvOk)
                                 val etTags = it.findViewById<EditText>(R.id.etTags)

@@ -126,4 +126,7 @@ dependencies {
     // 长图显示
     implementation 'com.github.piasy:BigImageViewer:1.5.7'
     implementation 'com.github.piasy:GlideImageLoader:1.5.7'
+
+    //rating
+    implementation 'com.github.CB-ysx:CBRatingBar:3.0.1'
 }

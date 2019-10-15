@@ -101,7 +101,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
         @WorkerThread
         private fun getMainColor(imageFileName: String?): IntArray {
                 imageFileName ?: return IntArray(3) { 0 }
-                val bitmap = BitmapUtil.decodeSampledBitmapFromFile(imageFileName, 500, 500)
+                val bitmap = BitmapUtil.decodeSampledBitmapFromFile(imageFileName, 500, 500) ?: return intArrayOf(0, 0, 0)
                 var result: List<IntArray> = ArrayList()
                 try {
                         result = MMCQ.compute(bitmap, 3)

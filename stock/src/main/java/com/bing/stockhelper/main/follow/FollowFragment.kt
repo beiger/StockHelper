@@ -56,6 +56,7 @@ class FollowFragment : Fragment() {
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
+                                binding.rate.starProgress = item.focusDegree * 10f
                                 binding.root.setOnLongClickListener {
                                         AlertDialog(context!!)
                                                 .init()

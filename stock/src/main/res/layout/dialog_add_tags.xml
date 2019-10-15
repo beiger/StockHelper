@@ -45,7 +45,8 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
             android:text="@string/tag_level"
             android:textColor="#222222"
             android:textSize="16sp"/>
@@ -60,11 +61,13 @@
                 android:id="@+id/rbFirst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="0"/>
         <RadioButton
                 android:id="@+id/rbSecond"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="1"/>
 
     </RadioGroup>
@@ -73,7 +76,8 @@
             style="@style/HoldTextView"
             android:text="@string/tag"
             android:layout_gravity="start"
-            android:padding="16dp"/>
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"/>
 
     <EditText
             android:id="@+id/etTags"

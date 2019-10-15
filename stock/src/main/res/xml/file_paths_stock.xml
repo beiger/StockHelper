@@ -9,8 +9,8 @@
 	<!-- Environment.getExternalStorageDirectory().-->
 	<external-path name="PictureSelector" path="PictureSelector" />
 	<!--Context#getExternalFilesDir(String) Context.getExternalFilesDir(null).   -->
-	<external-files-path name="collectArticle" path="data/stock/collect" />
-	<external-files-path name="stockBackup" path="data/stock/backup" />
+	<external-files-path name="collectArticle" path="Documents/stock/collect" />
+	<external-files-path name="stockBackup" path="Documents/stock/backup" />
 	<!-- Context.getExternalCacheDir().  -->
 	<external-cache-path name="outCacheData" path="data" />
 
