@@ -1,0 +1,16 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.sothree.slidinguppanel.library"
+4    android:versionCode="17"
+5    android:versionName="3.4.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+8-->D:\AndroidStudioProjects\StockHelper\slidinguppanel\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->D:\AndroidStudioProjects\StockHelper\slidinguppanel\src\main\AndroidManifest.xml
+10
+11    <application />
+11-->D:\AndroidStudioProjects\StockHelper\slidinguppanel\src\main\AndroidManifest.xml:7:2-17
+12
+13</manifest>
