@@ -49,4 +49,8 @@
     <string name="text">文本</string>
     <string name="image">图片</string>
     <string name="content_empty">内容为空</string>
+    <string name="backup">备份</string>
+    <string name="add_from_file">从文件中添加</string>
+    <string name="backup_finished">备份完成</string>
+    <string name="recover_finished">恢复完毕</string>
 </resources>

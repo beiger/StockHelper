@@ -18,6 +18,9 @@ interface StockTagDao {
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: StockTag)
 
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insert(items: List<StockTag>)
+
         @Delete
         fun delete(item: StockTag)
 

@@ -1,9 +1,13 @@
 package com.bing.stockhelper.main.holder
 
 import android.app.Application
+import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.AndroidViewModel
 import com.bing.stockhelper.model.AppDatabase
 import com.bing.stockhelper.model.entity.*
+import com.fanhantech.baselib.app.io
+
 class HoldViewModel(application: Application) : AndroidViewModel(application) {
 
         private val database = AppDatabase.getInstance(application)
@@ -19,14 +23,19 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
                 stockTagsSecond = tags.filter { it.level == TAG_LEVEL_SECOND }
         }
 
+        @MainThread
         fun delete(id: Int) {
-                database.deleteOrder(id)
+                io {
+                        database.deleteOrder(id)
+                }
         }
 
+        @WorkerThread
         fun deleteAllAttention() {
                 database.deleteAllAttention()
         }
 
+        @WorkerThread
         fun insert(item: DayAttention) {
                 database.insertDayAttention(item)
         }

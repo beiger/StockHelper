@@ -16,4 +16,5 @@ object Constant {
     const val TAG_MAIN_COLOR = "main_color"
 
     val COLLECT_File_DIR = BaseConstant.Out_File_DIR + "stock/collect" + File.separator
+    val BACKUP_FILE_DIR = BaseConstant.Out_File_DIR + "stock/backup" + File.separator
 }

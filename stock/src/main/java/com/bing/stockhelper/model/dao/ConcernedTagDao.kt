@@ -2,6 +2,7 @@ package com.bing.stockhelper.model.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.bing.stockhelper.model.entity.CollectArticle
 import com.bing.stockhelper.model.entity.ConcernedTag
 import com.bing.stockhelper.model.entity.Summary
 
@@ -15,6 +16,9 @@ interface ConcernedTagDao {
 
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: ConcernedTag)
+
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insert(items: List<ConcernedTag>)
 
         @Delete
         fun delete(item: ConcernedTag)

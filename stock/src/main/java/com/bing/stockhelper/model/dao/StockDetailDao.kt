@@ -2,6 +2,7 @@ package com.bing.stockhelper.model.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.bing.stockhelper.model.entity.OrderDetail
 import com.bing.stockhelper.model.entity.StockDetail
 import com.bing.stockhelper.model.entity.StockTag
 
@@ -21,6 +22,9 @@ interface StockDetailDao {
 
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: StockDetail)
+
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insert(items: List<StockDetail>)
 
         @Delete
         fun delete(item: StockDetail)

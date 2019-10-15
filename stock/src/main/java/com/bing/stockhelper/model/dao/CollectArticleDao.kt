@@ -3,6 +3,7 @@ package com.bing.stockhelper.model.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.bing.stockhelper.model.entity.CollectArticle
+import com.bing.stockhelper.model.entity.StockTag
 
 @Dao
 interface CollectArticleDao {
@@ -20,6 +21,9 @@ interface CollectArticleDao {
 
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: CollectArticle)
+
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insert(items: List<CollectArticle>)
 
         @Delete
         fun delete(item: CollectArticle)

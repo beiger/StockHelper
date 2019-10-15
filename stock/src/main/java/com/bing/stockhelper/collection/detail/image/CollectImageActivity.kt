@@ -19,6 +19,7 @@ import com.bing.stockhelper.model.entity.*
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.widget.filtersview.MulData
 import com.bing.stockhelper.widget.filtersview.MultipleFilterView
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.app.ui
@@ -290,13 +291,11 @@ class CollectImageActivity : AppCompatActivity(), View.OnClickListener {
                 imgUrl?.let {
                         val dir = File(Constant.COLLECT_File_DIR)
                         dir.mkdirs()
-                        var newImgUrl = Constant.COLLECT_File_DIR + it.substring(it.lastIndexOf("/"))
-                        var newImg = File(newImgUrl)
-                        if (newImg.exists()) {
-                                newImgUrl = Constant.COLLECT_File_DIR + System.currentTimeMillis() + it.substring(it.lastIndexOf("."))
-                                newImg = File(newImgUrl)
+                        val newImgUrl = Constant.COLLECT_File_DIR + FileUtils.getFileMD5(it) + it.substring(it.lastIndexOf("."))
+                        val newImg = File(newImgUrl)
+                        if (!newImg.exists()) {
+                                File(it).copyTo(newImg)
                         }
-                        File(it).copyTo(newImg)
                         imgUrl = newImgUrl
                 }
         }

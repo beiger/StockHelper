@@ -1,5 +1,6 @@
 package com.bing.stockhelper.main
 
+import android.Manifest
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.files.folderChooser
 import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimplePagerAdapter
 import com.bing.stockhelper.collection.list.CollectArticlesActivity
@@ -29,6 +32,7 @@ import com.bing.stockhelper.tag.TagListActivity
 import com.bing.stockhelper.widget.CustomTabLayout
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
+import com.tbruyelle.rxpermissions2.RxPermissions
 import org.jetbrains.anko.startActivity
 import java.util.*
 
@@ -97,7 +101,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         mBinding.tvHuawei,
                         mBinding.tvAllStocks,
                         mBinding.tvCollections,
-                        mBinding.tvTags
+                        mBinding.tvTags,
+                        mBinding.tvBackup,
+                        mBinding.tvAddFromFile
                 )
         }
 
@@ -110,9 +116,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         R.id.fabAdd -> {
                                 when (currentPosition) {
                                         0 -> startActivity<HoldEditActivity>()
-
                                         1 -> startActivity<FollowEditActivity>()
-
                                         2 -> startActivity<SummaryEditActivity>()
                                 }
                         }
@@ -120,6 +124,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         R.id.tvAllStocks -> startActivity<StockListActivity>()
                         R.id.tvCollections -> startActivity<CollectArticlesActivity>()
                         R.id.tvTags -> startActivity<TagListActivity>()
+                        R.id.tvBackup -> viewModel.backup()
+                        R.id.tvAddFromFile -> {
+                                RxPermissions(this)
+                                        .request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe {
+                                                if (it) {
+                                                        MaterialDialog(this).show {
+                                                                folderChooser { _, file ->
+                                                                        viewModel.recoverFromFile(file.absolutePath)
+                                                                }
+                                                        }
+                                                }
+                                        }
+                        }
                 }
         }
 

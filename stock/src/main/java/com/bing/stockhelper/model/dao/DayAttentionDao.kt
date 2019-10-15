@@ -2,6 +2,7 @@ package com.bing.stockhelper.model.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.bing.stockhelper.model.entity.ConcernedTag
 import com.bing.stockhelper.model.entity.DayAttention
 
 @Dao
@@ -14,6 +15,9 @@ interface DayAttentionDao {
 
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: DayAttention)
+
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insert(items: List<DayAttention>)
 
         @Delete
         fun delete(item: DayAttention)

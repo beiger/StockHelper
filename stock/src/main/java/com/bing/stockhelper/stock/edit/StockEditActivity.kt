@@ -18,6 +18,7 @@ import com.bing.stockhelper.model.entity.*
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.widget.filtersview.MulData
 import com.bing.stockhelper.widget.filtersview.MultipleFilterView
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.fanhantech.baselib.app.io
@@ -32,6 +33,7 @@ import com.luck.picture.lib.config.PictureMimeType
 import kotlinx.android.synthetic.main.dialog_add_tags.view.tvOk
 import kotlinx.android.synthetic.main.dialog_select_tags.view.*
 import kotlinx.android.synthetic.main.dialog_select_tags.view.tvCancel
+import java.io.File
 import java.lang.StringBuilder
 
 class StockEditActivity : AppCompatActivity(), View.OnClickListener {
@@ -256,9 +258,13 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                 val code = getStrFromEt(binding.etCode) ?: return false
                 val description = getStrFromEt(binding.etDescription, false)
                 if (viewModel.stockDetail == null) {
+                        copyImage()
                         viewModel.stockDetail = StockDetail(0, code, name, imgUrl, firstTags, secondTags, description)
                 } else {
                         viewModel.stockDetail?.let {
+                                if (it.imgUrl != imgUrl) {
+                                        copyImage()
+                                }
                                 it.code = code
                                 it.name = name
                                 it.imgUrl = imgUrl
@@ -268,6 +274,19 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                         }
                 }
                 return true
+        }
+
+        private fun copyImage() {
+                imgUrl?.let {
+                        val dir = File(Constant.COLLECT_File_DIR)
+                        dir.mkdirs()
+                        val newImgUrl = Constant.COLLECT_File_DIR + FileUtils.getFileMD5(it) + it.substring(it.lastIndexOf("."))
+                        val newImg = File(newImgUrl)
+                        if (!newImg.exists()) {
+                                File(it).copyTo(newImg)
+                        }
+                        imgUrl = newImgUrl
+                }
         }
 
         private fun getStrFromEt(et: EditText, required: Boolean = true): String? {

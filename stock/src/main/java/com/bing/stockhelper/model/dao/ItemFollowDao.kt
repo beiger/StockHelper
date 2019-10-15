@@ -2,6 +2,7 @@ package com.bing.stockhelper.model.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.ItemFollow
 import com.bing.stockhelper.model.entity.OrderDetail
 
@@ -22,6 +23,9 @@ interface ItemFollowDao {
         
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(item: ItemFollow)
+
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insert(items: List<ItemFollow>)
 
         @Delete
         fun delete(item: ItemFollow)
