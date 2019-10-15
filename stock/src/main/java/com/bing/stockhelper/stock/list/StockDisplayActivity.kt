@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityStockDisplayBinding
+import com.bing.stockhelper.kotlinexpands.initSlideBack
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.bing.stockhelper.stock.edit.StockEditActivity
@@ -31,6 +32,7 @@ class StockDisplayActivity : AppCompatActivity(), View.OnClickListener {
                 super.onCreate(savedInstanceState)
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_stock_display)
                 UiUtil.setBarColorAndFontWhiteByChangeView(this, Color.TRANSPARENT, binding.toolbar)
+                initSlideBack()
                 viewModel = ViewModelProviders.of(this).get(StockDisplayViewModel::class.java)
 
                 intent?.let {
