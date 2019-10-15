@@ -15,17 +15,22 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.databinding.ActivityStockListBinding
 import com.bing.stockhelper.databinding.ItemStockBinding
+import com.bing.stockhelper.kotlinexpands.initSlideBack
 import com.bing.stockhelper.model.entity.StockDetail
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.bing.stockhelper.stock.edit.StockEditActivity
 import com.bing.stockhelper.utils.Constant
 import com.bing.stockhelper.utils.MMCQ
+import com.blankj.utilcode.util.SizeUtils
 import com.fanhantech.baselib.app.ui
 import com.fanhantech.baselib.app.waitIO
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.BitmapUtil
 import com.fanhantech.baselib.utils.UiUtil
+import com.r0adkll.slidr.Slidr
+import com.r0adkll.slidr.model.SlidrConfig
+import com.r0adkll.slidr.model.SlidrPosition
 import org.jetbrains.anko.startActivity
 import java.io.IOException
 import java.util.*
@@ -39,6 +44,7 @@ class StockListActivity : AppCompatActivity(), View.OnClickListener {
                 super.onCreate(savedInstanceState)
                 UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_stock_list)
+                initSlideBack()
                 viewModel = ViewModelProviders.of(this).get(StockListViewModel::class.java)
 
                 initView()

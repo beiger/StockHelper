@@ -17,6 +17,7 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.databinding.ActivityStockSelectBinding
 import com.bing.stockhelper.databinding.ItemStockSearchBinding
+import com.bing.stockhelper.kotlinexpands.initSlideBack
 import com.bing.stockhelper.model.AppDatabase
 import com.bing.stockhelper.model.entity.StockDetail
 import com.bing.stockhelper.stock.edit.StockEditActivity
@@ -46,6 +47,7 @@ class StockSelectActivity : AppCompatActivity(), View.OnClickListener {
                 super.onCreate(savedInstanceState)
                 UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_stock_select)
+                initSlideBack()
 
                 database = AppDatabase.getInstance(application)
                 stocksLive = database.loadStocksLive()

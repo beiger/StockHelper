@@ -17,6 +17,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:fitsSystemWindows="true"
+                android:background="@color/white"
                 tools:context=".search.SearchActivity">
 
                 <androidx.appcompat.widget.Toolbar

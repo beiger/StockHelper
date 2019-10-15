@@ -19,6 +19,7 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.databinding.ActivityTagListBinding
 import com.bing.stockhelper.databinding.ItemTagBinding
+import com.bing.stockhelper.kotlinexpands.initSlideBack
 import com.bing.stockhelper.model.entity.StockTag
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
@@ -43,6 +44,7 @@ class TagListActivity : AppCompatActivity(), View.OnClickListener {
                 super.onCreate(savedInstanceState)
                 UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_tag_list)
+                initSlideBack()
                 viewModel = ViewModelProviders.of(this).get(TagListViewModel::class.java)
 
                 initView()

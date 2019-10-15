@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivitySearchBinding
+import com.bing.stockhelper.kotlinexpands.initSlideBack
 import com.fanhantech.baselib.kotlinExpands.afterTextChanged
 import com.fanhantech.baselib.utils.UiUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,8 +31,9 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
                 UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
-
                 mBinding = DataBindingUtil.setContentView(this, R.layout.activity_search)
+                initSlideBack()
+
                 with(mBinding) {
                         searchText = mSearchText
                         back.setOnClickListener(this@SearchActivity)

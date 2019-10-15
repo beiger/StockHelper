@@ -115,6 +115,7 @@ dependencies {
     implementation project(":lib-ios-dialog")
     implementation project(":bottomdialog")
     implementation project(":pilelayout")
+    implementation project(":slideback")
 
     kapt 'androidx.room:room-compiler:2.1.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'

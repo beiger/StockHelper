@@ -18,6 +18,7 @@ import com.bing.stockhelper.collection.detail.article.CollectArticleActivity
 import com.bing.stockhelper.collection.detail.image.CollectImageActivity
 import com.bing.stockhelper.databinding.ActivityCollectArticlesBinding
 import com.bing.stockhelper.databinding.ItemCollectArticleBinding
+import com.bing.stockhelper.kotlinexpands.initSlideBack
 import com.bing.stockhelper.model.entity.*
 import com.bing.stockhelper.utils.Constant
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
@@ -34,6 +35,8 @@ class CollectArticlesActivity : AppCompatActivity(), View.OnClickListener {
                 super.onCreate(savedInstanceState)
                 UiUtil.setBarColorAndFontBlack(this, Color.TRANSPARENT)
                 binding = DataBindingUtil.setContentView(this, R.layout.activity_collect_articles)
+                initSlideBack()
+
                 viewModel = ViewModelProviders.of(this).get(CollectArticlesViewModel::class.java)
 
                 initView()

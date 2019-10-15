@@ -9,6 +9,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:fitsSystemWindows="true"
+            android:background="@color/white"
             tools:context=".stock.list.StockListActivity">
 
         <androidx.appcompat.widget.Toolbar
