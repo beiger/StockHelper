@@ -6,25 +6,23 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
-    <application>
-        <activity android:name=".collection.detail.article.CollectArticleActivity">
-        </activity>
-        <activity android:name=".collection.detail.image.CollectImageActivity">
-        </activity>
-        <activity android:name=".tag.TagListActivity">
-        </activity>
-        <activity android:name=".collection.list.CollectArticlesActivity">
-        </activity>
-        <activity android:name=".stock.list.StockDisplayActivity">
-        </activity>
-        <activity android:name=".stock.list.StockListActivity">
-        </activity>
-        <activity android:name=".stock.select.StockSelectActivity">
-        </activity>
-        <activity android:name=".stock.edit.StockEditActivity">
-        </activity>
-        <activity android:name=".huawei.HuaweiActivity">
-        </activity>
+    <application
+        android:theme="@style/AppTheme">
+        <activity android:name=".collection.detail.article.CollectArticleActivity"/>
+        <activity android:name=".collection.detail.image.CollectImageActivity"/>
+        <activity android:name=".tag.TagListActivity"
+                  android:theme="@style/TranslucentAppTheme"/>
+        <activity android:name=".collection.list.CollectArticlesActivity"
+                  android:theme="@style/TranslucentAppTheme"/>
+        <activity android:name=".stock.list.StockDisplayActivity"
+                  android:theme="@style/TranslucentAppTheme"/>
+        <activity android:name=".stock.list.StockListActivity"
+                  android:theme="@style/TranslucentAppTheme"/>
+        <activity android:name=".stock.select.StockSelectActivity"
+                  android:theme="@style/TranslucentAppTheme"/>
+        <activity android:name=".stock.edit.StockEditActivity"/>
+        <activity android:name=".huawei.HuaweiActivity"
+                  android:theme="@style/TranslucentAppTheme"/>
         <activity
                 android:name=".summary.SummaryEditActivity"
                 android:screenOrientation="portrait"/>
@@ -50,7 +48,8 @@
         </activity>
         <activity
                 android:name=".search.SearchActivity"
-                android:screenOrientation="portrait"/>
+                android:screenOrientation="portrait"
+                android:theme="@style/TranslucentAppTheme"/>
 
         <provider
                 android:name=".utils.StockFileProvider"

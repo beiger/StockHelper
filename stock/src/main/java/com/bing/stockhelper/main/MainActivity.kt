@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 mTabs.setupWithViewPager(mViewPager)
 
                 addClickableViews(
+                        mBinding.indicator,
                         mBinding.search,
                         mBinding.fabAdd,
                         mBinding.tvHuawei,
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         override fun onClick(v: View) {
                 when (v.id) {
+                        R.id.indicator -> mBinding.drawerLayout.openDrawer(Gravity.LEFT)
                         R.id.search -> {
                                 startActivity<SearchActivity>()
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
