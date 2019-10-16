@@ -33,6 +33,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                         val follows = database.loadFollows()
                         val summarys = database.loadSummarys()
                         val dayAttention = database.loadDayAttentions()
+                        val collectArticles = database.loadCollectArticles()
                         val concernedTags = database.loadConcernedTags()
                         FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "tags.json", GSON.ins.toJson(tags))
                         FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "stocks.json", GSON.ins.toJson(stocks))
@@ -40,6 +41,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                         FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "follows.json", GSON.ins.toJson(follows))
                         FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "summarys.json", GSON.ins.toJson(summarys))
                         FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "dayAttention.json", GSON.ins.toJson(dayAttention))
+                        FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "collectArticles.json", GSON.ins.toJson(collectArticles))
                         FileIOUtils.writeFileFromString(Constant.BACKUP_FILE_DIR + "concernedTags.json", GSON.ins.toJson(concernedTags))
                         ToastUtils.showShort(R.string.backup_finished)
                 }
@@ -55,6 +57,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                                 val follows = GSON.ins.fromJson<List<ItemFollow>>(File("$dir/follows.json").readText(), genericType<List<ItemFollow>>())
                                 val summarys = GSON.ins.fromJson<List<Summary>>(File("$dir/summarys.json").readText(), genericType<List<Summary>>())
                                 val dayAttention = GSON.ins.fromJson<List<DayAttention>>(File("$dir/dayAttention.json").readText(), genericType<List<DayAttention>>())
+                                val collectArticles = GSON.ins.fromJson<List<CollectArticle>>(File("$dir/collectArticles.json").readText(), genericType<List<CollectArticle>>())
                                 val concernedTags = GSON.ins.fromJson<List<ConcernedTag>>(File("$dir/concernedTags.json").readText(), genericType<List<ConcernedTag>>())
 
                                 database.insertStockTags(tags)
@@ -63,6 +66,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                                 database.insertFollows(follows)
                                 database.insertSummarys(summarys)
                                 database.insertDayAttentions(dayAttention)
+                                database.insertCollectArticles(collectArticles)
                                 database.insertConcernedTags(concernedTags)
                                 ToastUtils.showShort(R.string.recover_finished)
                         } catch (e: Exception) {
