@@ -33,7 +33,6 @@ import com.fanhantech.bottomdialog.BottomDialog
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
-import com.vansuita.gaussianblur.GaussianBlur
 import kotlinx.android.synthetic.main.dialog_add_tags.view.tvOk
 import kotlinx.android.synthetic.main.dialog_select_tags.view.*
 import kotlinx.android.synthetic.main.dialog_select_tags.view.tvCancel

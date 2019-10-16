@@ -8,7 +8,6 @@ import com.bing.stockhelper.model.AppDatabase
 import com.bing.stockhelper.model.entity.*
 import com.bing.stockhelper.utils.Constant
 import com.blankj.utilcode.util.FileIOUtils
-import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.utils.GSON

@@ -17,6 +17,8 @@ android {
         versionName "1.0"
         multiDexEnabled true
 
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
 
         if (rootProject.ext.isStockApplication) {
             //组件模式下设置applicationId
@@ -117,7 +119,6 @@ dependencies {
     implementation project(":bottomdialog")
     implementation project(":pilelayout")
     implementation project(":slideback")
-    implementation project(":gaussianblur")
 
     kapt 'androidx.room:room-compiler:2.2.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
@@ -132,7 +133,4 @@ dependencies {
 
     //rating
     implementation 'com.github.CB-ysx:CBRatingBar:3.0.1'
-
-//    // Gaussian blur
-//    implementation 'com.github.jrvansuita:GaussianBlur:1.0.3'
 }

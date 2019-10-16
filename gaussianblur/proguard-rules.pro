@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#RenderScript
+-keepclasseswithmembernames class * {
+native <methods>;
+}
+-keep class android.support.v8.renderscript.** { *; }
