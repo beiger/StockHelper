@@ -23,6 +23,7 @@ import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.OrderDetail
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
+import com.bing.stockhelper.stock.list.StockDisplayActivity
 import com.blankj.utilcode.util.KeyboardUtils
 import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
@@ -113,6 +114,14 @@ class HoldFragment : Fragment(), View.OnClickListener {
 
                                                 }.show()
                                         true
+                                }
+                                binding.llTitle.setOnClickListener {
+                                        io {
+                                                val stockId = viewModel.getStockIdFromFollowId(item.id)
+                                                if (stockId != null) {
+                                                        startActivity<StockDisplayActivity>(Constant.TAG_STOCK_ID to stockId)
+                                                }
+                                        }
                                 }
                         }
                 )

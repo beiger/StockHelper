@@ -37,7 +37,7 @@ class StockDisplayActivity : AppCompatActivity(), View.OnClickListener {
 
                 intent?.let {
                         stockId = it.getIntExtra(Constant.TAG_STOCK_ID, -1)
-                        mainColor = it.getIntArrayExtra(Constant.TAG_MAIN_COLOR)!!
+                        mainColor = it.getIntArrayExtra(Constant.TAG_MAIN_COLOR) ?: intArrayOf(0, 0, 0)
                 }
                 binding.clHead.setBackgroundColor(Color.argb(200, mainColor[0], mainColor[1], mainColor[2]))
                 binding.scrollView.setOnScrollChangeListener(object : View.OnScrollChangeListener {

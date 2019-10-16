@@ -20,6 +20,8 @@ import com.bing.stockhelper.follow.FollowEditActivity
 import com.bing.stockhelper.model.entity.ItemFollow
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
+import com.bing.stockhelper.stock.list.StockDisplayActivity
+import com.fanhantech.baselib.app.io
 import org.jetbrains.anko.support.v4.startActivity
 
 class FollowFragment : Fragment() {
@@ -55,6 +57,7 @@ class FollowFragment : Fragment() {
                         bindData = { item, binding ->
                                 binding.item = item
                                 binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
+                                binding.slTags.visibility = if (item.secondTags.isEmpty()) View.GONE else View.VISIBLE
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
                                 binding.rate.starProgress = item.focusDegree * 10f
                                 binding.root.setOnLongClickListener {
@@ -67,6 +70,14 @@ class FollowFragment : Fragment() {
 
                                                 }.show()
                                         true
+                                }
+                                binding.llTitle.setOnClickListener {
+                                        io {
+                                                val stockId = viewModel.getStockIdFromFollowId(item.id)
+                                                if (stockId != null) {
+                                                        startActivity<StockDisplayActivity>(Constant.TAG_STOCK_ID to stockId)
+                                                }
+                                        }
                                 }
                         }
                 )

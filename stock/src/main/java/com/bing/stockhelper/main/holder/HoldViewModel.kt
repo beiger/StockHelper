@@ -39,4 +39,14 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
         fun insert(item: DayAttention) {
                 database.insertDayAttention(item)
         }
+
+        @WorkerThread
+        fun getStockIdFromFollowId(id: Int): Int? {
+                val results = database.loadFollows(id)
+                return if (results.isNotEmpty()) {
+                        results[0].stockId
+                } else {
+                        null
+                }
+        }
 }
