@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.ActivityStockEditBinding
 import com.bing.stockhelper.model.entity.*
 import com.bing.stockhelper.utils.Constant
+import com.bing.stockhelper.utils.gaussianBlur
 import com.bing.stockhelper.widget.filtersview.MulData
 import com.bing.stockhelper.widget.filtersview.MultipleFilterView
 import com.blankj.utilcode.util.FileUtils
@@ -31,6 +33,7 @@ import com.fanhantech.bottomdialog.BottomDialog
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
+import com.vansuita.gaussianblur.GaussianBlur
 import kotlinx.android.synthetic.main.dialog_add_tags.view.tvOk
 import kotlinx.android.synthetic.main.dialog_select_tags.view.*
 import kotlinx.android.synthetic.main.dialog_select_tags.view.tvCancel
@@ -245,17 +248,21 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         override fun onBackPressed() {
-                if (!updateStockDetail()) {
-                        return
+                ui {
+                        val updateSuccess = waitIO { updateStockDetail() }
+                        if (!updateSuccess) {
+                                return@ui
+                        }
+                        if (stockId == -1) {
+                                viewModel.insert(viewModel.stockDetail!!)
+                        } else {
+                                viewModel.update(viewModel.stockDetail!!)
+                        }
+                        super.onBackPressed()
                 }
-                if (stockId == -1) {
-                        viewModel.insert(viewModel.stockDetail!!)
-                } else {
-                        viewModel.update(viewModel.stockDetail!!)
-                }
-                super.onBackPressed()
         }
 
+        @WorkerThread
         private fun updateStockDetail(): Boolean {
                 val name = getStrFromEt(binding.etName) ?: return false
                 val code = getStrFromEt(binding.etCode) ?: return false
@@ -279,14 +286,19 @@ class StockEditActivity : AppCompatActivity(), View.OnClickListener {
                 return true
         }
 
+        @WorkerThread
         private fun copyImage() {
                 imgUrl?.let {
                         val dir = File(Constant.COLLECT_File_DIR)
                         dir.mkdirs()
-                        val newImgUrl = Constant.COLLECT_File_DIR + FileUtils.getFileMD5(it) + it.substring(it.lastIndexOf("."))
+                        val newImgUrl = Constant.COLLECT_File_DIR + FileUtils.getFileMD5(it)
+                        val newImgUrlGs = Constant.COLLECT_File_DIR + FileUtils.getFileMD5(it)+ "_gs"
                         val newImg = File(newImgUrl)
                         if (!newImg.exists()) {
                                 File(it).copyTo(newImg)
+                        }
+                        if (!File(newImgUrlGs).exists()) {
+                                gaussianBlur(this, newImgUrl, newImgUrlGs)
                         }
                         imgUrl = newImgUrl
                 }

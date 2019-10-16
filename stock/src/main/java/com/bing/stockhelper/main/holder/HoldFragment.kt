@@ -117,7 +117,7 @@ class HoldFragment : Fragment(), View.OnClickListener {
                                 }
                                 binding.llTitle.setOnClickListener {
                                         io {
-                                                val stockId = viewModel.getStockIdFromFollowId(item.id)
+                                                val stockId = viewModel.getStockIdFromOrderId(item.id)
                                                 if (stockId != null) {
                                                         startActivity<StockDisplayActivity>(Constant.TAG_STOCK_ID to stockId)
                                                 }

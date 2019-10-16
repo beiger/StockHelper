@@ -41,8 +41,8 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         @WorkerThread
-        fun getStockIdFromFollowId(id: Int): Int? {
-                val results = database.loadFollows(id)
+        fun getStockIdFromOrderId(id: Int): Int? {
+                val results = database.loadOrders(id)
                 return if (results.isNotEmpty()) {
                         results[0].stockId
                 } else {

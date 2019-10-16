@@ -16,6 +16,9 @@ android {
         versionName "1.05"
         multiDexEnabled true
 
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
+
         kapt {
             arguments {
                 arg("AROUTER_MODULE_NAME", project.getName())
@@ -98,7 +101,7 @@ dependencies {
     implementation project(':baselib')
     implementation project(':common_service')
     kapt 'com.alibaba:arouter-compiler:1.2.2'
-    compile "androidx.core:core-ktx:+"
+    compile 'androidx.core:core-ktx:+'
     compile "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
