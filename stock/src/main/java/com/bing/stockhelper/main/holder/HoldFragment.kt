@@ -49,7 +49,7 @@ class HoldFragment : Fragment(), View.OnClickListener {
                with(mBinding.refreshLayout) {
                        setEnableRefresh(false)
                        setEnableLoadMore(false)
-                       setEnableOverScrollDrag(true)//是否启用越界拖动
+                       setEnableOverScrollDrag(false)//是否启用越界拖动
                }
                 with(mBinding.recyclerView) {
                         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
