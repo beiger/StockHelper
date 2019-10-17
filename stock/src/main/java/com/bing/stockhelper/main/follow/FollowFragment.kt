@@ -42,7 +42,7 @@ class FollowFragment : Fragment() {
                         viewModel.separateTags(it)
                 })
                 viewModel.followInfos.observe(this, Observer {
-                        mAdapter.update(it)
+                        mAdapter.update(it.sortedBy { item -> -item.focusDegree })
                 })
                 return mBinding.root
         }
@@ -56,8 +56,10 @@ class FollowFragment : Fragment() {
                         itemLayout = R.layout.item_follow,
                         bindData = { item, binding ->
                                 binding.item = item
-                                binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
+                                binding.flTags.visibility = if (item.firstTags.isEmpty()) View.GONE else View.VISIBLE
                                 binding.slTags.visibility = if (item.secondTags.isEmpty()) View.GONE else View.VISIBLE
+                                binding.tvDescription.visibility = if (item.description.isNullOrEmpty()) View.GONE else View.VISIBLE
+                                binding.flTags.text = item.tagsStr(TAG_LEVEL_FIRST, viewModel.stockTagsFirst)
                                 binding.slTags.text = item.tagsStr(TAG_LEVEL_SECOND, viewModel.stockTagsSecond)
                                 binding.rate.starProgress = item.focusDegree * 10f
                                 binding.root.setOnLongClickListener {
