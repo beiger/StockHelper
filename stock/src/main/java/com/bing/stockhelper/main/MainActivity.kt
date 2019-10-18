@@ -32,6 +32,7 @@ import com.bing.stockhelper.tag.TagListActivity
 import com.bing.stockhelper.widget.CustomTabLayout
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.jetbrains.anko.startActivity
 import java.util.*
@@ -106,6 +107,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         mBinding.tvBackup,
                         mBinding.tvAddFromFile
                 )
+                mBinding.fabAdd.setOnLongClickListener {
+                        it.alpha = if (it.alpha != 1f) 1f else 0.1f
+                        true
+                }
         }
 
         override fun onClick(v: View) {
@@ -146,7 +151,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (hide) {
                         mBinding.fabAdd.hide()
                 } else {
-                        mBinding.fabAdd.show()
+                        mBinding.fabAdd.show(object : FloatingActionButton.OnVisibilityChangedListener() {
+                                override fun onShown(fab: FloatingActionButton) {
+                                        fab.animate().setDuration(300L).alpha(0.1f)
+                                }
+                        })
                 }
         }
 

@@ -31,11 +31,6 @@ class HoldViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         @WorkerThread
-        fun deleteAllAttention() {
-                database.deleteAllAttention()
-        }
-
-        @WorkerThread
         fun insert(item: DayAttention) {
                 database.insertDayAttention(item)
         }

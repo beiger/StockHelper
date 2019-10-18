@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -14,16 +15,21 @@ import androidx.lifecycle.ViewModelProviders
 import com.adorkable.iosdialog.AlertDialog
 import com.bing.stockhelper.R
 import com.bing.stockhelper.databinding.FragmentSummaryBinding
+import com.bing.stockhelper.main.MainActivity
+import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.Summary
 import com.bing.stockhelper.summary.SummaryEditActivity
-import com.bing.stockhelper.summary.SummaryViewModel
 import com.bing.stockhelper.utils.Constant
+import com.blankj.utilcode.util.KeyboardUtils
+import com.fanhantech.baselib.app.io
+import com.fanhantech.baselib.kotlinExpands.addClickableViews
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.stone.card.library.CardAdapter
 import com.stone.card.library.CardSlidePanel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SummaryFragment : Fragment() {
+class SummaryFragment : Fragment(), View.OnClickListener {
         private lateinit var binding: FragmentSummaryBinding
         private lateinit var viewModel: SummaryViewModel
 
@@ -94,6 +100,67 @@ class SummaryFragment : Fragment() {
                                 binding.slidePanel.adapter.notifyDataSetChanged()
                         }
                 })
+
+                viewModel.dayAttentions.observe(this, Observer{
+                        if (binding.etAttention.text.isNotEmpty()) {
+                                return@Observer
+                        }
+                        if (it.isNullOrEmpty()) {
+                                binding.etAttention.setText("")
+                        } else {
+                                binding.etAttention.setText(it[0].content)
+                        }
+                })
+
+                binding.panelLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
+                        override fun onPanelSlide(panel: View?, slideOffset: Float) { }
+
+                        override fun onPanelStateChanged(
+                                panel: View,
+                                previousState: SlidingUpPanelLayout.PanelState,
+                                newState: SlidingUpPanelLayout.PanelState
+                        ) {
+                                (activity as MainActivity).hideFab(newState != SlidingUpPanelLayout.PanelState.COLLAPSED)
+                        }
+                })
+
+                addClickableViews(
+                        binding.ivEdit,
+                        binding.ivCheck
+                )
+        }
+
+        override fun onClick(v: View) {
+                when (v.id) {
+                        R.id.ivEdit -> enableEditText(binding.etAttention, true)
+
+                        R.id.ivCheck -> {
+                                KeyboardUtils.hideSoftInput(v)
+                                enableEditText(binding.etAttention, false)
+                                updateAttention()
+                        }
+                }
+        }
+
+        private fun enableEditText(et: EditText, enable: Boolean) {
+                if (enable) {
+                        et.isFocusableInTouchMode = true
+                        et.isFocusable = true
+                        et.requestFocus()
+                } else {
+                        et.isFocusable = false
+                        et.isFocusableInTouchMode = false
+                }
+        }
+
+        private fun updateAttention() {
+                io {
+                        viewModel.deleteAllAttention()
+                        val content = binding.etAttention.text.toString()
+                        if (content.isNotEmpty()) {
+                                viewModel.insert(DayAttention(0, content))
+                        }
+                }
         }
 
         inner class SummaryViewHolder(val view: View) {

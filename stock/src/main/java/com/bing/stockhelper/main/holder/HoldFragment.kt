@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,19 +17,14 @@ import com.bing.stockhelper.databinding.FragmentHoldBinding
 import com.bing.stockhelper.adapter.SimpleAdapter
 import com.bing.stockhelper.databinding.ItemOrderDetailBinding
 import com.bing.stockhelper.holders.display.HoldsActivity
-import com.bing.stockhelper.main.MainActivity
-import com.bing.stockhelper.model.entity.DayAttention
 import com.bing.stockhelper.model.entity.OrderDetail
 import com.bing.stockhelper.model.entity.TAG_LEVEL_FIRST
 import com.bing.stockhelper.model.entity.TAG_LEVEL_SECOND
 import com.bing.stockhelper.stock.list.StockDisplayActivity
-import com.blankj.utilcode.util.KeyboardUtils
 import com.fanhantech.baselib.app.io
-import com.fanhantech.baselib.kotlinExpands.addClickableViews
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import org.jetbrains.anko.support.v4.startActivity
 
-class HoldFragment : Fragment(), View.OnClickListener {
+class HoldFragment : Fragment() {
 
         private lateinit var mBinding: FragmentHoldBinding
         private lateinit var viewModel: HoldViewModel
@@ -63,34 +57,6 @@ class HoldFragment : Fragment(), View.OnClickListener {
                 viewModel.orderDetailInfos.observe(this, Observer {
                         mAdapter.update(it)
                 })
-
-                viewModel.dayAttentions.observe(this, Observer{
-                        if (mBinding.etAttention.text.isNotEmpty()) {
-                                return@Observer
-                        }
-                        if (it.isNullOrEmpty()) {
-                                mBinding.etAttention.setText("")
-                        } else {
-                                mBinding.etAttention.setText(it[0].content)
-                        }
-                })
-
-                mBinding.panelLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
-                        override fun onPanelSlide(panel: View?, slideOffset: Float) { }
-
-                        override fun onPanelStateChanged(
-                                panel: View,
-                                previousState: SlidingUpPanelLayout.PanelState,
-                                newState: SlidingUpPanelLayout.PanelState
-                        ) {
-                                (activity as MainActivity).hideFab(newState != SlidingUpPanelLayout.PanelState.COLLAPSED)
-                        }
-                })
-
-                addClickableViews(
-                        mBinding.ivEdit,
-                        mBinding.ivCheck
-                )
         }
 
         private fun initAdapter() {
@@ -126,38 +92,5 @@ class HoldFragment : Fragment(), View.OnClickListener {
                         }
                 )
                 mBinding.recyclerView.adapter = mAdapter
-        }
-
-        override fun onClick(v: View) {
-                when (v.id) {
-                        R.id.ivEdit -> enableEditText(mBinding.etAttention, true)
-
-                        R.id.ivCheck -> {
-                                KeyboardUtils.hideSoftInput(v)
-                                enableEditText(mBinding.etAttention, false)
-                                updateAttention()
-                        }
-                }
-        }
-
-        private fun enableEditText(et: EditText, enable: Boolean) {
-                if (enable) {
-                        et.isFocusableInTouchMode = true
-                        et.isFocusable = true
-                        et.requestFocus()
-                } else {
-                        et.isFocusable = false
-                        et.isFocusableInTouchMode = false
-                }
-        }
-
-        private fun updateAttention() {
-                io {
-                        viewModel.deleteAllAttention()
-                        val content = mBinding.etAttention.text.toString()
-                        if (content.isNotEmpty()) {
-                                viewModel.insert(DayAttention(0, content))
-                        }
-                }
         }
 }
