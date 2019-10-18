@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         mBinding.tvAddFromFile
                 )
                 mBinding.fabAdd.setOnLongClickListener {
-                        it.alpha = if (it.alpha != 1f) 1f else 0.1f
+                        it.alpha = if (it.alpha != 1f) 1f else 0f
                         true
                 }
         }
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                         mBinding.fabAdd.show(object : FloatingActionButton.OnVisibilityChangedListener() {
                                 override fun onShown(fab: FloatingActionButton) {
-                                        fab.animate().setDuration(300L).alpha(0.1f)
+                                        fab.animate().setDuration(300L).alpha(0f)
                                 }
                         })
                 }

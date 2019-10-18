@@ -81,7 +81,7 @@
                                 android:src="@drawable/ic_add_white_24dp"
                                 app:backgroundTint="@color/dark_green"
                                 app:fabSize="normal"
-                                android:alpha="0.1"/>
+                                android:alpha="0"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
