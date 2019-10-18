@@ -9,7 +9,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:fitsSystemWindows="true"
-            android:background="@color/white">
+            android:background="#eeeeee">
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
