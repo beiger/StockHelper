@@ -1,10 +1,13 @@
 package com.bing.stockhelper.main
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.databinding.DataBindingUtil
@@ -29,15 +32,27 @@ import com.bing.stockhelper.search.SearchActivity
 import com.bing.stockhelper.stock.list.StockListActivity
 import com.bing.stockhelper.summary.SummaryEditActivity
 import com.bing.stockhelper.tag.TagListActivity
+import com.bing.stockhelper.utils.Constant
+import com.bing.stockhelper.utils.Constant.TAG_DRAWER_IMAGE
 import com.bing.stockhelper.widget.CustomTabLayout
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.SPStaticUtils
+import com.bumptech.glide.Glide
+import com.fanhantech.baselib.app.io
 import com.fanhantech.baselib.kotlinExpands.addClickableViews
 import com.fanhantech.baselib.utils.UiUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.config.PictureMimeType
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.jetbrains.anko.startActivity
+import java.io.File
 import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+        private val REQUEST_CODE_CHOOSE_IMG = 0x00
 
         private lateinit var mBinding: ActivityMainBinding
         private lateinit var viewModel: MainViewModel
@@ -97,6 +112,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 mTabs.setupWithViewPager(mViewPager)
 
                 addClickableViews(
+                        mBinding.ivDrawerHead,
                         mBinding.indicator,
                         mBinding.search,
                         mBinding.fabAdd,
@@ -111,10 +127,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         it.alpha = if (it.alpha != 1f) 1f else 0f
                         true
                 }
+                Glide.with(this).load(SPStaticUtils.getString(TAG_DRAWER_IMAGE)).into(mBinding.ivDrawerHead)
         }
 
         override fun onClick(v: View) {
                 when (v.id) {
+                        R.id.ivDrawerHead -> PictureSelector.create(this)
+                                .openGallery(PictureMimeType.ofImage())
+                                .selectionMode(PictureConfig.SINGLE)
+                                .isCamera(false)
+                                .forResult(REQUEST_CODE_CHOOSE_IMG)
                         R.id.indicator -> mBinding.drawerLayout.openDrawer(Gravity.LEFT)
                         R.id.search -> {
                                 startActivity<SearchActivity>()
@@ -157,6 +179,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 }
                         })
                 }
+        }
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+                super.onActivityResult(requestCode, resultCode, data)
+                if (resultCode == Activity.RESULT_OK) {
+                        when (requestCode) {
+                                REQUEST_CODE_CHOOSE_IMG -> {
+                                        val selected = PictureSelector.obtainMultipleResult(data)[0].path
+                                        Glide.with(this).load(selected).into(mBinding.ivDrawerHead)
+                                        io {
+                                                SPStaticUtils.put(TAG_DRAWER_IMAGE, copyImage(selected))
+                                        }
+                                }
+                        }
+                }
+        }
+
+        @WorkerThread
+        private fun copyImage(imgUrl: String): String {
+                val dir = File(Constant.COLLECT_File_DIR)
+                dir.mkdirs()
+                val newImgUrl = Constant.COLLECT_File_DIR + FileUtils.getFileMD5(imgUrl)
+                val newImg = File(newImgUrl)
+                if (!newImg.exists()) {
+                        File(imgUrl).copyTo(newImg)
+                }
+                return newImgUrl
         }
 
         override fun onBackPressed() {
